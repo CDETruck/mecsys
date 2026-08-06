@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#182c4d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>CDE Truck & Car Repair — Tablero</title>
+<style>
+:root{--navy:#182c4d;--org:#e8720c;--bg:#eef1f5;--card:#fff;--line:#d8dee8;
+--txt:#1c2430;--mut:#6b7686;--ok:#1e8e4e;--warn:#c98a00;--bad:#c93b3b;--blue:#2563a8}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--txt);padding-bottom:calc(82px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+button,label{touch-action:manipulation}
+header{background:var(--navy);color:#fff;padding:12px 14px 6px;position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.hwrap{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:960px;margin:0 auto}
+.brand{display:flex;gap:10px;align-items:center;min-width:0}
+.logo{background:var(--org);font-weight:800;padding:7px 9px;border-radius:8px;letter-spacing:1px;flex:none}
+.logoimg{height:42px;max-width:140px;object-fit:contain;background:#fff;border-radius:9px;padding:4px 7px;flex:none}
+.brand b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{display:block;opacity:.75;font-size:11px;text-transform:capitalize}
+.hbtns{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end}
+.hbtns button,.hbtns label{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 9px;font-size:12px;cursor:pointer;transition:.15s}
+.hbtns button:hover,.hbtns label:hover{background:rgba(255,255,255,.25)}
+.hbtns button:active{transform:scale(.95)}
+.stats{display:flex;gap:8px;max-width:960px;margin:10px auto 0}
+.stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:5px 8px;font-size:11px;flex:1;text-align:center}
+.stat b{display:block;font-size:18px}
+.who{display:flex;gap:6px;overflow-x:auto;max-width:960px;margin:8px auto 4px;padding-bottom:2px}
+.wchip{flex:none;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s}
+.wchip.on{background:#fff;color:var(--navy)}
+main{max-width:960px;margin:0 auto;padding:12px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:none;padding:9px 2px 11px;font-size:20px;color:var(--mut);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s}
+nav button span{font-size:11px;font-weight:700}
+nav button.on{color:var(--org);border-top:3px solid var(--org)}
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.toolbar input[type=search]{flex:1;min-width:150px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+.btn{border:none;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:var(--org);color:#fff}
+.btn.sec{background:#fff;border:1px solid var(--line);color:var(--txt)}
+.btn.sec:hover{background:#f4f6fa}
+.btn.ok{background:var(--ok);color:#fff}
+.btn.bad{background:var(--bad);color:#fff}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:8px}
+.btn.big{width:100%;padding:17px;font-size:18px;border-radius:13px}
+.btn.neword{width:100%;background:var(--navy);color:#fff;font-size:18px;padding:16px;border-radius:13px;margin-bottom:14px}
+input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:#fff;color:var(--txt)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,168,.15)}
+textarea{min-height:80px;resize:vertical}
+label.f{display:block;font-size:13px;font-weight:800;color:var(--mut);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.3px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:11px}
+.card.urg{border:2px solid var(--bad)}
+.badge{display:inline-block;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:800}
+.bFila{background:#e8ecf3;color:#4a5568}.bSig{background:var(--org);color:#fff}
+.bProg{background:#e3f0fb;color:#1d5c9e}.bDone{background:#e5f5ea;color:#1e7a45}.bUrg{background:#fdeaea;color:var(--bad)}
+.jtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ot{font-size:13px;color:var(--mut)}
+.jacts{margin-left:auto;display:flex;gap:5px}
+.junit{font-size:21px;font-weight:800;margin:7px 0 2px}
+.jdesc{color:var(--mut);font-size:14px;margin:4px 0;white-space:pre-wrap}
+.jtot{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:14px}
+.jtot b{color:var(--org)}
+.chip{display:inline-flex;align-items:center;gap:5px;background:#f1f4f9;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:13px;margin:3px 3px 0 0;cursor:pointer;user-select:none;transition:.15s}
+.chip.sel{background:var(--org);border-color:var(--org);color:#fff;font-weight:700}
+.chip.read{cursor:default;background:#f6f7fa}
+.loc{display:inline-block;color:#fff;font-weight:800;border-radius:6px;padding:3px 8px;font-size:12px;flex:none}
+.qty{display:inline-block;border-radius:6px;padding:2px 8px;font-weight:800;font-size:13px;background:#e5f5ea;color:#1e7a45}
+.qty.low{background:#fdeaea;color:var(--bad)}
+.pickrow{display:flex;align-items:center;gap:9px;padding:10px 11px;background:#fff;border:1px solid var(--line);border-radius:11px;margin-bottom:7px;flex-wrap:wrap}
+.pinfo{flex:1;min-width:130px}
+.pinfo b{font-size:15px}
+.pinfo small{display:block;color:var(--mut);font-size:12px}
+.stepbox{display:flex;gap:5px;align-items:center}
+.stepbox button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:#f6f7fa;font-size:19px;font-weight:800;cursor:pointer}
+.stepbox button:active{transform:scale(.93)}
+.stepbox b{min-width:30px;text-align:center;font-size:17px}
+.subhead{font-size:13px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cartbox{background:#fff8ef;border:1px solid #f0d8b6;border-radius:14px;padding:13px;margin-bottom:12px}
+.cartbox h3{font-size:14px;color:#8a5200;margin-bottom:7px}
+.mrow{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed #eedbbc;font-size:14px;flex-wrap:wrap}
+.mrow:last-child{border:none}
+.step{margin:20px 0 4px;font-weight:800;font-size:16px;color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:5px}
+.chipbox{max-height:230px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fafbfd}
+.selrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;font-size:14px;border-bottom:1px dashed var(--line)}
+.selrow input{width:100px;padding:8px;text-align:right}
+.mut{color:var(--mut);font-size:13px}
+.warnmut{color:var(--bad);font-size:12px;font-weight:700}
+.hist{font-size:13px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.empty{text-align:center;color:var(--mut);padding:30px 10px;font-size:15px}
+.helpbox{background:#eef4fb;border:1px solid #cfdff2;border-radius:14px;padding:14px;margin-bottom:14px;font-size:14px;line-height:1.7}
+#overlay{position:fixed;inset:0;background:rgba(15,23,40,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+#overlay[hidden]{display:none !important}
+#modal{background:#fff;width:100%;max-width:580px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px}
+@media(min-width:700px){#overlay{align-items:center}#modal{border-radius:16px}}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.mhead h3{font-size:19px}
+.x{background:none;border:none;font-size:24px;cursor:pointer;color:var(--mut)}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--navy);color:#fff;padding:13px 22px;border-radius:999px;font-weight:700;z-index:99;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center}
+#toast.show{opacity:1}
+.priceedit{cursor:pointer;padding:2px 6px;border-radius:6px;border:1px solid transparent}
+.priceedit:hover{background:#fff8ef;border-color:#f0d8b6}
+.reqbadge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;margin-left:4px}
+.reqneeded{background:#fdeaea;color:var(--bad)}.reqapproved{background:#fff3e0;color:#a55400}
+.reqordered{background:#e3f0fb;color:#1d5c9e}.reqreceived{background:#e5f5ea;color:#1e7a45}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div class="brand" id="brand"></div>
+    <div class="hbtns" id="hbtns"></div>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="who" id="who"></div>
+</header>
+<main id="main"></main>
+<nav id="nav">
+  <button data-tab="board" class="on">📋<span id="nv_board"></span></button>
+  <button data-tab="warehouse">📦<span id="nv_warehouse"></span></button>
+  <button data-tab="vendor">🛒<span id="nv_vendor"></span></button>
+  <button data-tab="services">💲<span id="nv_services"></span></button>
+  <button data-tab="team">👥<span id="nv_team"></span></button>
+</nav>
+<div id="overlay" hidden onclick="if(event.target===this)cerrar()"><div id="modal"></div></div>
+<div id="toast"></div>
+
+<script>
+/* ================================================================
+   CDE TALLER v5
+   Warehouse Parts (bodega) + Vendor Parts (proveedor) + Solicitudes
+   + PDFs + QuickBooks CSV + Bilingüe ES/EN
+================================================================ */
+
+const T={
+es:{nav_board:'Tablero',nav_warehouse:'Bodega',nav_vendor:'Comprar',nav_services:'Servicios',nav_team:'Equipo',
+h_backup:'⬇ Respaldar',h_restore:'⬆ Restaurar',h_logo:'🖼 Logo',h_road:'🚀 Futuro',h_lang:'🌐 EN',
+st_queue:'en fila',st_prog:'en progreso',st_carts:'en carritos',st_low:'stock bajo',st_req:'solicitudes',mgr:'🧑‍💼 Manager',
+new_order:'➕ NUEVA ORDEN DE TRABAJO',how_t:'¿Cómo funciona?',
+how_1:'1️⃣ El <b>Manager</b> recibe el camión y crea la orden con servicios y piezas (con su rack).',
+how_2:'2️⃣ El <b>mecánico</b> toca <b>TOMAR ESTE TRABAJO</b> y queda como líder ⭐.',
+how_3:'3️⃣ En la orden, cada pieza se saca con un toque y se va a su <b>🛒 carrito</b>.',
+head_queue:'🕒 En fila — se toman en este orden',head_prog:'🔧 En progreso',head_done:'✅ Terminados',
+csv_all:'⬇ CSV QuickBooks (todos)',b_next:'▶ SIGUIENTE',b_queue:'EN FILA #',b_urg:'🔴 URGENTE',
+b_prog:'🔧 EN PROGRESO',b_done:'✅ TERMINADO',take_job:'🙋 TOMAR ESTE TRABAJO',pre_assigned:'👤 Pre-asignado a:',
+team_none:'Sin equipo aún',add_team:'＋ Equipo',add_part:'＋ Añadir pieza',estimate:'Estimado',labor:'mano de obra',
+parts_w:'partes',total:'Total',finish_job:'✔ TERMINAR TRABAJO',reopen:'↺ Reabrir',retry:'Reintentar',
+missing_buy:'⚠ Faltante p/ compra',missing_btn:'⚠ FALTANTE',take_rack:'📦 SACAR DEL RACK',in_cart:'✅ En carrito',
+cart_of:'🛒 Carrito de',pieces_out:'pieza(s) fuera',return_b:'↩ Regresar',used_b:'✔ Usada',
+search_parts_ph:'🔍 Pieza, SKU o rack (A1...)',low_chip:'⚠ Bajo',add_part_b:'➕ Parte',stock:'stock',
+dest_q:'¿A dónde va?',dest_cart:'🛒 Al carrito',dest_veh:'🚚 Al vehículo',dest_ubi:'📍 Otro lugar del shop',
+qty_f:'Cantidad',who_f:'¿Quién la saca?',job_f:'Orden de trabajo (opcional)',none_opt:'— ninguna —',
+no_orders:'— sin órdenes activas —',place_ph:'Ej. mesa de soldadura, bahía 2...',take_from:'📦 Sacar de',
+return_t:'Regresar:',return_hint:'Vuelve al rack',had:'Tenía',return_btn:'↩ Regresar al rack',
+use_t:'Usar:',use_hint:'Se instala/consume y se puede cargar a la orden. Precio base precargado — ajústalo si este trabajo lleva otro.',
+price_f:'Precio a cobrar por pieza',charge_f:'Cargar a',no_charge:'— no se cobra / uso del shop —',use_btn:'✔ Usada en el trabajo',
+entry_t:'Entrada:',entry_q:'Cantidad que entra (compra, devolución, encontrada)',note_f:'Nota (opcional)',entry_btn:'＋ Agregar al stock',
+part_new:'Agregar pieza manual',part_edit:'Editar pieza',sku_f:'SKU',loc_f:'Rack / ubicación',nes_f:'Nombre (español)',
+nen_f:'Nombre (inglés)',price_base_f:'Precio base',min_f:'Mínimo',save_b:'💾 Guardar',cancel_b:'Cancelar',
+name_missing:'⚠ Ponle nombre a la pieza.',sku_exists:'⚠ Ese SKU ya existe.',
+serv_count:'servicios · precio base editable',add_serv:'➕ Servicio',code_f:'Código',ses_f:'Servicio (español)',
+sen_f:'Servicio (inglés)',unit_f:'Unidad',team_hint:'Cambia "Mecánico 1" por el nombre real — todo se actualiza solo.',
+spec_ph:'Especialidad (frenos, AC, eléctrico...)',no_jobs:'sin trabajos',in_cart_short:'pieza(s) en su carrito',
+wo_t:'📤 Salidas',out_lang:'Idioma de las salidas (PDF/CSV)',pdf_b:'📄 Orden de trabajo (PDF / imprimir)',
+csv_b:'📊 CSV QuickBooks (esta orden)',out_hint:'Hoy: los archivos se descargan. Mañana (con servidor): se archivan y se mandan directo a QuickBooks.',
+road_t:'🚀 Funcionalidad futura (notas)',who_t:'¿Quién toma este trabajo?',who_take:'¿Quién saca esta pieza?',
+new_t:'➕ Nueva orden de trabajo',edit_t:'✏️ Editar',s1:'1️⃣ El vehículo',unit_f2:'Unidad / camión / trailer *',
+unit_ph:'Ej. Camión 112 / Trailer 48\' #2214',client_f:'Cliente',client_ph:'Nombre del cliente',
+desc_f:'Descripción (texto libre)',desc_ph:'Ej. Arreglo del camión 112, reparación de AC...',mark_urgent:'🔴 MARCAR COMO URGENTE',
+s2:'2️⃣ Servicios requeridos',price_list_f:'Precio a cobrar (base precargado, ajustable)',s3:'3️⃣ Piezas pre-asignadas',
+s3h:'El mecánico verá cada pieza con su rack. Busca y toca ＋.',search_ph:'🔍 Buscar pieza, SKU o rack...',
+s4:'4️⃣ Equipo (opcional)',leader_f:'Líder pre-asignado',leader_none:'— que lo tome el primero disponible —',companions_f:'Compañeros',
+save_new:'💾 Guardar y mandar a la fila',save_edit:'💾 Guardar cambios',unit_missing:'⚠ Falta la unidad: ¿qué camión o trailer es?',
+finish_confirm:'¿Terminar',delete_confirm:'¿Eliminar',no_undo:'Esta acción no se puede deshacer.',
+skip_confirm:'⚠ Hay un trabajo primero en la fila',take_anyway:'¿Tomar este de todos modos?',
+equipo_t:'Equipo de',lead_b:'⭐ Líder',add_b:'Agregar',remove_b:'Quitar',done_b:'Listo',
+hist_t:'Historial:',hist_add:'➕ entrada',hist_ret:'↩ regresada',hist_use:'✔ usada',hist_out:'📦 sacada →',
+still_out:'SIGUE FUERA',no_moves:'Sin movimientos todavía.',results_none:'Sin resultados',no_parts_yet:'Sin piezas todavía.',
+logo_t:'🖼 Logo de la compañía',logo_up:'📷 Subir logo (PNG / JPG)',logo_rm:'🗑 Quitar logo',
+logo_none:'Sin logo aún — se muestra el distintivo CDE.',logo_hint:'Se redimensiona solo, se guarda en este aparato y viaja en los respaldos.',
+t_took:'tomó',t_updated:'actualizada',t_created:'creada y en fila',t_added_p:'＋ Pieza añadida a',t_to_cart:'→ 🛒 carrito de',
+t_short_f:'⚠ Faltan',t_avisa:'— avisa al manager',t_missing_mark:'⚠ Marcada como faltante para compra',t_no_stock:'⚠ No hay en stock — márcala para compra',
+t_back_r:'↩ Pieza de vuelta al rack',t_used:'✔ Pieza usada',t_charged:'— cargada a',t_stock_up:'＋ Stock actualizado:',
+t_part_saved:'💾 Pieza guardada',t_serv_saved:'💾 Servicio guardado',t_logo:'🖼 Logo actualizado',t_logo_off:'🖼 Logo quitado',
+t_restored:'⬆ Datos restaurados',t_backup:'⬇ Respaldo descargado',t_csv:'📊 CSV QuickBooks descargado',t_mode_m:'🧑‍💼 Modo Manager',
+only:'stock:',qtyshort:'pza',wh_hint:'Partes en bodega — click sobre el precio para editarlo inline.',
+vp_hint:'Catálogo del proveedor (customtruck.com) · Solicitudes de compra · PDFs.',
+vp_search:'🔍 Buscar en proveedor...',vp_cat:'Categoría',vp_all:'Todas',vp_req_b:'🛎 Solicitar compra',
+vp_po_b:'📄 Orden de Compra (PDF)',vp_req:'Solicitudes',vp_active:'Activas',vp_history:'Historial',
+vp_needed:'POR APROBAR',vp_approved:'APROBADA',vp_ordered:'ENVIADA',vp_received:'RECIBIDA',
+vp_vendor:'Proveedor',vp_price:'Precio proveedor',vp_qty:'Cantidad pedida',vp_urg:'Urgencia',
+vp_eta:'ETA (llegada estimada)',vp_order_num:'N° Orden',vp_notes:'Notas',vp_approved_by:'Aprobado por',
+vp_order_date:'Fecha de orden',vp_received_date:'Fecha de recepción',vp_mgr_approve:'✓ Aprobar pedido',
+vp_mgr_send:'📤 Marcar enviada',vp_mgr_receive:'✅ Marcar recibida',vp_cancel:'✕ Cancelar',
+vp_reason:'Motivo de la solicitud',vp_reason_ph:'Ej. faltante para OT-003, se rompió durante instalación...',
+vp_send:'🛎 Enviar solicitud al Manager',vp_sent:'✓ Solicitud enviada',vp_approved_toast:'✓ Pedido aprobado',
+vp_sent_toast:'📤 Pedido marcado como enviado',vp_received_toast:'✅ Pedido recibido y agregado a bodega',
+vp_cancel_toast:'✕ Solicitud cancelada',vp_no_reqs:'No hay solicitudes en esta categoría.',
+vp_po_title:'ORDEN DE COMPRA',vp_po_vendor:'Proveedor',vp_po_items:'Artículos',vp_po_total:'TOTAL',
+vp_po_date:'Fecha',vp_po_approved:'Aprobada por',vp_po_eta:'ETA',vp_po_notes:'Notas'
+},
+en:{nav_board:'Board',nav_warehouse:'Warehouse',nav_vendor:'Order',nav_services:'Services',nav_team:'Team',
+h_backup:'⬇ Backup',h_restore:'⬆ Restore',h_logo:'🖼 Logo',h_road:'🚀 Roadmap',h_lang:'🌐 ES',
+st_queue:'in queue',st_prog:'in progress',st_carts:'in carts',st_low:'low stock',st_req:'requests',mgr:'🧑‍💼 Manager',
+new_order:'➕ NEW WORK ORDER',how_t:'How it works',
+how_1:'1️⃣ The <b>Manager</b> receives the truck and creates the order with services and parts (with rack).',
+how_2:'2️⃣ The <b>mechanic</b> taps <b>TAKE THIS JOB</b> and becomes leader ⭐.',
+how_3:'3️⃣ On the order, each part is pulled with one tap and goes to their <b>🛒 cart</b>.',
+head_queue:'🕒 In queue — taken in this order',head_prog:'🔧 In progress',head_done:'✅ Completed',
+csv_all:'⬇ QuickBooks CSV (all)',b_next:'▶ NEXT',b_queue:'IN QUEUE #',b_urg:'🔴 URGENT',
+b_prog:'🔧 IN PROGRESS',b_done:'✅ DONE',take_job:'🙋 TAKE THIS JOB',pre_assigned:'👤 Pre-assigned to:',
+team_none:'No team yet',add_team:'＋ Team',add_part:'＋ Add part',estimate:'Estimate',labor:'labor',
+parts_w:'parts',total:'Total',finish_job:'✔ FINISH JOB',reopen:'↺ Reopen',retry:'Retry',
+missing_buy:'⚠ Missing — to buy',missing_btn:'⚠ MISSING',take_rack:'📦 TAKE FROM RACK',in_cart:'✅ In cart',
+cart_of:'🛒 Cart of',pieces_out:'part(s) out',return_b:'↩ Return',used_b:'✔ Used',
+search_parts_ph:'🔍 Part, SKU or rack (A1...)',low_chip:'⚠ Low',add_part_b:'➕ Part',stock:'stock',
+dest_q:'Where does it go?',dest_cart:'🛒 To cart',dest_veh:'🚚 To vehicle',dest_ubi:'📍 Other shop location',
+qty_f:'Quantity',who_f:'Who takes it?',job_f:'Work order (optional)',none_opt:'— none —',
+no_orders:'— no active orders —',place_ph:'e.g. weld table, bay 2...',take_from:'📦 Take from',
+return_t:'Return:',return_hint:'Goes back to rack',had:'Had',return_btn:'↩ Return to rack',
+use_t:'Use:',use_hint:'Installed/consumed and can be charged to the order. Base price preloaded — adjust if this job carries another.',
+price_f:'Price to charge per part',charge_f:'Charge to',no_charge:'— not charged / shop use —',use_btn:'✔ Used on the job',
+entry_t:'Stock in:',entry_q:'Quantity coming in (purchase, return, found)',note_f:'Note (optional)',entry_btn:'＋ Add to stock',
+part_new:'Add part manually',part_edit:'Edit part',sku_f:'SKU',loc_f:'Rack / location',nes_f:'Name (Spanish)',
+nen_f:'Name (English)',price_base_f:'Base price',min_f:'Minimum',save_b:'💾 Save',cancel_b:'Cancel',
+name_missing:'⚠ Give the part a name.',sku_exists:'⚠ That SKU already exists.',
+serv_count:'services · editable base price',add_serv:'➕ Service',code_f:'Code',ses_f:'Service (Spanish)',
+sen_f:'Service (English)',unit_f:'Unit',team_hint:'Change "Mecánico 1" to the real name — everything updates automatically.',
+spec_ph:'Specialty (brakes, AC, electrical...)',no_jobs:'no jobs',in_cart_short:'part(s) in cart',
+wo_t:'📤 Outputs',out_lang:'Output language (PDF/CSV)',pdf_b:'📄 Work order (PDF / print)',
+csv_b:'📊 QuickBooks CSV (this order)',out_hint:'Today: files download. Tomorrow (with server): archived and sent straight to QuickBooks.',
+road_t:'🚀 Future features (notes)',who_t:'Who takes this job?',who_take:'Who takes this part?',
+new_t:'➕ New work order',edit_t:'✏️ Edit',s1:'1️⃣ The vehicle',unit_f2:'Unit / truck / trailer *',
+unit_ph:'e.g. Truck 112 / 48\' Trailer #2214',client_f:'Customer',client_ph:'Customer name',
+desc_f:'Description (free text)',desc_ph:'e.g. Fix truck 112, AC repair...',mark_urgent:'🔴 MARK AS URGENT',
+s2:'2️⃣ Required services',price_list_f:'Price to charge (base preloaded, adjustable)',s3:'3️⃣ Pre-assigned parts',
+s3h:'The mechanic will see each part with its rack. Search and tap ＋.',search_ph:'🔍 Search part, SKU or rack...',
+s4:'4️⃣ Team (optional)',leader_f:'Pre-assigned leader',leader_none:'— first available takes it —',companions_f:'Crew',
+save_new:'💾 Save and send to queue',save_edit:'💾 Save changes',unit_missing:'⚠ Missing unit: which truck or trailer?',
+finish_confirm:'Finish',delete_confirm:'Delete',no_undo:'This cannot be undone.',
+skip_confirm:'⚠ There is a job first in line',take_anyway:'Take this one anyway?',
+equipo_t:'Team for',lead_b:'⭐ Leader',add_b:'Add',remove_b:'Remove',done_b:'Done',
+hist_t:'History:',hist_add:'➕ stock in',hist_ret:'↩ returned',hist_use:'✔ used',hist_out:'📦 taken →',
+still_out:'STILL OUT',no_moves:'No movements yet.',results_none:'No results',no_parts_yet:'No parts yet.',
+logo_t:'🖼 Company logo',logo_up:'📷 Upload logo (PNG / JPG)',logo_rm:'🗑 Remove logo',
+logo_none:'No logo yet — CDE badge shown.',logo_hint:'Auto-resized, stored on this device and travels in backups.',
+t_took:'took',t_updated:'updated',t_created:'created and in queue',t_added_p:'＋ Part added to',t_to_cart:'→ 🛒 cart of',
+t_short_f:'⚠ Missing',t_avisa:'— tell the manager',t_missing_mark:'⚠ Marked missing — to buy',t_no_stock:'⚠ Out of stock — mark to buy',
+t_back_r:'↩ Part back to rack',t_used:'✔ Part used',t_charged:'— charged to',t_stock_up:'＋ Stock updated:',
+t_part_saved:'💾 Part saved',t_serv_saved:'💾 Service saved',t_logo:' Logo updated',t_logo_off:'🖼 Logo removed',
+t_restored:'⬆ Data restored',t_backup:'⬇ Backup downloaded',t_csv:'📊 QuickBooks CSV downloaded',t_mode_m:'🧑‍💼 Manager mode',
+only:'stock:',qtyshort:'pc',wh_hint:'Warehouse parts — click on the price to edit it inline.',
+vp_hint:'Vendor catalog (customtruck.com) · Purchase requests · PDFs.',
+vp_search:'🔍 Search vendor...',vp_cat:'Category',vp_all:'All',vp_req_b:'🛎 Request purchase',
+vp_po_b:'📄 Purchase Order (PDF)',vp_req:'Requests',vp_active:'Active',vp_history:'History',
+vp_needed:'NEED APPROVAL',vp_approved:'APPROVED',vp_ordered:'ORDERED',vp_received:'RECEIVED',
+vp_vendor:'Vendor',vp_price:'Vendor price',vp_qty:'Qty requested',vp_urg:'Urgency',
+vp_eta:'ETA (expected arrival)',vp_order_num:'Order #',vp_notes:'Notes',vp_approved_by:'Approved by',
+vp_order_date:'Order date',vp_received_date:'Received date',vp_mgr_approve:'✓ Approve request',
+vp_mgr_send:'📤 Mark as sent',vp_mgr_receive:'✅ Mark as received',vp_cancel:'✕ Cancel',
+vp_reason:'Reason for request',vp_reason_ph:'e.g. missing for WO-003, broke during install...',
+vp_send:'🛎 Send request to Manager',vp_sent:'✓ Request sent',vp_approved_toast:'✓ Request approved',
+vp_sent_toast:'📤 Request marked as sent',vp_received_toast:'✅ Request received and added to warehouse',
+vp_cancel_toast:'✕ Request cancelled',vp_no_reqs:'No requests in this category.',
+vp_po_title:'PURCHASE ORDER',vp_po_vendor:'Vendor',vp_po_items:'Items',vp_po_total:'TOTAL',
+vp_po_date:'Date',vp_po_approved:'Approved by',vp_po_eta:'ETA',vp_po_notes:'Notes'
+}};
+
+const lang=()=>db.lang||'es';
+const t=k=>(T[lang()]||T.es)[k]??T.es[k]??k;
+const L=o=>lang()==='en'?(o.en||o.es):o.es;
+const outLang=()=>db.outLang||'en';
+const OL=o=>outLang()==='es'?o.es:outLang()==='en'?(o.en||o.es):(o.es+' / '+(o.en||''));
+const ST={'En fila':{es:'EN FILA',en:'IN QUEUE'},'En progreso':{es:'EN PROGRESO',en:'IN PROGRESS'},'Terminado':{es:'TERMINADO',en:'DONE'}};
+const stTxt=s=>(ST[s]||{})[lang()]||s;
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const oq=s=>String(s??'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+const money=n=>'$'+(Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:2});
+const fts=ts=>new Date(ts).toLocaleString(lang()==='en'?'en-US':'es-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+const OT=n=>'OT-'+String(n).padStart(3,'0');
+const rackCol={A:'#c93b3b',B:'#2563a8',C:'#7b4fc9',D:'#1e8e4e',E:'#a56400'};
+const locBadge=l=>`<span class="loc" style="background:${rackCol[(l||'?')[0]]||'#182c4d'}">${esc(l||'—')}</span>`;
+const mechName=id=>(db.mechanics.find(m=>m.id===id)||{}).name||'—';
+const partBySku=s=>db.parts.find(p=>p.sku===s);
+const servByCode=c=>db.services.find(s=>s.code===c);
+const userId=()=>db.currentUser==='mgr'?null:db.currentUser;
+const destIcon=m=>(m.dest||'cart')==='cart'?'🛒':m.dest==='vehiculo'?'🚚':'📍';
+const destTxt=m=>(m.dest||'cart')==='cart'?(lang()==='en'?'cart':'carrito'):(m.destTxt||'');
+function toast(msg){const x=$('#toast');x.textContent=msg;x.classList.add('show');clearTimeout(x._h);x._h=setTimeout(()=>x.classList.remove('show'),2400)}
+function abrir(h){$('#modal').innerHTML=h;$('#overlay').hidden=false;$('#modal').scrollTop=0}
+function cerrar(){$('#overlay').hidden=true}
+const mhead=x=>`<div class="mhead"><h3>${x}</h3><button class="x" onclick="cerrar()">✕</button></div>`;
+function download(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click()}
+
+/* ========== DATOS ========== */
+function seed(){return{
+nextJob:1,nextReq:1,currentUser:'mgr',lang:'es',outLang:'en',logo:'',jobs:[],moves:[],requests:[],
+mechanics:Array.from({length:8},(_,i)=>({id:i+1,name:'Mecánico '+(i+1),esp:''})),
+services:[
+{code:'LL-01',es:'Reparación de ponchadura',en:'Flat tire repair',precio:30,unidad:'c/u'},
+{code:'LL-02',es:'Cambio de llanta',en:'Tire replacement',precio:45,unidad:'c/u'},
+{code:'LL-03',es:'Rotación de llantas',en:'Tire rotation',precio:80,unidad:'c/u'},
+{code:'LL-04',es:'Servicio de baleros',en:'Wheel bearing service',precio:95,unidad:'c/u'},
+{code:'LL-05',es:'Cambio de birlos',en:'Wheel stud replacement',precio:20,unidad:'c/u'},
+{code:'LL-06',es:'Cambio de rin',en:'Rim replacement',precio:40,unidad:'c/u'},
+{code:'LL-07',es:'Sensor TPMS',en:'TPMS sensor',precio:75,unidad:'c/u'},
+{code:'FR-01',es:'Cambio de balatas (eje)',en:'Brake shoe replacement',precio:180,unidad:'eje'},
+{code:'FR-02',es:'Cambio de tambor',en:'Brake drum replacement',precio:140,unidad:'c/u'},
+{code:'FR-03',es:'Ajuste de frenos',en:'Brake adjustment',precio:60,unidad:'c/u'},
+{code:'FR-04',es:'Cámara de freno',en:'Brake chamber',precio:85,unidad:'c/u'},
+{code:'FR-05',es:'Slack adjuster',en:'Slack adjuster',precio:95,unidad:'c/u'},
+{code:'FR-06',es:'Sensor ABS',en:'ABS sensor',precio:120,unidad:'c/u'},
+{code:'FR-07',es:'Línea / manguera de aire',en:'Air line repair',precio:65,unidad:'c/u'},
+{code:'FR-08',es:'Válvula de relevo',en:'Relay valve',precio:95,unidad:'c/u'},
+{code:'FR-09',es:'Glad hands',en:'Glad hands',precio:25,unidad:'c/u'},
+{code:'EL-01',es:'Luces traseras LED',en:'LED tail lights',precio:55,unidad:'c/u'},
+{code:'EL-02',es:'Luces marcadoras',en:'Marker lights',precio:35,unidad:'c/u'},
+{code:'EL-03',es:'Reparación de cableado',en:'Wiring repair',precio:85,unidad:'hr'},
+{code:'EL-04',es:'Plug 7 pines',en:'7-way plug',precio:60,unidad:'c/u'},
+{code:'EL-05',es:'Problema de tierra',en:'Ground issue',precio:50,unidad:'c/u'},
+{code:'AC-01',es:'Reparación de AC',en:'A/C repair',precio:130,unidad:'c/u'},
+{code:'AC-02',es:'Reparación de heater',en:'Heater repair',precio:120,unidad:'c/u'},
+{code:'AC-03',es:'Carga de gas',en:'Refrigerant recharge',precio:90,unidad:'c/u'},
+{code:'AC-04',es:'Motor blower',en:'Blower motor',precio:110,unidad:'c/u'},
+{code:'AC-05',es:'Termostato',en:'Thermostat',precio:85,unidad:'c/u'},
+{code:'RF-01',es:'Servicio unidad reefer',en:'Reefer unit service',precio:150,unidad:'c/u'},
+{code:'RF-02',es:'Pre-trip reefer',en:'Reefer pre-trip',precio:95,unidad:'c/u'},
+{code:'RF-03',es:'Carga de gas reefer',en:'Reefer recharge',precio:120,unidad:'c/u'},
+{code:'SU-01',es:'Bolsa de aire',en:'Air spring',precio:120,unidad:'c/u'},
+{code:'SU-02',es:'Cambio de muelle',en:'Leaf spring',precio:220,unidad:'c/u'},
+{code:'SU-03',es:'Amortiguador',en:'Shock absorber',precio:80,unidad:'c/u'},
+{code:'SU-04',es:'Bushings',en:'Bushings',precio:90,unidad:'c/u'},
+{code:'SU-05',es:'Reparación de slider',en:'Slider repair',precio:150,unidad:'c/u'},
+{code:'SU-06',es:'Alineación de ejes',en:'Axle alignment',precio:250,unidad:'c/u'},
+{code:'CA-01',es:'Cambio de piso',en:'Floor replacement',precio:160,unidad:'hoja'},
+{code:'CA-02',es:'Herrajes de puerta',en:'Door hardware',precio:75,unidad:'c/u'},
+{code:'CA-03',es:'Puerta roll-up',en:'Roll-up door',precio:180,unidad:'c/u'},
+{code:'CA-04',es:'Parche de techo',en:'Roof patch',precio:150,unidad:'c/u'},
+{code:'CA-05',es:'Lámina / remaches',en:'Side sheet / rivets',precio:180,unidad:'c/u'},
+{code:'CA-06',es:'Salpicaderas',en:'Mud flaps',precio:40,unidad:'c/u'},
+{code:'CA-07',es:'Defensa ICC',en:'ICC bumper',precio:200,unidad:'c/u'},
+{code:'CA-08',es:'Landing gear',en:'Landing gear',precio:140,unidad:'c/u'},
+{code:'PM-01',es:'Servicio PM / engrase',en:'PM service',precio:250,unidad:'c/u'},
+{code:'PM-02',es:'Inspección DOT anual',en:'DOT annual inspection',precio:160,unidad:'c/u'},
+{code:'PM-03',es:'Inspección pre-compra',en:'Pre-purchase inspection',precio:150,unidad:'c/u'},
+{code:'PM-04',es:'Medición de frenos',en:'Brake measurement',precio:40,unidad:'c/u'},
+{code:'SO-01',es:'Soldadura',en:'Welding',precio:90,unidad:'hr'},
+{code:'SO-02',es:'Fabricación de soportes',en:'Fabrication',precio:95,unidad:'c/u'},
+{code:'VA-01',es:'Cambio de aceite',en:'Oil change',precio:200,unidad:'c/u'},
+{code:'VA-02',es:'Diagnóstico general',en:'General diagnosis',precio:85,unidad:'c/u'},
+{code:'VA-03',es:'Lona / tarp',en:'Tarp repair',precio:60,unidad:'c/u'},
+{code:'VA-04',es:'Pintura / retoque',en:'Paint touch-up',precio:95,unidad:'c/u'},
+{code:'VA-05',es:'Servicio en carretera',en:'Road service',precio:150,unidad:'c/u'}],
+parts:[
+{sku:'A-01',es:'Balata 16.5" Q (ancla)',en:'Brake shoe 16.5" Q',loc:'A1',precio:25,cant:12,min:4},
+{sku:'A-02',es:'Balata 16.5" Q+ con resortes',en:'Brake shoe kit w/ springs',loc:'A1',precio:45,cant:8,min:4},
+{sku:'A-03',es:'Kit resortes de retorno',en:'Return spring kit',loc:'A1',precio:12,cant:10,min:4},
+{sku:'A-04',es:'Tambor 16.5 x 7',en:'Brake drum 16.5x7',loc:'A2',precio:140,cant:4,min:2},
+{sku:'A-05',es:'Tambor 16.5 x 8',en:'Brake drum 16.5x8',loc:'A2',precio:150,cant:2,min:2},
+{sku:'A-06',es:'Cámara de freno T30',en:'Brake chamber T30',loc:'A3',precio:35,cant:10,min:4},
+{sku:'A-07',es:'Cámara T30/30 larga',en:'Chamber T30/30 long',loc:'A3',precio:48,cant:6,min:2},
+{sku:'A-08',es:'Cámara T24',en:'Brake chamber T24',loc:'A3',precio:30,cant:4,min:2},
+{sku:'A-09',es:'Slack adjuster',en:'Slack adjuster',loc:'A3',precio:75,cant:6,min:2},
+{sku:'A-10',es:'Sensor ABS universal',en:'ABS sensor',loc:'A4',precio:60,cant:6,min:2},
+{sku:'A-11',es:'Válvula de relevo',en:'Relay valve',loc:'A4',precio:55,cant:3,min:1},
+{sku:'A-12',es:'Válvula PPV',en:'PPV valve',loc:'A4',precio:45,cant:2,min:1},
+{sku:'A-13',es:'Glad hands',en:'Glad hands',loc:'A4',precio:8,cant:20,min:8},
+{sku:'A-14',es:'Manguera coil',en:'Coil hose',loc:'A4',precio:12,cant:10,min:4},
+{sku:'A-15',es:'Manguera aire 3/8" (pie)',en:'Air line 3/8" per ft',loc:'A4',precio:2,cant:100,min:25},
+{sku:'A-16',es:'Conector rápido 3/8"',en:'Push fitting 3/8"',loc:'A4',precio:4,cant:30,min:10},
+{sku:'B-01',es:'Luz trasera LED',en:'LED tail light',loc:'B1',precio:22,cant:10,min:4},
+{sku:'B-02',es:'Luz marcadora LED redonda',en:'LED marker light',loc:'B1',precio:8,cant:30,min:10},
+{sku:'B-03',es:'Mini marcadora LED',en:'Mini marker light',loc:'B1',precio:6,cant:20,min:10},
+{sku:'B-04',es:'Luz de placa LED',en:'License plate light',loc:'B2',precio:12,cant:8,min:4},
+{sku:'B-05',es:'Foco 1157',en:'Bulb 1157',loc:'B2',precio:2,cant:20,min:10},
+{sku:'B-06',es:'Plug 7 pines metálico',en:'7-way plug metal',loc:'B3',precio:25,cant:6,min:2},
+{sku:'B-07',es:'Socket 7 pines',en:'7-way socket',loc:'B3',precio:20,cant:4,min:2},
+{sku:'B-08',es:'Cable 7 vías (pie)',en:'7-way cable per ft',loc:'B3',precio:3,cant:60,min:20},
+{sku:'B-09',es:'Cable calibre 12 (pie)',en:'Wire 12ga per ft',loc:'B3',precio:1,cant:150,min:50},
+{sku:'B-10',es:'Conector termorretráctil',en:'Heat shrink connector',loc:'B4',precio:1,cant:60,min:20},
+{sku:'B-11',es:'Fusibles surtidos',en:'Fuses assorted',loc:'B4',precio:1,cant:40,min:15},
+{sku:'B-12',es:'Cinta reflejante DOT C2',en:'Conspicuity tape DOT C2',loc:'B4',precio:22,cant:5,min:2},
+{sku:'C-01',es:'Gas R134a (lata)',en:'R134a can',loc:'C1',precio:9,cant:8,min:3},
+{sku:'C-02',es:'Aceite para compresor',en:'Compressor oil',loc:'C1',precio:12,cant:4,min:2},
+{sku:'C-03',es:'Filtro secador',en:'Receiver dryer',loc:'C1',precio:30,cant:4,min:2},
+{sku:'C-04',es:'Motor blower 12V',en:'Blower motor 12V',loc:'C2',precio:45,cant:3,min:1},
+{sku:'C-05',es:'Heater core',en:'Heater core',loc:'C2',precio:40,cant:2,min:1},
+{sku:'C-06',es:'Manguera heater (pie)',en:'Heater hose per ft',loc:'C2',precio:6,cant:30,min:10},
+{sku:'C-07',es:'Interruptor AC/calefacción',en:'HVAC switch',loc:'C2',precio:25,cant:3,min:1},
+{sku:'D-01',es:'Bolsa de aire suspensión',en:'Air spring',loc:'D1',precio:75,cant:4,min:2},
+{sku:'D-02',es:'Muelle 3 hojas',en:'Leaf spring 3-leaf',loc:'D1',precio:95,cant:3,min:1},
+{sku:'D-03',es:'Amortiguador',en:'Shock absorber',loc:'D2',precio:35,cant:6,min:2},
+{sku:'D-04',es:'Bushing de suspensión',en:'Suspension bushing',loc:'D2',precio:8,cant:16,min:6},
+{sku:'D-05',es:'Sello de rueda',en:'Wheel seal',loc:'D2',precio:8,cant:10,min:4},
+{sku:'D-06',es:'Kit baleros (int/ext + pistas)',en:'Bearing kit',loc:'D2',precio:45,cant:4,min:2},
+{sku:'D-07',es:'Birlo de rueda',en:'Wheel stud',loc:'D3',precio:9,cant:20,min:8},
+{sku:'D-08',es:'Pata de landing gear',en:'Landing gear foot',loc:'D3',precio:20,cant:4,min:2},
+{sku:'D-09',es:'Manivela landing gear',en:'LG crank handle',loc:'D3',precio:35,cant:2,min:1},
+{sku:'E-01',es:'Aceite 15W-40 (galón)',en:'Oil 15W40 gallon',loc:'E1',precio:28,cant:12,min:4},
+{sku:'E-02',es:'Filtro de aceite diésel',en:'Oil filter (diesel)',loc:'E1',precio:12,cant:10,min:4},
+{sku:'E-03',es:'Filtro de combustible',en:'Fuel filter',loc:'E1',precio:18,cant:8,min:3},
+{sku:'E-04',es:'Filtro de aire',en:'Air filter',loc:'E1',precio:45,cant:4,min:2},
+{sku:'E-05',es:'Grasa (tubo)',en:'Grease tube',loc:'E2',precio:5,cant:12,min:4},
+{sku:'E-06',es:'Limpiador de frenos',en:'Brake cleaner',loc:'E2',precio:5,cant:15,min:6},
+{sku:'E-07',es:'Salpicadera',en:'Mud flap',loc:'E3',precio:25,cant:8,min:2},
+{sku:'E-08',es:'Bisagra de puerta',en:'Door hinge',loc:'E3',precio:12,cant:8,min:3},
+{sku:'E-09',es:'Kit candado de puerta',en:'Door lock hardware kit',loc:'E3',precio:35,cant:3,min:1},
+{sku:'E-10',es:'Cam keeper',en:'Cam keeper',loc:'E3',precio:5,cant:12,min:4},
+{sku:'E-11',es:'Remaches pop (caja)',en:'Pop rivets box',loc:'E4',precio:12,cant:5,min:2},
+{sku:'E-12',es:'Kit tornillos de piso',en:'Floor bolt kit',loc:'E4',precio:18,cant:6,min:2}],
+/* ========== VENDOR PARTS (catálogo customtruck.com) ========== */
+vendorParts:[
+/* Brakes */
+{sku:'GC3030R',es:'Cámara de freno 14" T30/30',en:'14" Brake Chamber T30/30',cat:'Brakes',precio:152.08,url:'customtruck.com'},
+{sku:'SC30LCW',es:'Cámara de servicio T30',en:'Service Brake Chamber T30',cat:'Brakes',precio:86.02,url:'customtruck.com'},
+{sku:'PLBSC-30LS',es:'Cámara tipo 30 servicio larga',en:'Type 30 Service Chamber Long',cat:'Brakes',precio:49.00,url:'customtruck.com'},
+{sku:'PLBTS-3030LS',es:'Cámara 30/30 larga',en:'Chamber 30/30 Long',cat:'Brakes',precio:87.98,url:'customtruck.com'},
+{sku:'151.6501BA',es:'Tambor de freno 16.5"x5" Automann',en:'Automann Brake Drum 16.5" x 5"',cat:'Brakes',precio:263.05,url:'customtruck.com'},
+{sku:'058-00690',es:'Cubo de freno',en:'Brake Hub',cat:'Brakes',precio:325.62,url:'customtruck.com'},
+{sku:'40010086',es:'Kit ajustador automático de freno',en:'Automatic Brake Adjuster Kit',cat:'Brakes',precio:207.90,url:'customtruck.com'},
+{sku:'23-106',es:'Ensamblaje de freno eléctrico 12x2',en:'Electric Brake Assembly 12x2',cat:'Brakes',precio:139.70,url:'customtruck.com'},
+{sku:'BE10-35R',es:'Ensamblaje freno eléctrico RH',en:'Electric Brake Assembly RH',cat:'Brakes',precio:57.58,url:'customtruck.com'},
+{sku:'BE12-70L',es:'Ensamblaje freno eléctrico LH 12x2',en:'Electric Brake Assembly 12x2 LH',cat:'Brakes',precio:130.14,url:'customtruck.com'},
+/* HVAC */
+{sku:'CO-2194CSLK',es:'Compresor AC Sanden EM A2 132',en:'Sanden AC Compressor EM A2 132',cat:'HVAC',precio:521.46,url:'customtruck.com'},
+{sku:'830.41029',es:'Filtro secador AC Automann',en:'Automann AC Receiver Drier',cat:'HVAC',precio:39.48,url:'customtruck.com'},
+{sku:'ARD-1242LK',es:'Secador 76mm x 210mm',en:'Drier 76mm x 210mm',cat:'HVAC',precio:70.78,url:'customtruck.com'},
+{sku:'CA-204EWLK',es:'Compresor AC 7H15 DM PV8 119 12V',en:'AC Compressor 7H15 DM PV8 119 12V',cat:'HVAC',precio:231.26,url:'customtruck.com'},
+{sku:'CF2010LK',es:'Filtro de aire de cabina',en:'Cab Air Filter',cat:'HVAC',precio:12.40,url:'customtruck.com'},
+{sku:'CA-307CLK',es:'Compresor YORK PV8 140mm 12V',en:'YORK Compressor PV8 140mm 12V',cat:'HVAC',precio:151.30,url:'customtruck.com'},
+/* Electrical */
+{sku:'HLK2181',es:'Seguro de caja de baterías Mack',en:'Automann Battery Box Latch Mack',cat:'Electrical',precio:4.82,url:'customtruck.com'},
+{sku:'82-5703',es:'Cable de batería Tipo SGR (pie)',en:'Battery Cable Type SGR (per ft)',cat:'Electrical',precio:6.53,url:'customtruck.com'},
+{sku:'AM4PA-4B',es:'Pack 4 baterías AAA',en:'4 Pack AAA Battery',cat:'Electrical',precio:3.42,url:'customtruck.com'},
+{sku:'564.62856',es:'Tapa caja de batería Mack',en:'Battery Box Cover Mack',cat:'Electrical',precio:85.47,url:'customtruck.com'},
+{sku:'LK-ELE-244',es:'Batería RV/Marine',en:'Battery RV / Marine',cat:'Electrical',precio:528.47,url:'customtruck.com'},
+{sku:'PHI8-662',es:'Tuerca de batería Grupo 31',en:'Phillips Battery Nut Group 31',cat:'Electrical',precio:3.21,url:'customtruck.com'},
+{sku:'577.3042-12',es:'Solenoide de arranque 85A 12V',en:'Starter Solenoid 4 Terminal 85A 12V',cat:'Electrical',precio:24.47,url:'customtruck.com'},
+{sku:'577.99535',es:'Switch baja presión aire universal',en:'Low Air Pressure Switch Universal',cat:'Electrical',precio:13.44,url:'customtruck.com'},
+{sku:'ABSZ70-4187',es:'Actuador Dock Lock Hendrickson',en:'Actuator Dock Lock Hendrickson',cat:'Electrical',precio:33.17,url:'customtruck.com'},
+{sku:'M80230',es:'Plug torre Chalmers',en:'Tower Plug Chalmers',cat:'Electrical',precio:2.99,url:'customtruck.com'},
+{sku:'11264',es:'Set plug doble conductor',en:'Dual Conductor Plug Set Vert',cat:'Electrical',precio:39.24,url:'customtruck.com'},
+{sku:'1039151',es:'Mini fusible 30A',en:'30 Amp Mini Fuse',cat:'Electrical',precio:1.81,url:'customtruck.com'},
+{sku:'LK-ELE-192',es:'Caja fusibles blade',en:'Fuse Box Blade Style',cat:'Electrical',precio:122.11,url:'customtruck.com'},
+{sku:'C1068451',es:'Luz baliza LED ámbar',en:'Amber LED Beacon Light',cat:'Electrical',precio:58.35,url:'customtruck.com'},
+{sku:'EW3011',es:'Luz ECCO Focus 360',en:'ECCO Focus 360 Light',cat:'Electrical',precio:300.00,url:'customtruck.com'},
+/* Suspension */
+{sku:'562.464',es:'Colgador resorte cromado recto',en:'Spring-Loaded Hanger Straight Chrome',cat:'Suspension',precio:154.28,url:'customtruck.com'},
+{sku:'AB9647P',es:'Placa superior bolsa de aire',en:'Air Bag Top Plate',cat:'Suspension',precio:28.28,url:'customtruck.com'},
+{sku:'BKF580500GR8',es:'Kit perno brazo de torsión Fruehauf',en:'Torque Arm Bolt Kit Fruehauf',cat:'Suspension',precio:5.37,url:'customtruck.com'},
+{sku:'MTN457UB',es:'Cojinete extremo resorte Neway',en:'Spring End Pad Poly Neway',cat:'Suspension',precio:16.98,url:'customtruck.com'},
+/* Wheel End */
+{sku:'058-00671',es:'Cono de rodamiento',en:'Bearing Cone',cat:'Wheel End',precio:177.79,url:'customtruck.com'},
+{sku:'901-00146',es:'Copa de rodamiento',en:'Bearing Cup',cat:'Wheel End',precio:118.27,url:'customtruck.com'},
+{sku:'H20704TU',es:'Rdamiento bronce',en:'Bearing Bronze',cat:'Wheel End',precio:12.45,url:'customtruck.com'},
+{sku:'150.S1201',es:'Cubo de rueda Automann',en:'Automann Wheel Hub',cat:'Wheel End',precio:489.09,url:'customtruck.com'},
+{sku:'HENVS-32054-3',es:'Kit ventana hubcap Hendrickson',en:'Hendrickson Tiremaax Hubcap Window Kit',cat:'Wheel End',precio:33.58,url:'customtruck.com'},
+{sku:'359-5999',es:'Kit ventana hubcap',en:'Window Kit',cat:'Wheel End',precio:10.00,url:'customtruck.com'},
+/* Hydraulics */
+{sku:'3139610658LK',es:'Bomba hidráulica birotativa NPT 6.3 CID',en:'Birotative Pump NPT 6.3 CID',cat:'Hydraulics',precio:866.62,url:'customtruck.com'},
+{sku:'561.47794',es:'Codo de hule 6" ID Automann',en:'Automann Elbow Rubber 6in ID',cat:'Hydraulics',precio:41.88,url:'customtruck.com'},
+{sku:'81-0015-40',es:'Manguera de aire en espiral',en:'Coiled Air Hose',cat:'Hydraulics',precio:75.24,url:'customtruck.com'},
+{sku:'890HDFJW-B5XY',es:'Toma de fuerza PowerShift 10 pernos',en:'PowerShift 10-Bolt PTO',cat:'Hydraulics',precio:4074.76,url:'customtruck.com'},
+/* Filtration */
+{sku:'B99',es:'Filtro lubricante Baldwin Full-Flow',en:'Baldwin Full-Flow Lube Spin-on',cat:'Filtration',precio:24.85,url:'customtruck.com'},
+{sku:'20000',es:'Kit filtro transmisión Baldwin',en:'Baldwin Transmission Filter Kit',cat:'Filtration',precio:46.42,url:'customtruck.com'},
+/* Body / Lights */
+{sku:'561.32680',es:'Luz trasera LED ovalada',en:'Oval LED Tail Light',cat:'Body',precio:35.00,url:'customtruck.com'},
+{sku:'577.13578',es:'Luz lateral marcador LED',en:'LED Side Marker Light',cat:'Body',precio:15.50,url:'customtruck.com'},
+{sku:'561.53929',es:'Luz placa LED',en:'LED License Plate Light',cat:'Body',precio:18.00,url:'customtruck.com'},
+{sku:'561.64025',es:'Plug 7 pines trailer',en:'7-Way Trailer Plug',cat:'Body',precio:32.00,url:'customtruck.com'},
+/* Tires & Wheels */
+{sku:'TIR-295-75-16',es:'Llanta 295/75R22.5',en:'Tire 295/75R22.5',cat:'Tires',precio:320.00,url:'customtruck.com'},
+{sku:'RIM-22.5-8.25',es:'Rin 22.5 x 8.25',en:'Rim 22.5 x 8.25',cat:'Tires',precio:245.00,url:'customtruck.com'},
+{sku:'WST-5-8',es:'Birlos de rueda 5/8"',en:'Wheel Stud 5/8"',cat:'Tires',precio:12.50,url:'customtruck.com'}
+]};}
+function loadDB(){
+ try{
+  const v2=JSON.parse(localStorage.getItem('cde_v2'));
+  if(v2&&v2.parts&&v2.jobs){
+   if(!v2.vendorParts){const s=seed();v2.vendorParts=s.vendorParts}
+   if(!v2.requests)v2.requests=[];
+   if(!v2.nextReq)v2.nextReq=1;
+   return v2;
+  }
+  const v1=JSON.parse(localStorage.getItem('cde_v1'));
+  if(v1&&v1.parts){const s=seed();
+   return{nextJob:v1.nextJob||1,nextReq:1,currentUser:'mgr',lang:'es',outLang:'en',logo:'',mechanics:v1.mechanics,services:v1.services,parts:v1.parts,
+    jobs:(v1.jobs||[]).map(j=>({num:j.num,ts:j.ts,st:j.st==='Pendiente'?'En fila':j.st,urgent:false,unit:j.unit,client:j.client||'',
+      desc:j.desc||'',serv:j.serv||[],prices:j.prices||{},leader:null,mech:j.mech||[],parts:[],finished:null})),
+    moves:v1.moves||[],requests:[],vendorParts:s.vendorParts};}
+ }catch(e){}
+ return seed();
+}
+let db=loadDB();
+function save(){localStorage.setItem('cde_v2',JSON.stringify(db));pintaChrome()}
+function pintaChrome(){pintaBrand();pintaHbtns();pintaStats();pintaWho();pintaNav()}
+function pintaBrand(){
+ $('#brand').innerHTML=(db.logo?`<img class="logoimg" src="${db.logo}" alt="logo">`:`<span class="logo">CDE</span>`)+
+  `<div style="min-width:0"><b>CDE Truck &amp; Car Repair Inc.</b><small>${new Date().toLocaleDateString(lang()==='en'?'en-US':'es-US',{weekday:'long',month:'long',day:'numeric'})}</small></div>`;
+}
+function pintaHbtns(){
+ $('#hbtns').innerHTML=`<button onclick="setLang()">${t('h_lang')}</button><button onclick="logoModal()">${t('h_logo')}</button>
+ <button onclick="roadModal()">${t('h_road')}</button><button onclick="exportar()">${t('h_backup')}</button>
+ <label>${t('h_restore')}<input type="file" accept=".json" hidden onchange="importar(event)"></label>`;
+}
+function pintaNav(){['board','warehouse','vendor','services','team'].forEach(k=>$('#nv_'+k).textContent=t('nav_'+k))}
+function setLang(){db.lang=lang()==='es'?'en':'es';save();render();toast(lang()==='en'?'🌐 English':'🌐 Español')}
+
+function estJob(j){
+ const s=(j.serv||[]).reduce((a,c)=>a+(Number((j.prices||{})[c])||servByCode(c)?.precio||0),0);
+ const p=db.moves.filter(m=>!m.open&&m.end==='use'&&m.job===j.num).reduce((a,m)=>a+((m.cargo!=null?m.cargo:m.precio)||0)*m.q,0);
+ return{s,p};
+}
+function pintaStats(){
+ const fila=db.jobs.filter(j=>j.st==='En fila').length,prog=db.jobs.filter(j=>j.st==='En progreso').length;
+ const car=db.moves.filter(m=>m.open).reduce((a,m)=>a+m.q,0),low=db.parts.filter(p=>p.cant<=p.min).length;
+ const reqs=(db.requests||[]).filter(r=>r.status==='needed').length;
+ $('#stats').innerHTML=`<div class="stat"><b>${fila}</b>${t('st_queue')}</div><div class="stat"><b>${prog}</b>${t('st_prog')}</div>
+ <div class="stat"><b>${car}</b>${t('st_carts')}</div><div class="stat"><b>${low}</b>${t('st_low')}</div>
+ ${reqs?`<div class="stat" style="background:rgba(239,68,68,.3)"><b>${reqs}</b>${t('st_req')}</div>`:''}`;
+}
+function pintaWho(){
+ $('#who').innerHTML=`<button class="wchip ${db.currentUser==='mgr'?'on':''}" onclick="setWho('mgr')">${t('mgr')}</button>`+
+  db.mechanics.map(m=>`<button class="wchip ${db.currentUser===m.id?'on':''}" onclick="setWho(${m.id})">👤 ${esc(m.name)}</button>`).join('');
+}
+function setWho(w){db.currentUser=w;save();render();toast(w==='mgr'?t('t_mode_m'):'👤 '+mechName(w))}
+
+function logoModal(){
+ abrir(`${mhead(t('logo_t'))}
+ <div style="text-align:center;padding:14px 0">${db.logo?`<img class="logoimg" style="height:64px" src="${db.logo}" alt="logo">`:`<span class="mut">${t('logo_none')}</span>`}</div>
+ <label class="btn pri big" style="cursor:pointer">${t('logo_up')}<input type="file" accept="image/*" hidden onchange="setLogoFile(event)"></label>
+ ${db.logo?`<button class="btn bad big" style="margin-top:8px" onclick="db.logo='';save();cerrar();toast('${oq(t('t_logo_off'))}')">${t('logo_rm')}</button>`:''}
+ <p class="mut" style="margin-top:12px">${t('logo_hint')}</p>`);
+}
+function setLogoFile(ev){
+ const f=ev.target.files[0];if(!f)return;
+ if(!f.type.startsWith('image/')){alert('⚠ PNG / JPG.');return}
+ const r=new FileReader();
+ r.onload=()=>{const img=new Image();
+  img.onload=()=>{const sc=Math.min(360/img.width,120/img.height,1);
+   const w=Math.max(1,Math.round(img.width*sc)),h=Math.max(1,Math.round(img.height*sc));
+   const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+   db.logo=c.toDataURL('image/png');save();cerrar();toast(t('t_logo'));};
+  img.onerror=()=>alert('⚠');img.src=r.result;};
+ r.readAsDataURL(f);ev.target.value='';
+}
+
+function roadModal(){
+ abrir(mhead(t('road_t'))+`<div style="line-height:1.8;font-size:14px">
+ <b>🖥 Servidor / Server:</b> base de datos compartida en la nube — sincronización en vivo, archivo de órdenes y PDFs permanentes.<br>
+ <b>📒 QuickBooks Online API:</b> OAuth2 para crear Estimate/Invoice directo al terminar la orden.<br>
+ <b>📷 Fotos / Photos:</b> evidencia antes/después en la orden y en el PDF.<br>
+ <b>🛒 Lista de compras / Purchase list:</b> faltantes acumulados → lista para el proveedor.<br>
+ <b>🔐 Usuarios / Users:</b> PIN por mecánico y rol de manager.<br>
+ <b>📅 Recordatorios DOT / DOT reminders:</b> avisos de inspecciones anuales por unidad.</div>`);
+}
+
+const unitLine=(j,sm)=>`<div class="junit" ${sm?'style="font-size:17px"':''}>${esc(j.unit)} ${j.client?`<span class="mut" style="font-weight:400">· ${esc(j.client)}</span>`:''}</div>`;
+function servChips(j){return(j.serv||[]).map(c=>{const s=servByCode(c);return s?`<span class="chip read">${s.code} ${esc(L(s))} · ${money(j.prices?.[c]??s.precio)}</span>`:''}).join('')}
+function partsResumen(j){
+ if(!(j.parts||[]).length)return'';
+ return `<div style="margin-top:6px">`+j.parts.map(p=>{const part=partBySku(p.sku);
+  return part?`<span class="chip read">${part.loc} · ${p.q}× ${esc(L(part))}${p.picked?' ✅':p.falta?' ⚠':''}</span>`:''}).join('')+`</div>`;
+}
+
+/* ========== TABLERO ========== */
+function renderBoard(){
+ const fila=db.jobs.filter(j=>j.st==='En fila').sort((a,b)=>a.ts-b.ts);
+ const prog=db.jobs.filter(j=>j.st==='En progreso').sort((a,b)=>a.ts-b.ts);
+ const done=db.jobs.filter(j=>j.st==='Terminado').sort((a,b)=>(b.finished||b.ts)-(a.finished||a.ts)).slice(0,8);
+ $('#main').innerHTML=`
+ <button class="btn neword" onclick="nuevoTicket()">${t('new_order')}</button>
+ ${db.jobs.length===0?`<div class="helpbox"><b>${t('how_t')}</b><br>${t('how_1')}<br>${t('how_2')}<br>${t('how_3')}</div>`:''}
+ ${fila.length?`<div class="subhead">${t('head_queue')}</div>${fila.map((j,i)=>cardFila(j,i+1)).join('')}`:''}
+ ${prog.length?`<div class="subhead">${t('head_prog')}</div>${prog.map(cardProg).join('')}`:''}
+ ${done.length?`<div class="subhead">${t('head_done')} <button class="btn sm sec" onclick="exportCSV()">${t('csv_all')}</button></div>${done.map(cardDone).join('')}`:''}`;
+}
+function cardFila(j,pos){
+ return `<div class="card ${j.urgent?'urg':''}">
+  <div class="jtop">${j.urgent?`<span class="badge bUrg">${t('b_urg')}</span>`:''}
+   <span class="badge ${pos===1?'bSig':'bFila'}">${pos===1?t('b_next'):t('b_queue')+pos}</span>
+   <b class="ot">${OT(j.num)}</b>
+   <span class="jacts"><button class="btn sm sec" onclick="nuevoTicket(${j.num})">✏️</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span></div>
+  ${unitLine(j)}
+  ${j.desc?`<div class="jdesc">${esc(j.desc)}</div>`:''}
+  <div>${servChips(j)}</div>${partsResumen(j)}
+  ${j.leader?`<div class="mut" style="margin-top:6px">${t('pre_assigned')} <b>${esc(mechName(j.leader))}</b></div>`:''}
+  <button class="btn pri big" style="margin-top:11px" onclick="tomar(${j.num})">${t('take_job')}</button></div>`;
+}
+function checklist(j){
+ if(!(j.parts||[]).length)return'';
+ return `<div style="margin-top:8px">`+j.parts.map((p,i)=>{const part=partBySku(p.sku);if(!part)return'';
+  let right;
+  if(p.picked){
+   const precio=p.priceOverride!=null?p.priceOverride:part.precio;
+   right=`<b style="color:var(--ok)">${t('in_cart')}${j.leader?' — '+esc(mechName(j.leader)):''}</b>
+    <span class="priceedit" onclick="precioPiezaJob(${j.num},${i})" title="Editar precio">${money(precio)}</span>`;
+  } else if(p.falta){
+   right=`<span class="warnmut">${t('missing_buy')} (${p.falta})</span>
+    <button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">🛎 ${t('vp_req_b').replace('🛎 ','')}</button>
+    ${part.cant>0?`<button class="btn sm sec" onclick="sacarLista(${j.num},${i})">${t('retry')}</button>`:''}`;
+  } else if(part.cant<=0){
+   right=`<button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">🛎 ${t('vp_req_b').replace('🛎 ','')}</button>`;
+  } else {
+   right=`<button class="btn sm pri" onclick="sacarLista(${j.num},${i})">${t('take_rack')}</button>`;
+  }
+  return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${p.q}× ${esc(L(part))}</b><small>${esc(part.sku)} · ${money(part.precio)}</small></div>${right}</div>`}).join('')+`</div>`;
+}
+function precioPiezaJob(num,i){
+ const j=db.jobs.find(x=>x.num===num),p=j.parts[i],part=partBySku(p.sku);
+ const actual=p.priceOverride!=null?p.priceOverride:part.precio;
+ abrir(mhead(`${t('price_f')} — ${esc(L(part))}`)+`
+  <p class="mut">${t('use_hint')}</p>
+  <label class="f">${t('price_f')}</label>
+  <input type="number" step="0.01" id="precioO" value="${actual}" inputmode="decimal">
+  <div style="display:flex;gap:8px;margin-top:14px">
+   <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
+   <button class="btn pri" style="flex:1" onclick="guardarPrecioPieza(${num},${i})">${t('save_b')}</button></div>`);
+}
+function guardarPrecioPieza(num,i){
+ const j=db.jobs.find(x=>x.num===num);j.parts[i].priceOverride=Number($('#precioO').value)||0;
+ save();cerrar();render();toast('💾 '+t('price_f'));
+}
+function cardProg(j){
+ const e=estJob(j);
+ const team=(j.mech||[]).map(id=>`<span class="chip read">${id===j.leader?'⭐ ':''}${esc(mechName(id))}</span>`).join('');
+ return `<div class="card ${j.urgent?'urg':''}">
+  <div class="jtop"><span class="badge bProg">${t('b_prog')}</span><b class="ot">${OT(j.num)}</b>
+   <span class="jacts"><button class="btn sm sec" onclick="outModal(${j.num})">📤</button><button class="btn sm sec" onclick="nuevoTicket(${j.num})">✏️</button></span></div>
+  ${unitLine(j)}
+  ${j.desc?`<div class="jdesc">${esc(j.desc)}</div>`:''}
+  <div>${servChips(j)}</div>
+  <div style="margin-top:6px">${team||`<span class="mut">${t('team_none')}</span>`}
+   <button class="chip" onclick="equipoModal(${j.num})">${t('add_team')}</button></div>
+  ${checklist(j)}
+  <button class="chip" style="margin-top:8px" onclick="pickerJob(${j.num})">${t('add_part')}</button>
+  <div class="jtot">${t('estimate')}: <b>${money(e.s+e.p)}</b> <span class="mut">(${t('labor')} ${money(e.s)} · ${t('parts_w')} ${money(e.p)})</span></div>
+  <button class="btn ok big" style="margin-top:10px" onclick="terminar(${j.num})">${t('finish_job')}</button></div>`;
+}
+function cardDone(j){
+ const e=estJob(j);
+ return `<div class="card">
+  <div class="jtop"><span class="badge bDone">${t('b_done')}</span><b class="ot">${OT(j.num)}</b>
+   <span class="mut">${j.finished?fts(j.finished):''}</span>
+   <span class="jacts"><button class="btn sm sec" onclick="outModal(${j.num})">📤</button><button class="btn sm sec" onclick="cambiarSt(${j.num},'En progreso')">${t('reopen')}</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span></div>
+  ${unitLine(j,true)}
+  <div class="jtot">${t('total')}: <b>${money(e.s+e.p)}</b></div></div>`;
+}
+function cambiarSt(n,st){const j=db.jobs.find(x=>x.num===n);if(j){j.st=st;if(st==='Terminado')j.finished=Date.now();save();render()}}
+function terminar(n){if(confirm(t('finish_confirm')+' '+OT(n)+'?'))cambiarSt(n,'Terminado')}
+function borraJob(n){if(confirm(t('delete_confirm')+' '+OT(n)+'? '+t('no_undo'))){db.jobs=db.jobs.filter(j=>j.num!==n);save();render()}}
+function tomar(num){
+ const j=db.jobs.find(x=>x.num===num);if(!j)return;
+ const fila=db.jobs.filter(x=>x.st==='En fila').sort((a,b)=>a.ts-b.ts);
+ if(fila[0]&&fila[0].num!==num&&!confirm(t('skip_confirm')+' ('+OT(fila[0].num)+'). '+t('take_anyway')))return;
+ const uid=userId();
+ if(uid){j.leader=uid;if(!(j.mech||[]).includes(uid))j.mech.push(uid);j.st='En progreso';save();render();toast('🙋 '+mechName(uid)+' '+t('t_took')+' '+OT(num))}
+ else abrir(mhead(t('who_t'))+db.mechanics.map(m=>
+   `<button class="btn pri big" style="margin-bottom:8px" onclick="asignaToma(${num},${m.id})">🙋 ${esc(m.name)}</button>`).join('')+
+   `<button class="btn sec big" onclick="cerrar()">${t('cancel_b')}</button>`);
+}
+function asignaToma(num,mid){cerrar();const j=db.jobs.find(x=>x.num===num);
+ j.leader=mid;if(!(j.mech||[]).includes(mid))j.mech.push(mid);j.st='En progreso';save();render();toast('🙋 '+mechName(mid)+' '+t('t_took')+' '+OT(num))}
+function equipoModal(num){
+ const j=db.jobs.find(x=>x.num===num);
+ abrir(mhead(t('equipo_t')+' '+OT(num))+
+  db.mechanics.map(m=>{const inT=(j.mech||[]).includes(m.id);
+   return `<div class="pickrow"><b style="flex:1">${inT?'✅':'⬜'} ${esc(m.name)} ${j.leader===m.id?'⭐':''}</b>
+   ${inT&&j.leader!==m.id?`<button class="btn sm sec" onclick="hacerLider(${num},${m.id})">${t('lead_b')}</button>`:''}
+   <button class="btn sm ${inT?'bad':'pri'}" onclick="toggleTeam(${num},${m.id})">${inT?t('remove_b'):t('add_b')}</button></div>`}).join('')+
+  `<button class="btn sec big" style="margin-top:10px" onclick="cerrar()">${t('done_b')}</button>`);
+}
+function toggleTeam(num,mid){const j=db.jobs.find(x=>x.num===num);
+ j.mech=j.mech||[];const i=j.mech.indexOf(mid);i>=0?j.mech.splice(i,1):j.mech.push(mid);save();equipoModal(num);render()}
+function hacerLider(num,mid){const j=db.jobs.find(x=>x.num===num);j.leader=mid;if(!(j.mech||[]).includes(mid))j.mech.push(mid);save();equipoModal(num);render()}
+
+/* ========== CREAR ORDEN ========== */
+let tSel=new Set(),tTeam=new Set(),tParts=[],tPrices={},tSearch='',tUrgent=false,editNum=null;
+function nuevoTicket(num){
+ editNum=num||null;const j=num?db.jobs.find(x=>x.num===num):null;
+ tSel=new Set(j?.serv||[]);tTeam=new Set(j?.mech||[]);tParts=(j?.parts||[]).map(p=>({...p}));
+ tPrices={...(j?.prices||{})};tUrgent=j?.urgent||false;tSearch='';
+ abrir(`${mhead(editNum?t('edit_t')+' '+OT(editNum):t('new_t'))}
+ <div class="step">${t('s1')}</div>
+ <label class="f">${t('unit_f2')}</label><input id="tUnit" value="${esc(j?.unit||'')}" placeholder="${esc(t('unit_ph'))}">
+ <label class="f">${t('client_f')}</label><input id="tClient" value="${esc(j?.client||'')}" placeholder="${esc(t('client_ph'))}">
+ <label class="f">${t('desc_f')}</label><textarea id="tDesc" placeholder="${esc(t('desc_ph'))}">${esc(j?.desc||'')}</textarea>
+ <div style="margin-top:10px"><span class="chip ${tUrgent?'sel':''}" onclick="tUrgent=!tUrgent;this.classList.toggle('sel')">${t('mark_urgent')}</span></div>
+ <div class="step">${t('s2')}</div>
+ <div class="chipbox" id="tServBox"></div><div id="tPriceList"></div>
+ <div class="step">${t('s3')}</div>
+ <p class="mut">${t('s3h')}</p>
+ <div id="tPartsList"></div>
+ <input type="search" placeholder="${esc(t('search_ph'))}" oninput="tSearch=this.value;pintaPick()">
+ <div class="chipbox" style="margin-top:7px" id="tPickBox"></div>
+ <div class="step">${t('s4')}</div>
+ <label class="f">${t('leader_f')}</label>
+ <select id="tLeader"><option value="">${t('leader_none')}</option>
+  ${db.mechanics.map(m=>`<option value="${m.id}" ${j?.leader===m.id?'selected':''}>${esc(m.name)}</option>`).join('')}</select>
+ <label class="f">${t('companions_f')}</label><div class="chipbox" id="tTeamBox"></div>
+ <div style="display:flex;gap:8px;margin-top:18px">
+  <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
+  <button class="btn pri" style="flex:2" onclick="guardaTicket()">${editNum?t('save_edit'):t('save_new')}</button></div>`);
+ pintaTServ();pintaSelPrices();pintaTParts();pintaPick();pintaTTeam();
+}
+function pintaTServ(){
+ $('#tServBox').innerHTML=db.services.map(s=>
+  `<span class="chip ${tSel.has(s.code)?'sel':''}" onclick="tToggleServ('${oq(s.code)}')">${s.code} ${esc(L(s))} · ${money(s.precio)}${s.unidad==='hr'?'/hr':''}</span>`).join('');
+}
+function tToggleServ(c){tSel.has(c)?tSel.delete(c):tSel.add(c);pintaTServ();pintaSelPrices()}
+function pintaSelPrices(){
+ $('#tPriceList').innerHTML=tSel.size?`<label class="f">${t('price_list_f')}</label>`+
+  [...tSel].map(c=>{const s=servByCode(c);
+   return `<div class="selrow"><span>${s.code} ${esc(L(s))}</span><input type="number" step="0.01" data-pc="${esc(c)}" value="${tPrices[c]??s.precio}"></div>`}).join(''):'';
+}
+function pintaTTeam(){
+ $('#tTeamBox').innerHTML=db.mechanics.map(m=>
+  `<span class="chip ${tTeam.has(m.id)?'sel':''}" onclick="tTeam.has(${m.id})?tTeam.delete(${m.id}):tTeam.add(${m.id});pintaTTeam()">👤 ${esc(m.name)}</span>`).join('');
+}
+function pintaTParts(){
+ $('#tPartsList').innerHTML=tParts.length?tParts.map((p,idx)=>{const part=partBySku(p.sku);if(!part)return'';
+  return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${esc(L(part))}</b><small>${t('only')} ${part.cant}</small></div>
+  <div class="stepbox"><button onclick="tMenos('${oq(p.sku)}')">－</button><b>${p.q}</b><button onclick="tMas('${oq(p.sku)}')">＋</button></div>
+  <span class="priceedit" onclick="tEditPrecio(${idx})" title="Precio: ${money(p.priceOverride!=null?p.priceOverride:part.precio)}">${money(p.priceOverride!=null?p.priceOverride:part.precio)}</span>
+  ${p.q>part.cant?`<span class="warnmut">⚠ ${t('only')} ${part.cant}</span>`:''}
+  <button class="btn sm sec" onclick="tDel('${oq(p.sku)}')">✕</button></div>`}).join('')
+ :`<p class="mut">${t('no_parts_yet')}</p>`;
+}
+function tEditPrecio(idx){
+ const p=tParts[idx],part=partBySku(p.sku);
+ const actual=p.priceOverride!=null?p.priceOverride:part.precio;
+ const v=prompt(`${t('price_f')} — ${L(part)}`,actual);
+ if(v!==null){p.priceOverride=Number(v)||0;pintaTParts()}
+}
+function tAdd(sku){const ex=tParts.find(p=>p.sku===sku);ex?ex.q++:tParts.push({sku,q:1,picked:false,falta:0});pintaTParts();pintaPick()}
+function tMas(sku){const p=tParts.find(x=>x.sku===sku);if(p)p.q++;pintaTParts()}
+function tMenos(sku){const p=tParts.find(x=>x.sku===sku);if(p)(p.q>1?p.q--:tParts=tParts.filter(x=>x.sku!==sku));pintaTParts()}
+function tDel(sku){tParts=tParts.filter(x=>x.sku!==sku);pintaTParts();pintaPick()}
+function pintaPick(){
+ const q=tSearch.toLowerCase();
+ const list=db.parts.filter(p=>!q||p.es.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||p.sku.toLowerCase().includes(q)||p.loc.toLowerCase().includes(q)).slice(0,30);
+ $('#tPickBox').innerHTML=list.map(p=>
+  `<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${esc(p.sku)} · ${money(p.precio)} · ${t('only')} ${p.cant}${p.cant<=p.min?' ⚠':''}</small></div>
+  <button class="btn sm pri" onclick="tAdd('${oq(p.sku)}')">＋</button></div>`).join('')||`<div class="empty">${t('results_none')}</div>`;
+}
+function guardaTicket(){
+ const unit=$('#tUnit').value.trim();
+ if(!unit){alert(t('unit_missing'));return}
+ document.querySelectorAll('#tPriceList [data-pc]').forEach(i=>tPrices[i.dataset.pc]=Number(i.value)||0);
+ const data={unit,client:$('#tClient').value.trim(),desc:$('#tDesc').value.trim(),urgent:tUrgent,
+  serv:[...tSel],prices:{...tPrices},parts:tParts,leader:Number($('#tLeader').value)||null,mech:[...tTeam]};
+ if(editNum){Object.assign(db.jobs.find(x=>x.num===editNum),data);toast('💾 '+OT(editNum)+' '+t('t_updated'))}
+ else{const n=db.nextJob++;db.jobs.push(Object.assign({num:n,ts:Date.now(),st:'En fila',finished:null},data));toast('✅ '+OT(n)+' '+t('t_created'))}
+ save();cerrar();tab='board';render();
+}
+
+/* añadir pieza en orden activa */
+let jSearch='';
+function pickerJob(num){
+ jSearch='';
+ abrir(mhead(t('add_part')+' — '+OT(num))+
+  `<input type="search" placeholder="${esc(t('search_ph'))}" oninput="jSearch=this.value;pintaJPick(${num})">
+  <div style="margin-top:8px" id="jPickBox"></div>`);
+ pintaJPick(num);
+}
+function pintaJPick(num){
+ const q=jSearch.toLowerCase();
+ const list=db.parts.filter(p=>!q||p.es.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||p.sku.toLowerCase().includes(q)||p.loc.toLowerCase().includes(q)).slice(0,25);
+ $('#jPickBox').innerHTML=list.map(p=>`<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${t('only')} ${p.cant} · ${money(p.precio)}</small></div>
+  <button class="btn sm pri" onclick="addJobPart(${num},'${oq(p.sku)}')">＋</button></div>`).join('')||`<div class="empty">${t('results_none')}</div>`;
+}
+function addJobPart(num,sku){
+ const j=db.jobs.find(x=>x.num===num);j.parts=j.parts||[];
+ const ex=j.parts.find(p=>p.sku===sku&&!p.picked);ex?ex.q++:j.parts.push({sku,q:1,picked:false,falta:0});
+ save();toast(t('t_added_p')+' '+OT(num));pintaJPick(num);render();
+}
+
+/* sacar del rack */
+function sacarLista(num,i){
+ const j=db.jobs.find(x=>x.num===num),lid=j.leader||userId();
+ if(!lid){abrir(mhead(t('who_take'))+db.mechanics.map(m=>
+  `<button class="btn pri big" style="margin-bottom:8px" onclick="cerrar();sacaComo(${num},${i},${m.id})">🛒 ${esc(m.name)}</button>`).join('')+
+  `<button class="btn sec big" onclick="cerrar()">${t('cancel_b')}</button>`);return}
+ sacaComo(num,i,lid);
+}
+function sacaComo(num,i,mid){
+ const j=db.jobs.find(x=>x.num===num),p=j.parts[i],part=partBySku(p.sku);
+ if(!part||p.picked)return;
+ const precio=p.priceOverride!=null?p.priceOverride:part.precio;
+ if(part.cant>=p.q){
+  part.cant-=p.q;p.picked=true;p.priceOverride=precio;
+  db.moves.push({id:Date.now()+Math.random(),ts:Date.now(),sku:p.sku,es:part.es,en:part.en,q:p.q,mech:mid,job:num,precio:precio,loc:part.loc,dest:'cart',destTxt:'',open:true,end:null});
+  toast('📦 '+p.q+'× '+L(part)+' '+t('t_to_cart')+' '+mechName(mid));
+ }else if(part.cant>0){
+  if(confirm('⚠ '+t('only')+' '+part.cant+' ('+part.loc+'). '+t('t_short_f')+' '+(p.q-part.cant)+'?')){
+   const take=part.cant;part.cant=0;p.picked=true;p.falta=p.q-take;p.priceOverride=precio;
+   db.moves.push({id:Date.now()+Math.random(),ts:Date.now(),sku:p.sku,es:part.es,en:part.en,q:take,mech:mid,job:num,precio:precio,loc:part.loc,dest:'cart',destTxt:'',open:true,end:null});
+   toast(t('t_short_f')+' '+(p.q-take)+' '+t('t_avisa'));
+  }else return;
+ }else{p.falta=p.q;toast(t('t_no_stock'))}
+ save();render();
+}
+function pedirDesdeOrden(num,i){
+ const j=db.jobs.find(x=>x.num===num),p=j.parts[i],part=partBySku(p.sku);
+ abrir(mhead(`${t('vp_req_b')} — ${esc(L(part))}`)+`
+  <p class="mut">${t('vp_reason')}</p>
+  <textarea id="rReason" placeholder="${esc(t('vp_reason_ph'))}">${lang()==='en'?'Missing for ':'Faltante para '}${OT(num)}${j.unit?' — '+esc(j.unit):''}</textarea>
+  <label class="f">${t('vp_qty')}</label>
+  <input type="number" id="rQ" value="${p.falta||p.q}" min="1" inputmode="numeric">
+  <label class="f">${t('vp_urg')}</label>
+  <select id="rUrg"><option value="normal">${lang()==='en'?'Normal':'Normal'}</option><option value="high">${lang()==='en'?'High':'Alta'}</option><option value="critical">${lang()==='en'?'Critical (shop stopped)':'Crítica (shop parado)'}</option></select>
+  <div style="display:flex;gap:8px;margin-top:14px">
+   <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
+   <button class="btn pri" style="flex:2" onclick="crearReq('${oq(p.sku)}',${num},${i})">${t('vp_send')}</button></div>`);
+}
+function crearReq(sku,num,i){
+ const reason=$('#rReason').value.trim()||'—';
+ const q=Number($('#rQ').value)||1;
+ const urg=$('#rUrg').value;
+ const part=partBySku(sku);
+ const j=db.jobs.find(x=>x.num===num);
+ db.requests=db.requests||[];
+ db.requests.push({id:db.nextReq++,ts:Date.now(),sku,es:part.es,en:part.en,cat:'Warehouse',q,urg,reason,status:'needed',
+  jobNum:num||0,jobUnit:j?.unit||'',requestedBy:mechName(userId())});
+ if(j&&j.parts[i])j.parts[i].falta=q;
+ save();cerrar();render();toast(t('vp_sent')+' · '+L(part));
+}
+
+/* ========== WAREHOUSE PARTS ========== */
+let pSearch='',pLow=false;
+function renderWarehouse(){
+ const abiertos=db.moves.filter(m=>m.open);
+ let carts='';
+ if(abiertos.length){
+  const porMech={},sinMech=[];
+  abiertos.forEach(m=>m.mech?(porMech[m.mech]=porMech[m.mech]||[]).push(m):sinMech.push(m));
+  const grupo=(nombre,ms)=>`<div class="cartbox"><h3>${t('cart_of')} ${esc(nombre)} — ${ms.reduce((a,m)=>a+m.q,0)} ${t('pieces_out')}</h3>${
+   ms.map(m=>`<div class="mrow"><b>${m.q}×</b> ${esc(lang()==='en'?(m.en||m.es):m.es)} <span class="mut">${destIcon(m)} ${esc(destTxt(m))}${m.job?' · '+OT(m.job):''} · ${fts(m.ts)}</span>
+   <span style="margin-left:auto;display:flex;gap:5px">
+   <button class="btn sm sec" onclick="devolverModal(${m.id})">${t('return_b')}</button>
+   <button class="btn sm ok" onclick="usarModal(${m.id})">${t('used_b')}</button></span></div>`).join('')}</div>`;
+  carts=Object.keys(porMech).map(id=>grupo(mechName(Number(id)),porMech[id])).join('')+(sinMech.length?grupo('—',sinMech):'');
+ }
+ const q=pSearch.toLowerCase();
+ let parts=db.parts.filter(p=>!q||p.es.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||p.sku.toLowerCase().includes(q)||p.loc.toLowerCase().includes(q));
+ if(pLow)parts=parts.filter(p=>p.cant<=p.min);
+ $('#main').innerHTML=carts+`
+ <div class="mut" style="margin-bottom:10px">${t('wh_hint')}</div>
+ <div class="toolbar">
+  <input type="search" placeholder="${esc(t('search_parts_ph'))}" value="${esc(pSearch)}" oninput="pSearch=this.value;render()">
+  <button class="chip ${pLow?'sel':''}" onclick="pLow=!pLow;render()">${t('low_chip')} (${db.parts.filter(p=>p.cant<=p.min).length})</button>
+  <button class="btn pri" onclick="partModal()">${t('add_part_b')}</button></div>
+ ${parts.map(p=>`<div class="pickrow">
+  <div class="pinfo"><b>${esc(L(p))}</b><small>${esc(lang()==='en'?p.es:p.en)} · ${esc(p.sku)}</small></div>
+  ${locBadge(p.loc)}<span class="priceedit" onclick="editPrecioInline('${oq(p.sku)}',this)" title="Click para editar">${money(p.precio)}</span>
+  <span class="qty ${p.cant<=p.min?'low':''}">${p.cant}</span>
+  <button class="btn sm sec" onclick="entradaModal('${oq(p.sku)}')">＋</button>
+  <button class="btn sm pri" onclick="salidaModal('${oq(p.sku)}')">－</button>
+  <button class="btn sm sec" onclick="histModal('${oq(p.sku)}')">≡</button>
+  <button class="btn sm sec" onclick="partModal('${oq(p.sku)}')">✏️</button></div>`).join('')}
+ ${parts.length?'':`<div class="empty">${t('results_none')}</div>`}`;
+}
+function editPrecioInline(sku,el){
+ const p=partBySku(sku);
+ const v=prompt(`${t('price_base_f')} — ${L(p)}`,p.precio);
+ if(v!==null){p.precio=Number(v)||0;save();render();toast('💾 '+t('t_part_saved'))}
+}
+
+let salDest='cart';
+function salidaModal(sku){
+ const p=partBySku(sku);salDest='cart';
+ abrir(`${mhead(t('take_from')+' '+p.loc+': '+esc(L(p)))}
+ <p class="mut">${t('only')} <b>${p.cant}</b> · ${esc(p.loc)}</p>
+ <label class="f">${t('dest_q')}</label>
+ <div style="display:flex;gap:6px;flex-wrap:wrap">
+  <span class="chip sel" id="dCart" onclick="setDest('cart')">${t('dest_cart')}</span>
+  <span class="chip" id="dVeh" onclick="setDest('vehiculo')">${t('dest_veh')}</span>
+  <span class="chip" id="dUbi" onclick="setDest('ubicacion')">${t('dest_ubi')}</span></div>
+ <label class="f">${t('qty_f')}</label><input type="number" id="mQ" value="1" min="1" max="${p.cant}" inputmode="numeric">
+ <label class="f">${t('who_f')}</label><select id="mMech">${db.mechanics.map(m=>`<option value="${m.id}" ${userId()===m.id?'selected':''}>${esc(m.name)}</option>`).join('')}</select>
+ <div id="salExtra"></div>
+ <button class="btn pri big" style="margin-top:16px" onclick="sacar('${oq(sku)}')">${t('take_from')} ${esc(p.loc)}</button>`);
+ pintaSalExtra();
+}
+function setDest(d){salDest=d;['dCart','dVeh','dUbi'].forEach(id=>$('#'+id).classList.remove('sel'));
+ $(d==='cart'?'#dCart':d==='vehiculo'?'#dVeh':'#dUbi').classList.add('sel');pintaSalExtra()}
+function pintaSalExtra(){
+ const jobs=db.jobs.filter(j=>j.st!=='Terminado');
+ $('#salExtra').innerHTML=
+  salDest==='vehiculo'?`<label class="f">${t('charge_f')}</label><select id="mJob">
+   ${jobs.length?jobs.map(j=>`<option value="${j.num}">${OT(j.num)} · ${esc(j.unit)}</option>`).join(''):`<option value="0">${t('no_orders')}</option>`}</select>`
+  :salDest==='ubicacion'?`<label class="f">${t('dest_ubi')}</label><input id="mUbi" placeholder="${esc(t('place_ph'))}">`
+  :`<label class="f">${t('job_f')}</label><select id="mJobO"><option value="0">${t('none_opt')}</option>
+   ${jobs.map(j=>`<option value="${j.num}">${OT(j.num)} · ${esc(j.unit)}</option>`).join('')}</select>`;
+}
+function sacar(sku){
+ const p=partBySku(sku),q=Math.max(1,Math.floor(Number($('#mQ').value)||1));
+ if(q>p.cant){alert('⚠ '+t('only')+' '+p.cant);return}
+ p.cant-=q;
+ let dest=salDest,txt='',job=0;
+ if(dest==='vehiculo'){job=Number($('#mJob')?.value)||0;txt=job?OT(job)+' '+(db.jobs.find(j=>j.num===job)?.unit||''):''}
+ if(dest==='ubicacion'){txt=$('#mUbi')?.value.trim()||'—'}
+ if(dest==='cart'){job=Number($('#mJobO')?.value)||0}
+ db.moves.push({id:Date.now()+Math.random(),ts:Date.now(),sku,es:p.es,en:p.en,q,mech:Number($('#mMech').value),job,precio:p.precio,loc:p.loc,dest,destTxt:txt,open:true,end:null});
+ save();cerrar();render();toast('📦 '+q+'× '+L(p)+' → '+destIcon({dest})+' '+txt);
+}
+function devolverModal(id){
+ const m=db.moves.find(x=>x.id===id);
+ abrir(`${mhead(t('return_t')+' '+esc(lang()==='en'?(m.en||m.es):m.es))}
+ <p class="mut">${t('return_hint')} <b>${esc(m.loc)}</b>. ${t('had')} ${m.q}.</p>
+ <label class="f">${t('qty_f')}</label><input type="number" id="dQ" value="${m.q}" min="1" max="${m.q}" inputmode="numeric">
+ <button class="btn pri big" style="margin-top:16px" onclick="devolver(${id})">${t('return_btn')}</button>`);
+}
+function devolver(id){
+ const m=db.moves.find(x=>x.id===id),p=partBySku(m.sku);
+ const q=Math.min(m.q,Math.max(1,Math.floor(Number($('#dQ').value)||m.q)));
+ if(p)p.cant+=q;
+ q>=m.q?(m.open=false,m.end='return'):m.q-=q;
+ save();cerrar();render();toast(t('t_back_r')+' '+(p?.loc||''));
+}
+function usarModal(id){
+ const m=db.moves.find(x=>x.id===id);
+ abrir(`${mhead(t('use_t')+' '+esc(lang()==='en'?(m.en||m.es):m.es))}
+ <p class="mut">${t('use_hint')}</p>
+ <label class="f">${t('price_f')}</label><input type="number" step="0.01" id="uCargo" value="${m.precio}" inputmode="decimal">
+ <label class="f">${t('charge_f')}</label><select id="uJob">
+  <option value="0" ${!m.job?'selected':''}>${t('no_charge')}</option>
+  ${db.jobs.filter(j=>j.st!=='Terminado').map(j=>`<option value="${j.num}" ${m.job===j.num?'selected':''}>${OT(j.num)} · ${esc(j.unit)}</option>`).join('')}</select>
+ <button class="btn ok big" style="margin-top:16px" onclick="usar(${id})">${t('use_btn')}</button>`);
+}
+function usar(id){
+ const m=db.moves.find(x=>x.id===id);
+ m.open=false;m.end='use';m.cargo=Number($('#uCargo').value)||0;m.job=Number($('#uJob').value)||0;
+ save();cerrar();render();toast(t('t_used')+(m.job?' '+t('t_charged')+' '+OT(m.job):''));
+}
+function entradaModal(sku){
+ const p=partBySku(sku);
+ abrir(`${mhead(t('entry_t')+' '+esc(L(p)))}
+ <p class="mut">${esc(p.loc)} · ${t('stock')}: <b>${p.cant}</b></p>
+ <label class="f">${t('entry_q')}</label><input type="number" id="eQ" value="1" min="1" inputmode="numeric">
+ <label class="f">${t('note_f')}</label><input id="eNota" placeholder="NAPA #4482">
+ <button class="btn pri big" style="margin-top:16px" onclick="entrar('${oq(sku)}')">${t('entry_btn')}</button>`);
+}
+function entrar(sku){
+ const p=partBySku(sku),q=Math.max(1,Math.floor(Number($('#eQ').value)||1));
+ p.cant+=q;
+ db.moves.push({id:Date.now()+Math.random(),ts:Date.now(),sku,es:p.es,en:p.en,q,mech:0,job:0,nota:$('#eNota').value.trim(),open:false,end:'add'});
+ save();cerrar();render();toast(t('t_stock_up')+' '+p.cant+' @ '+p.loc);
+}
+function partModal(sku){
+ const p=sku?partBySku(sku):null;
+ const next='N-'+(db.parts.reduce((a,x)=>Math.max(a,parseInt(String(x.sku).split('-')[1])||0),0)+1);
+ abrir(`${mhead(p?t('part_edit'):t('part_new'))}
+ <div style="display:flex;gap:8px">
+  <div style="flex:1"><label class="f">${t('sku_f')}</label><input id="pSku" value="${esc(p?.sku||next)}"></div>
+  <div style="flex:1"><label class="f">${t('loc_f')}</label><input id="pLoc" value="${esc(p?.loc||'A1')}" placeholder="A1, B3, E2..."></div></div>
+ <label class="f">${t('nes_f')}</label><input id="pEs" value="${esc(p?.es||'')}">
+ <label class="f">${t('nen_f')}</label><input id="pEn" value="${esc(p?.en||'')}">
+ <div style="display:flex;gap:8px">
+  <div style="flex:1"><label class="f">${t('price_base_f')}</label><input type="number" step="0.01" id="pPrecio" value="${p?.precio??''}" inputmode="decimal"></div>
+  <div style="flex:1"><label class="f">${t('qty_f')}</label><input type="number" id="pCant" value="${p?.cant??0}" inputmode="numeric"></div>
+  <div style="flex:1"><label class="f">${t('min_f')}</label><input type="number" id="pMin" value="${p?.min??0}" inputmode="numeric"></div></div>
+ <div style="display:flex;gap:8px;margin-top:16px">
+  ${p?`<button class="btn bad" onclick="if(confirm('${oq(t('delete_confirm'))}?')){db.parts=db.parts.filter(x=>x.sku!=='${oq(p.sku)}');save();cerrar();render()}">🗑</button>`:''}
+  <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
+  <button class="btn pri" style="flex:2" onclick="guardaParte('${oq(sku||'')}')">${t('save_b')}</button></div>`);
+}
+function guardaParte(sku){
+ const d={sku:$('#pSku').value.trim()||'N-'+Date.now(),es:$('#pEs').value.trim(),en:$('#pEn').value.trim()||$('#pEs').value.trim(),
+  loc:$('#pLoc').value.trim().toUpperCase(),precio:Number($('#pPrecio').value)||0,
+  cant:Math.max(0,Math.floor(Number($('#pCant').value)||0)),min:Math.max(0,Math.floor(Number($('#pMin').value)||0))};
+ if(!d.es){alert(t('name_missing'));return}
+ if(sku){const old=partBySku(sku);if(old)Object.assign(old,d)}
+ else{if(db.parts.some(p=>p.sku===d.sku)){alert(t('sku_exists'));return}db.parts.push(d)}
+ save();cerrar();render();toast(t('t_part_saved'));
+}
+function histModal(sku){
+ const ms=db.moves.filter(m=>m.sku===sku).slice(-25).reverse();
+ const p=partBySku(sku);
+ const tipo=m=>m.end==='add'?t('hist_add'):m.end==='return'?t('hist_ret'):m.end==='use'?t('hist_use')+(m.job?' '+OT(m.job):''):t('hist_out')+' '+destIcon(m)+' '+esc(destTxt(m));
+ abrir(mhead(t('hist_t')+' '+esc(L(p)||sku))+
+ (ms.length?ms.map(m=>`<div class="hist"><b>${tipo(m)}</b> · ${m.q} ${t('qtyshort')} · ${m.mech?esc(mechName(m.mech)):'shop'} · ${fts(m.ts)}${m.nota?' · '+esc(m.nota):''}${m.open?` · <b style="color:var(--bad)">${t('still_out')}</b>`:''}</div>`).join(''):`<div class="empty">${t('no_moves')}</div>`));
+}
+
+/* ========== VENDOR PARTS ========== */
+let vpSearch='',vpCat='ALL',vpFilter='active';
+function renderVendor(){
+ db.requests=db.requests||[];
+ const cats=[...new Set(db.vendorParts.map(v=>v.cat))].sort();
+ const q=vpSearch.toLowerCase();
+ let vps=db.vendorParts.filter(v=>!q||v.es.toLowerCase().includes(q)||v.en.toLowerCase().includes(q)||v.sku.toLowerCase().includes(q));
+ if(vpCat!=='ALL')vps=vps.filter(v=>v.cat===vpCat);
+ 
+ const reqs=db.requests.filter(r=>r.cat==='Vendor'||(r.cat==='Warehouse'&&db.vendorParts.some(v=>v.sku===r.sku)));
+ const active=reqs.filter(r=>r.status==='needed'||r.status==='approved'||r.status==='ordered');
+ const hist=reqs.filter(r=>r.status==='received'||r.status==='cancelled');
+ 
+ $('#main').innerHTML=`
+ <div class="mut" style="margin-bottom:10px">${t('vp_hint')}</div>
+ <div class="toolbar">
+  <input type="search" placeholder="${esc(t('vp_search'))}" value="${esc(vpSearch)}" oninput="vpSearch=this.value;render()">
+  <select style="flex:0 0 auto;width:auto" onchange="vpCat=this.value;render()">
+   <option value="ALL" ${vpCat==='ALL'?'selected':''}>${t('vp_cat')}: ${t('vp_all')}</option>
+   ${cats.map(c=>`<option ${vpCat===c?'selected':''}>${esc(c)}</option>`).join('')}</select>
+  <button class="btn sm sec" onclick="vpFilter='active';render()" style="margin-left:auto">${t('vp_active')}</button>
+  <button class="btn sm sec" onclick="vpFilter='hist';render()">${t('vp_history')}</button></div>
+ ${active.length&&vpFilter==='active'?`<div class="subhead">${t('vp_req')} <button class="btn sm sec" onclick="printPO()">📄 ${t('vp_po_b').replace('📄 ','')}</button></div>${active.map(cardReq).join('')}`:''}
+ ${hist.length&&vpFilter==='hist'?`<div class="subhead">${t('vp_history')}</div>${hist.map(cardReq).join('')}`:''}
+ ${!active.length&&vpFilter==='active'?`<div class="empty">${t('vp_no_reqs')}</div>`:''}
+ ${!hist.length&&vpFilter==='hist'?`<div class="empty">${t('vp_no_reqs')}</div>`:''}
+ <div class="subhead">${t('nav_vendor')} — ${t('vp_vendor')}: customtruck.com (${vps.length})</div>
+ ${vps.map(cardVP).join('')||`<div class="empty">${t('results_none')}</div>`}`;
+}
+function cardReq(r){
+ const vp=db.vendorParts.find(v=>v.sku===r.sku);
+ const precio=vp?vp.precio:r.precio||0;
+ const total=precio*r.q;
+ const statusBadge={needed:t('vp_needed'),approved:t('vp_approved'),ordered:t('vp_ordered'),received:t('vp_received'),cancelled:'CANCELLED'}[r.status];
+ const badgeClass={needed:'reqneeded',approved:'reqapproved',ordered:'reqordered',received:'reqreceived'}[r.status];
+ const isMgr=db.currentUser==='mgr';
+ let actions='';
+ if(r.status==='needed'&&isMgr)actions=`<button class="btn sm ok" onclick="reqApprove(${r.id})">${t('vp_mgr_approve')}</button><button class="btn sm bad" onclick="reqCancel(${r.id})">${t('vp_cancel')}</button>`;
+ else if(r.status==='approved'&&isMgr)actions=`<button class="btn sm pri" onclick="reqMarkSent(${r.id})">${t('vp_mgr_send')}</button>`;
+ else if(r.status==='ordered'&&isMgr)actions=`<button class="btn sm ok" onclick="reqMarkReceived(${r.id})">${t('vp_mgr_receive')}</button>`;
+ else if(r.status==='needed')actions=`<button class="btn sm bad" onclick="reqCancel(${r.id})">${t('vp_cancel')}</button>`;
+ 
+ return `<div class="card">
+  <div class="jtop">
+   <span class="badge ${badgeClass}">${statusBadge}</span>
+   <b class="ot">REQ-${String(r.id).padStart(3,'0')}</b>
+   ${r.jobNum?`<span class="mut">→ ${OT(r.jobNum)} ${r.jobUnit?esc(r.jobUnit):''}</span>`:''}
+   <span class="jacts">${actions}</span></div>
+  <div class="junit">${esc(L({es:r.es,en:r.en||r.es}))}</div>
+  <div class="mut">${esc(r.sku)} · ${r.cat||'Warehouse'} · ${r.q} ${t('qtyshort')} × ${money(precio)} = <b>${money(total)}</b></div>
+  ${r.urg!=='normal'?`<span class="badge ${r.urg==='critical'?'bUrg':'bSig'}" style="font-size:10px">${r.urg.toUpperCase()}</span>`:''}
+  ${r.reason?`<div class="jdesc">${esc(r.reason)}</div>`:''}
+  <div class="mut" style="margin-top:5px">👤 ${esc(r.requestedBy||'—')} · ${fts(r.ts)}${r.approvedBy?' · ✓ '+esc(r.approvedBy):''}${r.eta?' · 📅 ETA: '+esc(r.eta):''}${r.orderNum?' · #'+esc(r.orderNum):''}</div>
+ </div>`;
+}
+function cardVP(v){
+ const existeEnWH=db.parts.find(p=>p.sku===v.sku);
+ return `<div class="pickrow">
+  <div class="pinfo"><b>${esc(L(v))}</b><small>${esc(v.sku)} · ${esc(v.cat)}${existeEnWH?' · <b style="color:var(--ok)">✓ en bodega</b>':''}</small></div>
+  <b>${money(v.precio)}</b>
+  <button class="btn sm pri" onclick="reqDesdeVendor('${oq(v.sku)}')">🛎</button></div>`;
+}
+function reqDesdeVendor(sku){
+ const v=db.vendorParts.find(x=>x.sku===sku);
+ abrir(mhead(`${t('vp_req_b')} — ${esc(L(v))}`)+`
+  <p class="mut">${esc(v.sku)} · ${money(v.precio)} · ${esc(v.cat)}</p>
+  <label class="f">${t('vp_reason')}</label>
+  <textarea id="vrReason" placeholder="${esc(t('vp_reason_ph'))}"></textarea>
+  <label class="f">${t('vp_qty')}</label>
+  <input type="number" id="vrQ" value="1" min="1" inputmode="numeric">
+  <label class="f">${t('vp_urg')}</label>
+  <select id="vrUrg"><option value="normal">${lang()==='en'?'Normal':'Normal'}</option><option value="high">${lang()==='en'?'High':'Alta'}</option><option value="critical">${lang()==='en'?'Critical':'Crítica'}</option></select>
+  <div style="display:flex;gap:8px;margin-top:14px">
+   <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
+   <button class="btn pri" style="flex:2" onclick="crearReqV('${oq(sku)}')">${t('vp_send')}</button></div>`);
+}
+function crearReqV(sku){
+ const v=db.vendorParts.find(x=>x.sku===sku);
+ db.requests=db.requests||[];
+ db.requests.push({id:db.nextReq++,ts:Date.now(),sku,es:v.es,en:v.en,cat:'Vendor',q:Number($('#vrQ').value)||1,urg:$('#vrUrg').value,
+  reason:$('#vrReason').value.trim()||'—',status:'needed',jobNum:0,jobUnit:'',requestedBy:mechName(userId())});
+ save();cerrar();render();toast(t('vp_sent')+' · '+L(v));
+}
+function reqApprove(id){
+ const r=db.requests.find(x=>x.id===id);if(!r)return;
+ abrir(mhead(t('vp_mgr_approve'))+`
+  <p class="mut">${esc(L({es:r.es,en:r.en||r.es}))} · ${r.q} ${t('qtyshort')}</p>
+  <label class="f">${t('vp_eta')}</label>
+  <input type="text" id="rEta" placeholder="Ej. 2026-08-14 o 'viernes PM'">
+  <label class="f">${t('vp_order_num')}</label>
+  <input type="text" id="rOrderNum" placeholder="Ej. CT-1044805">
+  <label class="f">${t('vp_notes')}</label>
+  <input type="text" id="rNotes" placeholder="Notas opcionales">
+  <div style="display:flex;gap:8px;margin-top:14px">
+   <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
+   <button class="btn ok" style="flex:2" onclick="doApprove(${id})">${t('vp_mgr_approve')}</button></div>`);
+}
+function doApprove(id){
+ const r=db.requests.find(x=>x.id===id);
+ r.status='approved';r.approvedBy=mechName(userId());
+ r.eta=$('#rEta')?.value.trim()||'';r.orderNum=$('#rOrderNum')?.value.trim()||'';r.notes=$('#rNotes')?.value.trim()||'';
+ save();cerrar();render();toast(t('vp_approved_toast'));
+}
+function reqMarkSent(id){
+ const r=db.requests.find(x=>x.id===id);if(!r)return;
+ r.status='ordered';r.orderDate=new Date().toISOString();
+ if(!r.eta)r.eta=prompt(t('vp_eta'),'')||'';
+ save();render();toast(t('vp_sent_toast'));
+}
+function reqMarkReceived(id){
+ const r=db.requests.find(x=>x.id===id);if(!r)return;
+ r.status='received';r.receivedDate=new Date().toISOString();
+ // agregar a warehouse si no existe
+ if(!db.parts.some(p=>p.sku===r.sku)){
+  const v=db.vendorParts.find(x=>x.sku===r.sku);
+  const loc=prompt((lang()==='en'?'Rack location: ':'Rack / ubicación: '),'E1');
+  if(loc)db.parts.push({sku:r.sku,es:r.es,en:r.en||r.es,loc:loc.toUpperCase(),precio:v?.precio||0,cant:r.q,min:Math.max(1,Math.floor(r.q/2))});
+  else{toast('⚠');return}
+ }else{
+  const p=db.parts.find(p=>p.sku===r.sku);
+  p.cant+=r.q;
+  // actualizar precio del vendor si es más reciente
+  const v=db.vendorParts.find(x=>x.sku===r.sku);
+  if(v)p.precio=v.precio;
+ }
+ save();render();toast(t('vp_received_toast'));
+}
+function reqCancel(id){
+ const r=db.requests.find(x=>x.id===id);if(!r)return;
+ if(!confirm(t('delete_confirm')+'?'))return;
+ r.status='cancelled';save();render();toast(t('vp_cancel_toast'));
+}
+
+/* PDF Purchase Order */
+function printPO(){
+ const reqs=(db.requests||[]).filter(r=>r.status==='needed'||r.status==='approved'||r.status==='ordered');
+ if(!reqs.length){alert('—');return}
+ const W=(es,en)=>outLang()==='es'?es:outLang()==='en'?en:es+' / '+en;
+ const items=reqs.map(r=>{const vp=db.vendorParts.find(v=>v.sku===r.sku);const precio=vp?vp.precio:r.precio||0;
+  return `<tr><td>${esc(r.sku)}</td><td>${esc(outLang()==='en'?(r.en||r.es):r.es)}</td><td class="r">${r.q}</td><td class="r">${money(precio)}</td><td class="r">${money(precio*r.q)}</td></tr>`}).join('');
+ const total=reqs.reduce((a,r)=>{const vp=db.vendorParts.find(v=>v.sku===r.sku);const precio=vp?vp.precio:r.precio||0;return a+precio*r.q},0);
+ const etas=reqs.filter(r=>r.eta).map(r=>`${esc(r.sku)}: ${esc(r.eta)}`).join('<br>');
+ const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Purchase Order</title><style>
+ body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:28px;font-size:13px}
+ .hd{display:flex;justify-content:space-between;border-bottom:4px solid #182c4d;padding-bottom:12px}
+ .co{font-size:20px;font-weight:800;color:#182c4d}.co small{display:block;font-size:11px;color:#555;font-weight:400}
+ .po{text-align:right}.po b{font-size:22px;color:#e8720c}
+ img{height:56px;object-fit:contain}
+ table{width:100%;border-collapse:collapse;margin-top:10px}
+ th{background:#182c4d;color:#fff;text-align:left;padding:6px 8px;font-size:11px;text-transform:uppercase}
+ td{border-bottom:1px solid #ddd;padding:6px 8px;vertical-align:top}
+ .r{text-align:right}.tot{font-size:16px;font-weight:800;text-align:right;margin-top:10px}.tot b{color:#e8720c}
+ .btnp{position:fixed;top:10px;right:10px;background:#e8720c;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+ .sec{margin:14px 0 4px;font-weight:800;color:#182c4d;text-transform:uppercase;font-size:12px}
+ @media print{.btnp{display:none}}</style></head><body>
+ <button class="btnp" onclick="window.print()">🖨 ${W('Imprimir / Guardar PDF','Print / Save PDF')}</button>
+ <div class="hd"><div>${db.logo?`<img src="${db.logo}"><br>`:''}<div class="co">CDE Truck &amp; Car Repair Inc.<small>${W('Taller de reparación de trailers y camiones','Truck & Trailer Repair Shop')}</small></div></div>
+ <div class="po"><b>${W('ORDEN DE COMPRA','PURCHASE ORDER')}</b><br>${new Date().toLocaleDateString('en-US')}<br>
+ <span class="mut" style="font-size:11px">${t('vp_vendor')}: customtruck.com</span></div></div>
+ <div class="sec">${W('Solicitudes pendientes / aprobadas / enviadas','Pending / Approved / Ordered requests')}</div>
+ <table><tr><th>SKU</th><th>${W('Descripción','Description')}</th><th class="r">${W('Cant','Qty')}</th><th class="r">${W('Precio','Price')}</th><th class="r">${W('Subtotal','Subtotal')}</th></tr>${items}</table>
+ <div class="tot">${W('TOTAL','TOTAL')}: <b>${money(total)}</b></div>
+ ${etas?`<div class="sec">${W('ETAs estimadas','Estimated ETAs')}</div><p>${etas}</p>`:''}
+ <p class="mut" style="margin-top:24px;font-size:10px">${W('Generado por CDE —','Generated by CDE —')} ${reqs.length} ${W('items','artículos')}</p>
+ </body></html>`;
+ const w=window.open('','_blank');
+ if(!w){alert('⚠ Pop-ups blocked');return}
+ w.document.write(html);w.document.close();w.focus();
+}
+
+/* ========== SERVICIOS ========== */
+function renderServices(){
+ $('#main').innerHTML=`
+ <div class="toolbar"><span class="mut">${db.services.length} ${t('serv_count')}</span>
+ <button class="btn pri" style="margin-left:auto" onclick="servModal()">${t('add_serv')}</button></div>
+ ${db.services.map(s=>`<div class="pickrow"><span class="loc" style="background:#eef2f8;color:var(--blue)">${s.code}</span>
+ <div class="pinfo"><b>${esc(L(s))}</b><small>${esc(lang()==='en'?s.es:s.en)}</small></div>
+ <span class="priceedit" onclick="editServInline('${oq(s.code)}',this)" title="Click para editar">${money(s.precio)}</span>
+ <button class="btn sm sec" onclick="servModal('${oq(s.code)}')">✏️</button></div>`).join('')}`;
+}
+function editServInline(code,el){
+ const s=servByCode(code);
+ const v=prompt(`${t('price_base_f')} — ${L(s)}`,s.precio);
+ if(v!==null){s.precio=Number(v)||0;save();render();toast('💾 '+t('t_serv_saved'))}
+}
+function servModal(code){
+ const s=code?servByCode(code):null;
+ abrir(`${mhead(s?t('edit_t')+' '+s.code:t('add_serv'))}
+ <label class="f">${t('code_f')}</label><input id="sCode" value="${esc(s?.code||'NV-'+(db.services.length+1))}">
+ <label class="f">${t('ses_f')}</label><input id="sEs" value="${esc(s?.es||'')}">
+ <label class="f">${t('sen_f')}</label><input id="sEn" value="${esc(s?.en||'')}">
+ <div style="display:flex;gap:8px">
+  <div style="flex:1"><label class="f">${t('price_base_f')}</label><input type="number" step="0.01" id="sPrecio" value="${s?.precio??''}" inputmode="decimal"></div>
+  <div style="flex:1"><label class="f">${t('unit_f')}</label><select id="sUnidad">
+   ${['c/u','hr','eje','hoja'].map(u=>`<option ${s?.unidad===u?'selected':''}>${u}</option>`).join('')}</select></div></div>
+ <div style="display:flex;gap:8px;margin-top:16px">
+  ${s?`<button class="btn bad" onclick="if(confirm('${oq(t('delete_confirm'))}?')){db.services=db.services.filter(x=>x.code!=='${oq(s.code)}');save();cerrar();render()}">🗑</button>`:''}
+  <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
+  <button class="btn pri" style="flex:2" onclick="guardaServ('${oq(code||'')}')">${t('save_b')}</button></div>`);
+}
+function guardaServ(code){
+ const d={code:$('#sCode').value.trim(),es:$('#sEs').value.trim(),en:$('#sEn').value.trim()||$('#sEs').value.trim(),
+  precio:Number($('#sPrecio').value)||0,unidad:$('#sUnidad').value};
+ if(!d.es){alert(t('name_missing'));return}
+ if(code){const old=servByCode(code);if(old)Object.assign(old,d)}
+ else{if(db.services.some(x=>x.code===d.code)){alert(t('sku_exists'));return}db.services.push(d)}
+ save();cerrar();render();toast(t('t_serv_saved'));
+}
+
+/* ========== EQUIPO ========== */
+function renderTeam(){
+ $('#main').innerHTML=`
+ <div class="toolbar"><span class="mut">${t('team_hint')}</span></div>
+ <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px">
+ ${db.mechanics.map(m=>{
+  const jobs=db.jobs.filter(j=>j.st!=='Terminado'&&(j.mech||[]).includes(m.id));
+  const ab=db.moves.filter(x=>x.open&&x.mech===m.id);
+  return `<div class="card">
+   <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span style="font-size:26px">👤</span>
+    <input value="${esc(m.name)}" onchange="setNombre(${m.id},this.value)" style="font-weight:800"></div>
+   <input placeholder="${esc(t('spec_ph'))}" value="${esc(m.esp||'')}" onchange="setEsp(${m.id},this.value)">
+   <div class="mut" style="margin-top:9px">🛠 ${jobs.map(j=>OT(j.num)).join(', ')||t('no_jobs')} · 🛒 ${ab.reduce((a,x)=>a+x.q,0)} ${t('in_cart_short')}</div>
+   ${ab.map(x=>`<div class="mut">• ${x.q}× ${esc(lang()==='en'?(x.en||x.es):x.es)}</div>`).join('')}</div>`}).join('')}</div>`;
+}
+function setNombre(id,v){db.mechanics.find(m=>m.id===id).name=v.trim()||('Mecánico '+id);save();render()}
+function setEsp(id,v){db.mechanics.find(m=>m.id===id).esp=v;save()}
+
+/* ========== SALIDAS ========== */
+function setOutLang(v){db.outLang=v;save();outModalRefresh&&outModalRefresh()}
+let outModalRefresh=null;
+function outModal(num){
+ const draw=()=>{abrir(`${mhead(t('wo_t')+' — '+OT(num))}
+  <label class="f">${t('out_lang')}</label>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+   <span class="chip ${outLang()==='en'?'sel':''}" onclick="setOutLang('en')">🇺🇸 English</span>
+   <span class="chip ${outLang()==='es'?'sel':''}" onclick="setOutLang('es')">🇲🇽 Español</span>
+   <span class="chip ${outLang()==='bi'?'sel':''}" onclick="setOutLang('bi')">🌐 ES / EN</span></div>
+  <button class="btn pri big" style="margin-top:14px" onclick="printWO(${num})">${t('pdf_b')}</button>
+  <button class="btn sec big" style="margin-top:8px" onclick="exportCSV([${num}])">${t('csv_b')}</button>
+  <p class="mut" style="margin-top:12px">${t('out_hint')}</p>`)};
+ outModalRefresh=draw;draw();
+}
+const csvEsc=v=>{v=String(v??'');return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+function qbRows(j){
+ const rows=[],date=new Date(j.finished||j.ts).toLocaleDateString('en-US'),cust=j.client||'Walk-in';
+ (j.serv||[]).forEach(c=>{const s=servByCode(c);if(!s)return;const rate=Number((j.prices||{})[c])||s.precio||0;
+  rows.push([date,OT(j.num),cust,j.unit,'Service',s.code,OL(s),1,rate.toFixed(2),rate.toFixed(2)])});
+ db.moves.filter(m=>m.job===j.num&&!m.open&&m.end==='use').forEach(m=>{const part=partBySku(m.sku);
+  const rate=(m.cargo!=null?m.cargo:m.precio)||0;
+  rows.push([date,OT(j.num),cust,j.unit,'Part',m.sku,part?OL(part):m.es,m.q,rate.toFixed(2),(rate*m.q).toFixed(2)])});
+ return rows;
+}
+function exportCSV(nums){
+ const jobs=(nums&&nums.length?nums.map(n=>db.jobs.find(j=>j.num===n)):db.jobs.filter(j=>j.st==='Terminado')).filter(Boolean);
+ if(!jobs.length){alert('—');return}
+ const header=['Date','DocNumber','Customer','Unit','LineType','Code','Description','Qty','Rate','Amount'];
+ const rows=jobs.flatMap(qbRows);
+ const csv='\uFEFF'+[header,...rows].map(r=>r.map(csvEsc).join(',')).join('\r\n');
+ download('cde-quickbooks-'+new Date().toISOString().slice(0,10)+'.csv',csv,'text/csv');
+ toast(t('t_csv'));
+}
+function printWO(num){
+ const j=db.jobs.find(x=>x.num===num);if(!j)return;
+ const ol=outLang(),W=(es,en)=>ol==='es'?es:ol==='en'?en:es+' / '+en;
+ const e=estJob(j);
+ const rS=(j.serv||[]).map(c=>{const s=servByCode(c);if(!s)return'';const rate=Number((j.prices||{})[c])||s.precio||0;
+  return `<tr><td>${s.code}</td><td>${esc(ol==='en'?(s.en||s.es):ol==='es'?s.es:s.es+' / '+s.en)}</td><td class="r">1</td><td class="r">${money(rate)}</td><td class="r">${money(rate)}</td></tr>`}).join('');
+ const pm=db.moves.filter(m=>m.job===num&&(m.end==='use'||m.open));
+ const rP=pm.map(m=>{const part=partBySku(m.sku);const rate=(m.cargo!=null?m.cargo:m.precio)||0;
+  return `<tr><td>${esc(m.sku)}</td><td>${esc(ol==='en'?(part?.en||part?.es||m.es):ol==='es'?m.es:(m.es+' / '+(part?.en||'')))}</td><td class="r">${m.q}</td><td class="r">${money(rate)}</td><td class="r">${money(rate*m.q)}</td></tr>`}).join('');
+ const pTot=pm.reduce((a,m)=>a+((m.cargo!=null?m.cargo:m.precio)||0)*m.q,0);
+ const team=(j.mech||[]).map(mechName).join(', ');
+ const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${OT(num)}</title><style>
+ body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:28px;font-size:13px}
+ .hd{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:4px solid #182c4d;padding-bottom:12px}
+ .co{font-size:20px;font-weight:800;color:#182c4d}.co small{display:block;font-size:11px;font-weight:400;color:#555}
+ .wo{text-align:right}.wo b{font-size:22px;color:#e8720c}
+ img{height:56px;object-fit:contain}
+ table{width:100%;border-collapse:collapse;margin-top:10px}
+ th{background:#182c4d;color:#fff;text-align:left;padding:6px 8px;font-size:11px;text-transform:uppercase}
+ td{border-bottom:1px solid #ddd;padding:6px 8px;vertical-align:top}
+ .r{text-align:right}.mut{color:#666}.sec{margin:16px 0 4px;font-weight:800;color:#182c4d;text-transform:uppercase;font-size:12px}
+ .tot{font-size:16px;font-weight:800;text-align:right;margin-top:10px}.tot b{color:#e8720c}
+ .sig{display:flex;gap:40px;margin-top:56px}.sig div{flex:1;border-top:1px solid #111;padding-top:6px;font-size:11px}
+ .btnp{position:fixed;top:10px;right:10px;background:#e8720c;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+ @media print{.btnp{display:none}}</style></head><body>
+ <button class="btnp" onclick="window.print()">🖨 ${W('Imprimir / Guardar PDF','Print / Save PDF')}</button>
+ <div class="hd"><div>${db.logo?`<img src="${db.logo}"><br>`:''}<div class="co">CDE Truck &amp; Car Repair Inc.<small>${W('Taller de reparación de trailers y camiones','Truck & Trailer Repair Shop')}</small></div></div>
+ <div class="wo"><b>${W('ORDEN DE TRABAJO','WORK ORDER')}</b><br>#${OT(j.num)}<br><span class="mut">${new Date().toLocaleDateString('en-US')}</span><br><span class="mut">${esc(stTxt(j.st))}</span></div></div>
+ <div class="sec">${W('Cliente / Vehículo','Customer / Vehicle')}</div>
+ <table><tr><td><b>${W('Cliente','Customer')}:</b> ${esc(j.client||'Walk-in')}</td><td><b>${W('Unidad','Unit')}:</b> ${esc(j.unit)}</td></tr>
+ <tr><td colspan="2"><b>${W('Equipo','Crew')}:</b> ${esc(team||'—')}</td></tr>
+ ${j.desc?`<tr><td colspan="2"><b>${W('Descripción','Description')}:</b> ${esc(j.desc)}</td></tr>`:''}</table>
+ <div class="sec">${W('Servicios','Services')}</div>
+ <table><tr><th>${W('Código','Code')}</th><th>${W('Descripción','Description')}</th><th class="r">${W('Cant','Qty')}</th><th class="r">${W('Tarifa','Rate')}</th><th class="r">${W('Importe','Amount')}</th></tr>
+ ${rS||`<tr><td colspan="5" class="mut">—</td></tr>`}</table>
+ <div class="sec">${W('Partes','Parts')}</div>
+ <table><tr><th>SKU</th><th>${W('Descripción','Description')}</th><th class="r">${W('Cant','Qty')}</th><th class="r">${W('Tarifa','Rate')}</th><th class="r">${W('Importe','Amount')}</th></tr>
+ ${rP||`<tr><td colspan="5" class="mut">—</td></tr>`}</table>
+ <div class="tot">${W('TOTAL ESTIMADO','ESTIMATED TOTAL')}: <b>${money(e.s+pTot)}</b></div>
+ <div class="sig"><div>${W('Firma del cliente','Customer signature')}</div><div>${W('Recibido por','Received by')}</div></div>
+ <p class="mut" style="margin-top:24px;font-size:10px">CDE Truck &amp; Car Repair Inc. — ${W('Precios sujetos a inspección final.','Prices subject to final inspection.')} · ${OT(j.num)}</p>
+ </body></html>`;
+ const w=window.open('','_blank');
+ if(!w){alert('⚠ Pop-ups blocked');return}
+ w.document.write(html);w.document.close();w.focus();
+}
+
+/* ========== respaldo ========== */
+function exportar(){download('cde-respaldo-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(db,null,1),'application/json');toast(t('t_backup'))}
+function importar(ev){
+ const f=ev.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{try{const d=JSON.parse(r.result);
+  if(d.parts&&d.services&&d.mechanics&&d.jobs){
+   if(!d.vendorParts)d.vendorParts=seed().vendorParts;
+   if(!d.requests)d.requests=[];if(!d.nextReq)d.nextReq=1;
+   db=d;save();render();toast(t('t_restored'))}
+  else alert('⚠')}catch(e){alert('⚠')}};
+ r.readAsText(f);ev.target.value='';
+}
+
+/* ========== nav ========== */
+let tab='board';
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
+ tab=b.dataset.tab;
+ document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on',x===b));
+ render();window.scrollTo(0,0);
+});
+function render(){({board:renderBoard,warehouse:renderWarehouse,vendor:renderVendor,services:renderServices,team:renderTeam})[tab]();pintaStats()}
+pintaChrome();render();
+</script>
+</body>
+</html>
