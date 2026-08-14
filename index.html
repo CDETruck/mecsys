@@ -875,7 +875,7 @@ vp_cancel_toast: 'âœ• Solicitud cancelada', vp_no_reqs: 'No hay solicitudes 
 vp_po_title: 'ORDEN DE COMPRA', vp_po_vendor: 'Proveedor', vp_po_items: 'Artículos', vp_po_total: 'TOTAL',
 vp_po_date: 'Fecha', vp_po_approved: 'Aprobada por', vp_po_eta: 'ETA', vp_po_notes: 'Notas',
 pending_status: 'Estado Pendiente', waiting_parts: 'Esperando por partes', waiting_approval: 'Esperando aprobación del cliente',
-pending_comments: 'Comentarios / Notas', request_sign: 'Pedir Firma al Cliente', leave_job: 'Salir del Trabajo',
+pending_comments: 'Comentarios / Notas', request_sign: 'Mirar Work Order', leave_job: 'Salir del Trabajo',
 leave_reason: 'Razón de salida (ej: fin de turno, dejado a medias)', idle: 'Idle', working: 'Working',
 upload_signed: 'ðŸ“¥ Upload PDF Signed (Subir PDF firmado)',
 signed_title: 'ðŸ“¥ PDF firmado por el cliente',
@@ -954,7 +954,7 @@ vp_cancel_toast: 'âœ• Request cancelled', vp_no_reqs: 'No requests in this c
 vp_po_title: 'PURCHASE ORDER', vp_po_vendor: 'Vendor', vp_po_items: 'Items', vp_po_total: 'TOTAL',
 vp_po_date: 'Date', vp_po_approved: 'Approved by', vp_po_eta: 'ETA', vp_po_notes: 'Notes',
 pending_status: 'Pending Status', waiting_parts: 'Waiting for parts', waiting_approval: 'Waiting for customer approval',
-pending_comments: 'Comments / Notes', request_sign: 'Request Sign to Customer', leave_job: 'Leave Job',
+pending_comments: 'Comments / Notes', request_sign: 'See Work Order', leave_job: 'Leave Job',
 leave_reason: 'Reason for leaving (e.g: end of shift, left incomplete)', idle: 'Idle', working: 'Working',
 upload_signed: 'ðŸ“¥ Upload PDF Signed',
 signed_title: 'ðŸ“¥ Customer-signed PDF',
@@ -1321,7 +1321,7 @@ fila = [];
 }
 }
 $('#main').innerHTML = `
-<button class="btn neword" onclick="nuevoTicket()">${t('new_order')}</button>
+${isManager ? `<button class="btn neword" onclick="nuevoTicket()">${t('new_order')}</button>` : ''}
 ${db.jobs.length === 0 ? `<div class="helpbox"><b>${t('how_t')}</b><br>${t('how_1')}<br>${t('how_2')}<br>${t('how_3')}</div>` : ''}
 ${fila.length ? `<div class="subhead">${t('head_queue')}</div>${fila.map((j, i) => cardFila(j, i + 1)).join('')}` : ''}
 ${prog.length ? `<div class="subhead">${t('head_prog')}</div>${prog.map(cardProg).join('')}` : ''}
@@ -1436,12 +1436,10 @@ const rS = (j.serv || []).map(c => {
 const s = servByCode(c); if (!s) return ''; const rate = Number((j.prices || {})[c]) || s.precio || 0;
 return `<tr><td>${s.code}</td><td>${esc(s.en || s.es)}</td><td class="r">${j.servQty?.[c] || 1}</td><td class="r">${money(rate)}</td><td class="r">${money(rate * (j.servQty?.[c] || 1))}</td></tr>`
 }).join('');
-const pm = db.moves.filter(m => m.job === num && (m.end === 'use' || m.open));
-const rP = pm.map(m => {
-const part = partBySku(m.sku); const rate = (m.cargo != null ? m.cargo : m.precio) || 0;
-return `<tr><td>${esc(m.sku)}</td><td>${esc(part?.en || part?.es || m.es)}</td><td class="r">${m.q}</td><td class="r">${money(rate)}</td><td class="r">${money(rate * m.q)}</td></tr>`
+const rP = (j.parts || []).map(p => {
+const part = partBySku(p.sku); const rate = p.priceOverride != null ? p.priceOverride : (part?.precio || 0);
+return `<tr><td>${esc(p.sku)}</td><td>${esc(part?.en || part?.es || p.sku)}</td><td class="r">${p.q}</td><td class="r">${money(rate)}</td><td class="r">${money(rate * p.q)}</td></tr>`
 }).join('');
-const pTot = pm.reduce((a, m) => a + ((m.cargo != null ? m.cargo : m.precio) || 0) * m.q, 0);
 const team = (j.mech || []).map(mechName).join(', ');
 const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Work Order ${OT(num)} - Customer Signature</title><style>
 body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:28px;font-size:13px}
@@ -1474,7 +1472,7 @@ ${rS || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
 <div class="sec">Parts</div>
 <table><tr><th>SKU</th><th>Description</th><th class="r">Qty</th><th class="r">Rate</th><th class="r">Amount</th></tr>
 ${rP || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
-<div class="tot">ESTIMATED TOTAL: <b>${money(e.s + pTot)}</b></div>
+<div class="tot">ESTIMATED TOTAL: <b>${money(e.s + e.p)}</b></div>
 <div class="sign-section">
 <h3>Customer Signature Required</h3>
 <p class="mut">I authorize the above work to be performed on my vehicle.</p>
