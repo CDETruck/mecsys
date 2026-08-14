@@ -1431,14 +1431,13 @@ save();
 function requestCustomerSign(num) {
 const j = db.jobs.find(x => x.num === num);
 if (!j) return;
-const e = estJob(j);
 const rS = (j.serv || []).map(c => {
-const s = servByCode(c); if (!s) return ''; const rate = Number((j.prices || {})[c]) || s.precio || 0;
-return `<tr><td>${s.code}</td><td>${esc(s.en || s.es)}</td><td class="r">${j.servQty?.[c] || 1}</td><td class="r">${money(rate)}</td><td class="r">${money(rate * (j.servQty?.[c] || 1))}</td></tr>`
+const s = servByCode(c); if (!s) return '';
+return `<tr><td>${s.code}</td><td>${esc(s.en || s.es)}</td><td class="r">${j.servQty?.[c] || 1}</td></tr>`
 }).join('');
 const rP = (j.parts || []).map(p => {
-const part = partBySku(p.sku); const rate = p.priceOverride != null ? p.priceOverride : (part?.precio || 0);
-return `<tr><td>${esc(p.sku)}</td><td>${esc(part?.en || part?.es || p.sku)}</td><td class="r">${p.q}</td><td class="r">${money(rate)}</td><td class="r">${money(rate * p.q)}</td></tr>`
+const part = partBySku(p.sku);
+return `<tr><td>${esc(p.sku)}</td><td>${esc(part?.en || part?.es || p.sku)}</td><td class="r">${p.q}</td></tr>`
 }).join('');
 const team = (j.mech || []).map(mechName).join(', ');
 const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Work Order ${OT(num)} - Customer Signature</title><style>
@@ -1461,18 +1460,17 @@ td{border-bottom:1px solid #ddd;padding:6px 8px;vertical-align:top}
 @media print{.btnp{display:none}}</style></head><body>
 <button class="btnp" onclick="window.print()">🖨 Print / Save PDF</button>
 <div class="hd"><div>${db.logo ? `<img src="${db.logo}"><br>` : ''}<div class="co">CDE Truck &amp; Car Repair Inc.<small>Truck & Trailer Repair Shop</small></div></div>
-<div class="wo"><b>CUSTOMER SIGNATURE REQUEST</b><br>Work Order #${OT(j.num)}<br><span class="mut">${new Date().toLocaleDateString('en-US')}</span></div></div>
+<div class="wo">Work Order #${OT(j.num)}<br><span class="mut">${new Date().toLocaleDateString('en-US')}</span></div></div>
 <div class="sec">Customer / Vehicle</div>
 <table><tr><td><b>Customer:</b> ${esc(j.client || 'Walk-in')}</td><td><b>Unit:</b> ${esc(j.unit)}</td></tr>
 <tr><td colspan="2"><b>Crew:</b> ${esc(team || '—')}</td></tr>
 ${j.desc ? `<tr><td colspan="2"><b>Description:</b> ${esc(j.desc)}</td></tr>` : ''}</table>
 <div class="sec">Services</div>
-<table><tr><th>Code</th><th>Description</th><th class="r">Qty</th><th class="r">Rate</th><th class="r">Amount</th></tr>
-${rS || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
+<table><tr><th>Code</th><th>Description</th><th class="r">Qty</th></tr>
+${rS || `<tr><td colspan="3" class="mut">—</td></tr>`}</table>
 <div class="sec">Parts</div>
-<table><tr><th>SKU</th><th>Description</th><th class="r">Qty</th><th class="r">Rate</th><th class="r">Amount</th></tr>
-${rP || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
-<div class="tot">ESTIMATED TOTAL: <b>${money(e.s + e.p)}</b></div>
+<table><tr><th>SKU</th><th>Description</th><th class="r">Qty</th></tr>
+${rP || `<tr><td colspan="3" class="mut">—</td></tr>`}</table>
 <div class="sign-section">
 <h3>Customer Signature Required</h3>
 <p class="mut">I authorize the above work to be performed on my vehicle.</p>
