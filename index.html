@@ -764,7 +764,7 @@ white-space: nowrap
 <button data-tab="services">💲<span id="nv_services"></span></button>
 <button data-tab="team">👥<span id="nv_team"></span></button>
 </nav>
-<div id="overlay" hidden onclick="if(event.target===this)cerrar()">
+<div id="overlay" hidden>
 <div id="modal"></div>
 </div>
 <div id="toast"></div>
@@ -1598,7 +1598,7 @@ const j = db.jobs.find(x => x.num === num); if (!j) return;
 const fila = db.jobs.filter(x => x.st === 'En fila').sort((a, b) => a.ts - b.ts);
 if (fila[0] && fila[0].num !== num && !confirm(t('skip_confirm') + ' (' + OT(fila[0].num) + '). ' + t('take_anyway'))) return;
 const uid = userId();
-if (uid) { j.leader = uid; if (!(j.mech || []).includes(uid)) j.mech.push(uid); j.st = 'En progreso'; save(); render(); toast('🙋 ' + mechName(uid) + ' ' + t('t_took') + ' ' + OT(num)) }
+if (uid) { j.leader = uid; if (!j.mech) j.mech = []; if (!j.mech.includes(uid)) j.mech.push(uid); j.st = 'En progreso'; save(); render(); toast('🙋 ' + mechName(uid) + ' ' + t('t_took') + ' ' + OT(num)) }
 else abrir(mhead(t('who_t')) + db.mechanics.map(m =>
 `<button class="btn pri big" style="margin-bottom:8px" onclick="asignaToma(${num},${m.id})">🙋 ${esc(m.name)}</button>`).join('') +
 `<button class="btn sec big" onclick="cerrar()">${t('cancel_b')}</button>`);
