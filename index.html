@@ -1362,7 +1362,7 @@ let right;
 if (p.picked) {
 const precio = p.priceOverride != null ? p.priceOverride : part.precio;
 right = `<b style="color:var(--ok)">${t('in_cart')}${j.leader ? ' — ' + esc(mechName(j.leader)) : ''}</b>
-<span class="priceedit" onclick="precioPiezaJob(${j.num},${i})" title="Editar precio">${money(precio)}</span>`;
+${db.currentUser === "mgr" ? `<span class="priceedit" onclick="precioPiezaJob(${j.num},${i})" title="Editar precio">${money(precio)}</span>` : ""}`;
 } else if (p.falta) {
 right = `<span class="warnmut">${t('missing_buy')} (${p.falta})</span>
 <button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">🛒 ${t('vp_req_b').replace('🛒 ', '')}</button>
@@ -1372,7 +1372,7 @@ right = `<button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">�
 } else {
 right = `<button class="btn sm pri" onclick="sacarLista(${j.num},${i})">${t('take_rack')}</button>`;
 }
-return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${p.q}× ${esc(L(part))}</b><small>${esc(part.sku)} · ${money(part.precio)}</small></div>${right}</div>`
+return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${p.q}× ${esc(L(part))}</b><small>${esc(part.sku)}${db.currentUser === "mgr" ? " · " + money(part.precio) : ""}</small></div>${right}</div>`
 }).join('') + `</div>`;
 }
 function precioPiezaJob(num, i) {
