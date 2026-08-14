@@ -794,7 +794,7 @@ white-space: nowrap
   const dbRef = ref(database, 'cde_v2');
   onValue(dbRef, (snapshot) => {
     const data = snapshot.val();
-    if (data && window.updateDBFromCloud) {
+    if (window.updateDBFromCloud) {
       window.updateDBFromCloud(data);
     }
   });
@@ -1194,6 +1194,12 @@ return seed();
 }
 let db = loadDB();
 window.updateDBFromCloud = function(cloudData) {
+   if (!cloudData || !cloudData.jobs || !cloudData.parts) {
+      if (db && db.jobs && db.parts && window.isFirebaseReady && window.firebaseSet) {
+         window.firebaseSet(window.firebaseRef(window.firebaseDB, 'cde_v2'), db).catch(e => console.error(e));
+      }
+      return;
+   }
    db = cloudData;
    try { localStorage.setItem('cde_v2', JSON.stringify(db)) } catch (e) { }
    if (typeof render === 'function') render();
