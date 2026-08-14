@@ -1219,7 +1219,7 @@ $('#hbtns').innerHTML = `<button onclick="setLang()">${t('h_lang')}</button><but
 function pintaNav() { ['board', 'warehouse', 'vendor', 'services', 'team'].forEach(k => $('#nv_' + k).textContent = t('nav_' + k)) }
 function setLang() { db.lang = lang() === 'es' ? 'en' : 'es'; save(); render(); toast(lang() === 'en' ? '🌐 English' : '🌐 Español') }
 function estJob(j) {
-const s = (j.serv || []).reduce((a, c) => a + (Number((j.prices || {})[c]) || servByCode(c)?.precio || 0), 0);
+const s = (j.serv || []).reduce((a, c) => a + ((Number((j.prices || {})[c]) || servByCode(c)?.precio || 0) * (j.servQty?.[c] || 1)), 0);
 const p = db.moves.filter(m => !m.open && m.end === 'use' && m.job === j.num).reduce((a, m) => a + ((m.cargo != null ? m.cargo : m.precio) || 0) * m.q, 0);
 return { s, p };
 }
@@ -1409,7 +1409,7 @@ if (!j) return;
 const e = estJob(j);
 const rS = (j.serv || []).map(c => {
 const s = servByCode(c); if (!s) return ''; const rate = Number((j.prices || {})[c]) || s.precio || 0;
-return `<tr><td>${s.code}</td><td>${esc(s.en || s.es)}</td><td class="r">1</td><td class="r">${money(rate)}</td><td class="r">${money(rate)}</td></tr>`
+return `<tr><td>${s.code}</td><td>${esc(s.en || s.es)}</td><td class="r">${j.servQty?.[c] || 1}</td><td class="r">${money(rate)}</td><td class="r">${money(rate * (j.servQty?.[c] || 1))}</td></tr>`
 }).join('');
 const pm = db.moves.filter(m => m.job === num && (m.end === 'use' || m.open));
 const rP = pm.map(m => {
@@ -1588,7 +1588,7 @@ j.mech = j.mech || []; const i = j.mech.indexOf(mid); i >= 0 ? j.mech.splice(i, 
 }
 function hacerLider(num, mid) { const j = db.jobs.find(x => x.num === num); j.leader = mid; if (!(j.mech || []).includes(mid)) j.mech.push(mid); save(); equipoModal(num); render() }
 /* ========== CREAR ORDEN ========== */
-let tSel = new Set(), tTeam = new Set(), tParts = [], tPrices = {}, tSearch = '', tServSearch = '', tUrgent = false, editNum = null, tDraft = null, returningToTicket = false;
+let tSel = new Set(), tTeam = new Set(), tParts = [], tPrices = {}, tServQty = {}, tSearch = '', tServSearch = '', tUrgent = false, editNum = null, tDraft = null, returningToTicket = false;
 function saveTDraft() {
 document.querySelectorAll('#tPriceList [data-pc]').forEach(i => tPrices[i.dataset.pc] = Number(i.value) || 0);
 tDraft = { unit: $('#tUnit').value, client: $('#tClient').value, desc: $('#tDesc').value, leader: $('#tLeader').value };
@@ -1623,7 +1623,7 @@ restoreTDraft();
 function nuevoTicket(num) {
 editNum = num || null; const j = num ? db.jobs.find(x => x.num === num) : null;
 tSel = new Set(j?.serv || []); tTeam = new Set(j?.mech || []); tParts = (j?.parts || []).map(p => ({ ...p }));
-tPrices = { ...(j?.prices || {}) }; tUrgent = j?.urgent || false; tSearch = ''; tServSearch = '';
+tPrices = { ...(j?.prices || {}) }; tServQty = { ...(j?.servQty || {}) }; tUrgent = j?.urgent || false; tSearch = ''; tServSearch = '';
 abrir(`${mhead(editNum ? t('edit_t') + ' ' + OT(editNum) : t('new_t'))}
 <div class="step">${t('s1')}</div>
 <label class="f">${t('unit_f2')}</label><input id="tUnit" value="${esc(j?.unit || '')}" placeholder="${esc(t('unit_ph'))}">
@@ -1660,12 +1660,30 @@ const list = db.services.filter(s => !q || s.code.toLowerCase().includes(q) || s
 $('#tServBox').innerHTML = list.map(s =>
 `<span class="chip ${tSel.has(s.code) ? 'sel' : ''}" onclick="tToggleServ('${oq(s.code)}')">${s.code} ${esc(L(s))} · ${money(s.precio)}${s.unidad === 'hr' ? '/hr' : ''}</span>`).join('');
 }
-function tToggleServ(c) { tSel.has(c) ? tSel.delete(c) : tSel.add(c); pintaTServ(); pintaSelPrices() }
+function tToggleServ(c) { 
+  if (tSel.has(c)) { tSel.delete(c); delete tServQty[c]; } 
+  else { tSel.add(c); tServQty[c] = 1; } 
+  pintaTServ(); pintaSelPrices(); 
+}
+function tSq(c, d) {
+  tServQty[c] = Math.max(1, (tServQty[c] || 1) + d);
+  pintaSelPrices();
+}
 function pintaSelPrices() {
 $('#tPriceList').innerHTML = tSel.size ? `<label class="f">${t('price_list_f')}</label>` +
 [...tSel].map(c => {
 const s = servByCode(c);
-return `<div class="selrow"><span>${s.code} ${esc(L(s))}</span><input type="number" step="0.01" data-pc="${esc(c)}" value="${tPrices[c] ?? s.precio}"></div>`
+const q = tServQty[c] || 1;
+return `<div class="selrow">
+<div style="flex:1;display:flex;align-items:center;gap:10px">
+  <span>${s.code} ${esc(L(s))}</span>
+  <div class="stepbox" style="margin:0"><button onclick="tSq('${oq(c)}',-1)">-</button><b>${q}</b><button onclick="tSq('${oq(c)}',1)">+</button></div>
+</div>
+<div style="display:flex;gap:5px;align-items:center;">
+<input type="number" step="0.01" data-pc="${esc(c)}" value="${tPrices[c] ?? s.precio}" style="width:80px">
+<button class="btn sm sec" onclick="tToggleServ('${oq(c)}')">✕</button>
+</div>
+</div>`
 }).join('') : '';
 }
 function pintaTTeam() {
@@ -1706,7 +1724,7 @@ if (!unit) { alert(t('unit_missing')); return }
 document.querySelectorAll('#tPriceList [data-pc]').forEach(i => tPrices[i.dataset.pc] = Number(i.value) || 0);
 const data = {
 unit, client: $('#tClient').value.trim(), desc: $('#tDesc').value.trim(), urgent: tUrgent,
-serv: [...tSel], prices: { ...tPrices }, parts: tParts, leader: Number($('#tLeader').value) || null, mech: [...tTeam]
+serv: [...tSel], servQty: { ...tServQty }, prices: { ...tPrices }, parts: tParts, leader: Number($('#tLeader').value) || null, mech: [...tTeam]
 };
 if (editNum) { Object.assign(db.jobs.find(x => x.num === editNum), data); toast('💾 ' + OT(editNum) + ' ' + t('t_updated')) }
 else { const n = db.nextJob++; db.jobs.push(Object.assign({ num: n, ts: Date.now(), st: 'En fila', finished: null, pendingStatus: { waitingParts: false, waitingApproval: false, comments: '' }, signedPdf: null }, data)); toast('✅ ' + OT(n) + ' ' + t('t_created')) }
@@ -2191,7 +2209,7 @@ function qbRows(j) {
 const rows = [], date = new Date(j.finished || j.ts).toLocaleDateString('en-US'), cust = j.client || 'Walk-in';
 (j.serv || []).forEach(c => {
 const s = servByCode(c); if (!s) return; const rate = Number((j.prices || {})[c]) || s.precio || 0;
-rows.push([date, OT(j.num), cust, j.unit, 'Service', s.code, OL(s), 1, rate.toFixed(2), rate.toFixed(2)])
+rows.push([date, OT(j.num), cust, j.unit, 'Service', s.code, OL(s), j.servQty?.[c] || 1, rate.toFixed(2), (rate * (j.servQty?.[c] || 1)).toFixed(2)])
 });
 db.moves.filter(m => m.job === j.num && !m.open && m.end === 'use').forEach(m => {
 const part = partBySku(m.sku);
@@ -2215,7 +2233,7 @@ const ol = outLang(), W = (es, en) => ol === 'es' ? es : ol === 'en' ? en : es +
 const e = estJob(j);
 const rS = (j.serv || []).map(c => {
 const s = servByCode(c); if (!s) return ''; const rate = Number((j.prices || {})[c]) || s.precio || 0;
-return `<tr><td>${s.code}</td><td>${esc(ol === 'en' ? (s.en || s.es) : ol === 'es' ? s.es : s.es + ' / ' + s.en)}</td><td class="r">1</td><td class="r">${money(rate)}</td><td class="r">${money(rate)}</td></tr>`
+return `<tr><td>${s.code}</td><td>${esc(ol === 'en' ? (s.en || s.es) : ol === 'es' ? s.es : s.es + ' / ' + s.en)}</td><td class="r">${j.servQty?.[c] || 1}</td><td class="r">${money(rate)}</td><td class="r">${money(rate * (j.servQty?.[c] || 1))}</td></tr>`
 }).join('');
 const pm = db.moves.filter(m => m.job === num && (m.end === 'use' || m.open));
 const rP = pm.map(m => {
