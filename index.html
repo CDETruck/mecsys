@@ -758,11 +758,11 @@ white-space: nowrap
 </header>
 <main id="main"></main>
 <nav id="nav">
-<button data-tab="board" class="on">ðŸ“‹<span id="nv_board"></span></button>
-<button data-tab="warehouse">ðŸ“¦<span id="nv_warehouse"></span></button>
-<button data-tab="vendor">🛒’<span id="nv_vendor"></span></button>
-<button data-tab="services">ðŸ’²<span id="nv_services"></span></button>
-<button data-tab="team">ðŸ‘¥<span id="nv_team"></span></button>
+<button data-tab="board" class="on">📋<span id="nv_board"></span></button>
+<button data-tab="warehouse">📦<span id="nv_warehouse"></span></button>
+<button data-tab="vendor">🛒<span id="nv_vendor"></span></button>
+<button data-tab="services">💲<span id="nv_services"></span></button>
+<button data-tab="team">👥<span id="nv_team"></span></button>
 </nav>
 <div id="overlay" hidden onclick="if(event.target===this)cerrar()">
 <div id="modal"></div>
@@ -810,161 +810,161 @@ CDE TALLER v7
 const T = {
 es: {
 nav_board: 'Tablero', nav_warehouse: 'Bodega', nav_vendor: 'Comprar', nav_services: 'Servicios', nav_team: 'Equipo',
-h_backup: 'â¬‡ Respaldar', h_restore: 'â¬† Restaurar', h_logo: 'ðŸ–¼ Logo', h_road: 'ðŸš€ Futuro', h_lang: 'ðŸŒ EN',
-st_queue: 'en fila', st_prog: 'en progreso', st_carts: 'en carritos', st_low: 'stock bajo', st_req: 'solicitudes', mgr: 'ðŸ§‘â€ Manager',
-new_order: 'âž• NUEVA ORDEN DE TRABAJO', how_t: '¿Cómo funciona?',
-how_1: '1ï¸âƒ£ El <b>Manager</b> recibe el camión y crea la orden con servicios y piezas (con su rack).',
-how_2: '2ï¸âƒ£ El <b>mecánico</b> toca <b>TOMAR ESTE TRABAJO</b> y queda como líder â­.',
-how_3: '3ï¸âƒ£ En la orden, cada pieza se saca con un toque y se va a su <b>🛒’ carrito</b>.',
-head_queue: 'ðŸ•’ En fila — se toman en este orden', head_prog: 'ðŸ”§ En progreso', head_done: 'âœ… Terminados',
-csv_all: 'â¬‡ CSV QuickBooks (todos)', b_next: 'â–¶ SIGUIENTE', b_queue: 'EN FILA #', b_urg: 'ðŸ”´ URGENTE',
-b_prog: 'ðŸ”§ EN PROGRESO', b_done: 'âœ… TERMINADO', take_job: 'ðŸ™‹ TOMAR ESTE TRABAJO', pre_assigned: 'ðŸ‘¤ Pre-asignado a:',
-team_none: 'Sin equipo aún', add_team: 'ï¼‹ Equipo', add_part: 'ï¼‹ Añadir pieza', estimate: 'Estimado', labor: 'mano de obra',
-parts_w: 'partes', total: 'Total', finish_job: 'âœ” TERMINAR TRABAJO', reopen: 'â†º Reabrir', retry: 'Reintentar',
-missing_buy: '⚠  Faltante p/ compra', missing_btn: '⚠  FALTANTE', take_rack: 'ðŸ“¦ SACAR DEL RACK', in_cart: 'âœ… En carrito',
-cart_of: '🛒’ Carrito de', pieces_out: 'pieza(s) fuera', return_b: 'â†© Regresar', used_b: 'âœ” Usada',
-search_parts_ph: 'ðŸ” Pieza, SKU o rack (A1...)', low_chip: '⚠  Bajo', add_part_b: 'âž• Parte', stock: 'stock',
-dest_q: '¿A dónde va?', dest_cart: '🛒’ Al carrito', dest_veh: 'ðŸšš Al vehículo', dest_ubi: 'ðŸ“ Otro lugar del shop',
+h_backup: '⬇ Respaldar', h_restore: '⬆ Restaurar', h_logo: '🖼 Logo', h_road: '🚀 Futuro', h_lang: '🌐 EN',
+st_queue: 'en fila', st_prog: 'en progreso', st_carts: 'en carritos', st_low: 'stock bajo', st_req: 'solicitudes', mgr: '🧑‍🔧 Manager',
+new_order: '➕ NUEVA ORDEN DE TRABAJO', how_t: '¿Cómo funciona?',
+how_1: '11️⃣ El <b>Manager</b> recibe el camión y crea la orden con servicios y piezas (con su rack).',
+how_2: '21️⃣ El <b>mecánico</b> toca <b>TOMAR ESTE TRABAJO</b> y queda como líder ⭐.',
+how_3: '31️⃣ En la orden, cada pieza se saca con un toque y se va a su <b>🛒 carrito</b>.',
+head_queue: '🕒 En fila — se toman en este orden', head_prog: '🔧 En progreso', head_done: '✅ Terminados',
+csv_all: '⬇ CSV QuickBooks (todos)', b_next: '▶ SIGUIENTE', b_queue: 'EN FILA #', b_urg: '🔴 URGENTE',
+b_prog: '🔧 EN PROGRESO', b_done: '✅ TERMINADO', take_job: '🙋 TOMAR ESTE TRABAJO', pre_assigned: '👤 Pre-asignado a:',
+team_none: 'Sin equipo aún', add_team: '＋ Equipo', add_part: '＋ Añadir pieza', estimate: 'Estimado', labor: 'mano de obra',
+parts_w: 'partes', total: 'Total', finish_job: '✔ TERMINAR TRABAJO', reopen: '↺ Reabrir', retry: 'Reintentar',
+missing_buy: '⚠  Faltante p/ compra', missing_btn: '⚠  FALTANTE', take_rack: '📦 SACAR DEL RACK', in_cart: '✅ En carrito',
+cart_of: '🛒 Carrito de', pieces_out: 'pieza(s) fuera', return_b: '↩ Regresar', used_b: '✔ Usada',
+search_parts_ph: '🔍 Pieza, SKU o rack (A1...)', low_chip: '⚠  Bajo', add_part_b: '➕ Parte', stock: 'stock',
+dest_q: '¿A dónde va?', dest_cart: '🛒 Al carrito', dest_veh: '🚚 Al vehículo', dest_ubi: '📍 Otro lugar del shop',
 qty_f: 'Cantidad', who_f: '¿Quién la saca?', job_f: 'Orden de trabajo (opcional)', none_opt: '— ninguna —',
-no_orders: '— sin órdenes activas —', place_ph: 'Ej. mesa de soldadura, bahía 2...', take_from: 'ðŸ“¦ Sacar de',
-return_t: 'Regresar:', return_hint: 'Vuelve al rack', had: 'Tenía', return_btn: 'â†© Regresar al rack',
+no_orders: '— sin órdenes activas —', place_ph: 'Ej. mesa de soldadura, bahía 2...', take_from: '📦 Sacar de',
+return_t: 'Regresar:', return_hint: 'Vuelve al rack', had: 'Tenía', return_btn: '↩ Regresar al rack',
 use_t: 'Usar:', use_hint: 'Se instala/consume y se puede cargar a la orden. Precio base precargado — ajústalo si este trabajo lleva otro.',
-price_f: 'Precio a cobrar por pieza', charge_f: 'Cargar a', no_charge: '— no se cobra / uso del shop —', use_btn: 'âœ” Usada en el trabajo',
-entry_t: 'Entrada:', entry_q: 'Cantidad que entra (compra, devolución, encontrada)', note_f: 'Nota (opcional)', entry_btn: 'ï¼‹ Agregar al stock',
+price_f: 'Precio a cobrar por pieza', charge_f: 'Cargar a', no_charge: '— no se cobra / uso del shop —', use_btn: '✔ Usada en el trabajo',
+entry_t: 'Entrada:', entry_q: 'Cantidad que entra (compra, devolución, encontrada)', note_f: 'Nota (opcional)', entry_btn: '＋ Agregar al stock',
 part_new: 'Agregar pieza manual', part_edit: 'Editar pieza', sku_f: 'SKU', loc_f: 'Rack / ubicación', nes_f: 'Nombre (español)',
-nen_f: 'Nombre (inglés)', price_base_f: 'Precio base', min_f: 'Mínimo', save_b: 'ðŸ’¾ Guardar', cancel_b: 'Cancelar',
-name_missing: '⚠  Ponle nombre a la pieza.', sku_exists: '⚠  Ese SKU ya existe.',
-serv_count: 'servicios Â· precio base editable', add_serv: 'âž• Servicio', code_f: 'Código', ses_f: 'Servicio (español)',
+nen_f: 'Nombre (inglés)', price_base_f: 'Precio base', min_f: 'Mínimo', save_b: '💾 Guardar', cancel_b: 'Cancelar',
+name_missing: '⚠  Ponle nombre a la pieza.', sku_exists: '⚠  Ese SKU ya existe.',
+serv_count: 'servicios · precio base editable', add_serv: '➕ Servicio', code_f: 'Código', ses_f: 'Servicio (español)',
 sen_f: 'Servicio (inglés)', unit_f: 'Unidad', team_hint: 'Cambia "Mecánico 1" por el nombre real — todo se actualiza solo.',
 spec_ph: 'Especialidad (frenos, AC, eléctrico...)', no_jobs: 'sin trabajos', in_cart_short: 'pieza(s) en su carrito',
-wo_t: 'ðŸ“¤ Salidas', out_lang: 'Idioma de las salidas (PDF/CSV)', pdf_b: 'ðŸ“„ Orden de trabajo (PDF / imprimir)',
-csv_b: 'ðŸ“Š CSV QuickBooks (esta orden)', out_hint: 'Hoy: los archivos se descargan. Mañana (con servidor): se archivan y se mandan directo a QuickBooks.',
-road_t: 'ðŸš€ Funcionalidad futura (notas)', who_t: '¿Quién toma este trabajo?', who_take: '¿Quién saca esta pieza?',
-new_t: 'âž• Nueva orden de trabajo', edit_t: 'âœï¸ Editar', s1: '1ï¸âƒ£ El vehículo', unit_f2: 'Unidad / camión / trailer *',
+wo_t: '📤 Salidas', out_lang: 'Idioma de las salidas (PDF/CSV)', pdf_b: '📄 Orden de trabajo (PDF / imprimir)',
+csv_b: '📊 CSV QuickBooks (esta orden)', out_hint: 'Hoy: los archivos se descargan. Mañana (con servidor): se archivan y se mandan directo a QuickBooks.',
+road_t: '🚀 Funcionalidad futura (notas)', who_t: '¿Quién toma este trabajo?', who_take: '¿Quién saca esta pieza?',
+new_t: '➕ Nueva orden de trabajo', edit_t: '✏️ Editar', s1: '11️⃣ El vehículo', unit_f2: 'Unidad / camión / trailer *',
 unit_ph: 'Ej. Camión 112 / Trailer 48\' #2214', client_f: 'Cliente', client_ph: 'Nombre del cliente',
-desc_f: 'Descripción (texto libre)', desc_ph: 'Ej. Arreglo del camión 112, reparación de AC...', mark_urgent: 'ðŸ”´ MARCAR COMO URGENTE',
-s2: '2ï¸âƒ£ Servicios requeridos', price_list_f: 'Precio a cobrar (base precargado, ajustable)', s3: '3ï¸âƒ£ Piezas pre-asignadas',
-s3h: 'El mecánico verá cada pieza con su rack. Busca y toca ï¼‹.', search_ph: 'ðŸ” Buscar pieza, SKU o rack...',
-s4: '4ï¸âƒ£ Equipo (opcional)', leader_f: 'Líder pre-asignado', leader_none: '— que lo tome el primero disponible —', companions_f: 'Compañeros',
-save_new: 'ðŸ’¾ Guardar y mandar a la fila', save_edit: 'ðŸ’¾ Guardar cambios', unit_missing: '⚠  Falta la unidad: ¿qué camión o trailer es?',
+desc_f: 'Descripción (texto libre)', desc_ph: 'Ej. Arreglo del camión 112, reparación de AC...', mark_urgent: '🔴 MARCAR COMO URGENTE',
+s2: '21️⃣ Servicios requeridos', price_list_f: 'Precio a cobrar (base precargado, ajustable)', s3: '31️⃣ Piezas pre-asignadas',
+s3h: 'El mecánico verá cada pieza con su rack. Busca y toca ＋.', search_ph: '🔍 Buscar pieza, SKU o rack...',
+s4: '41️⃣ Equipo (opcional)', leader_f: 'Líder pre-asignado', leader_none: '— que lo tome el primero disponible —', companions_f: 'Compañeros',
+save_new: '💾 Guardar y mandar a la fila', save_edit: '💾 Guardar cambios', unit_missing: '⚠  Falta la unidad: ¿qué camión o trailer es?',
 finish_confirm: '¿Terminar', delete_confirm: '¿Eliminar', no_undo: 'Esta acción no se puede deshacer.',
-skip_confirm: '⚠  Hay un trabajo primero en la fila', take_anyway: '¿Tomar este de todos modos?',
-equipo_t: 'Equipo de', lead_b: 'â­ Líder', add_b: 'Agregar', remove_b: 'Quitar', done_b: 'Listo',
-hist_t: 'Historial:', hist_add: 'âž• entrada', hist_ret: 'â†© regresada', hist_use: 'âœ” usada', hist_out: 'ðŸ“¦ sacada â†’',
+skip_confirm: '⚠  Hay un trabajo primero en la fila', take_anyway: '¿Tomar este de todos modos?',
+equipo_t: 'Equipo de', lead_b: '⭐ Líder', add_b: 'Agregar', remove_b: 'Quitar', done_b: 'Listo',
+hist_t: 'Historial:', hist_add: '➕ entrada', hist_ret: '↩ regresada', hist_use: '✔ usada', hist_out: '📦 sacada →',
 still_out: 'SIGUE FUERA', no_moves: 'Sin movimientos todavía.', results_none: 'Sin resultados', no_parts_yet: 'Sin piezas todavía.',
-logo_t: 'ðŸ–¼ Logo de la compañía', logo_up: 'ðŸ“· Subir logo (PNG / JPG)', logo_rm: 'ðŸ—‘ Quitar logo',
+logo_t: '🖼 Logo de la compañía', logo_up: '📷 Subir logo (PNG / JPG)', logo_rm: '🗑 Quitar logo',
 logo_none: 'Sin logo aún — se muestra el distintivo CDE.', logo_hint: 'Se redimensiona solo, se guarda en este aparato y viaja en los respaldos.',
-t_took: 'tomó', t_updated: 'actualizada', t_created: 'creada y en fila', t_added_p: 'ï¼‹ Pieza añadida a', t_to_cart: 'â†’ 🛒’ carrito de',
-t_short_f: '⚠  Faltan', t_avisa: '— avisa al manager', t_missing_mark: '⚠  Marcada como faltante para compra', t_no_stock: '⚠  No hay en stock — márcala para compra',
-t_back_r: 'â†© Pieza de vuelta al rack', t_used: 'âœ” Pieza usada', t_charged: '— cargada a', t_stock_up: 'ï¼‹ Stock actualizado:',
-t_part_saved: 'ðŸ’¾ Pieza guardada', t_serv_saved: 'ðŸ’¾ Servicio guardado', t_logo: 'ðŸ–¼ Logo actualizado', t_logo_off: 'ðŸ–¼ Logo quitado',
-t_restored: 'â¬† Datos restaurados', t_backup: 'â¬‡ Respaldo descargado', t_csv: 'ðŸ“Š CSV QuickBooks descargado', t_mode_m: 'ðŸ§‘â€ Modo Manager',
+t_took: 'tomó', t_updated: 'actualizada', t_created: 'creada y en fila', t_added_p: '＋ Pieza añadida a', t_to_cart: '→ 🛒 carrito de',
+t_short_f: '⚠  Faltan', t_avisa: '— avisa al manager', t_missing_mark: '⚠  Marcada como faltante para compra', t_no_stock: '⚠  No hay en stock — márcala para compra',
+t_back_r: '↩ Pieza de vuelta al rack', t_used: '✔ Pieza usada', t_charged: '— cargada a', t_stock_up: '＋ Stock actualizado:',
+t_part_saved: '💾 Pieza guardada', t_serv_saved: '💾 Servicio guardado', t_logo: '🖼 Logo actualizado', t_logo_off: '🖼 Logo quitado',
+t_restored: '⬆ Datos restaurados', t_backup: '⬇ Respaldo descargado', t_csv: '📊 CSV QuickBooks descargado', t_mode_m: '🧑‍🔧 Modo Manager',
 only: 'stock:', qtyshort: 'pza', wh_hint: 'Partes en bodega — click sobre el precio para editarlo inline.',
-vp_hint: 'Catálogo del proveedor (customtruck.com) Â· Solicitudes de compra Â· PDFs.',
-vp_search: 'ðŸ” Buscar en proveedor...', vp_cat: 'Categoría', vp_all: 'Todas', vp_req_b: '🛒Ž Solicitar compra',
-vp_po_b: 'ðŸ“„ Orden de Compra (PDF)', vp_req: 'Solicitudes', vp_active: 'Activas', vp_history: 'Historial',
+vp_hint: 'Catálogo del proveedor (customtruck.com) · Solicitudes de compra · PDFs.',
+vp_search: '🔍 Buscar en proveedor...', vp_cat: 'Categoría', vp_all: 'Todas', vp_req_b: '🛒 Solicitar compra',
+vp_po_b: '📄 Orden de Compra (PDF)', vp_req: 'Solicitudes', vp_active: 'Activas', vp_history: 'Historial',
 vp_needed: 'POR APROBAR', vp_approved: 'APROBADA', vp_ordered: 'ENVIADA', vp_received: 'RECIBIDA',
 vp_vendor: 'Proveedor', vp_price: 'Precio proveedor', vp_qty: 'Cantidad pedida', vp_urg: 'Urgencia',
-vp_eta: 'ETA (llegada estimada)', vp_order_num: 'NÂ° Orden', vp_notes: 'Notas', vp_approved_by: 'Aprobado por',
-vp_order_date: 'Fecha de orden', vp_received_date: 'Fecha de recepción', vp_mgr_approve: 'âœ“ Aprobar pedido',
-vp_mgr_send: 'ðŸ“¤ Marcar enviada', vp_mgr_receive: 'âœ… Marcar recibida', vp_cancel: 'âœ• Cancelar',
+vp_eta: 'ETA (llegada estimada)', vp_order_num: 'N° Orden', vp_notes: 'Notas', vp_approved_by: 'Aprobado por',
+vp_order_date: 'Fecha de orden', vp_received_date: 'Fecha de recepción', vp_mgr_approve: '✓ Aprobar pedido',
+vp_mgr_send: '📤 Marcar enviada', vp_mgr_receive: '✅ Marcar recibida', vp_cancel: '✕ Cancelar',
 vp_reason: 'Motivo de la solicitud', vp_reason_ph: 'Ej. faltante para OT-003, se rompió durante instalación...',
-vp_send: '🛒Ž Enviar solicitud al Manager', vp_sent: 'âœ“ Solicitud enviada', vp_approved_toast: 'âœ“ Pedido aprobado',
-vp_sent_toast: 'ðŸ“¤ Pedido marcado como enviado', vp_received_toast: 'âœ… Pedido recibido y agregado a bodega',
-vp_cancel_toast: 'âœ• Solicitud cancelada', vp_no_reqs: 'No hay solicitudes en esta categoría.',
+vp_send: '🛒 Enviar solicitud al Manager', vp_sent: '✓ Solicitud enviada', vp_approved_toast: '✓ Pedido aprobado',
+vp_sent_toast: '📤 Pedido marcado como enviado', vp_received_toast: '✅ Pedido recibido y agregado a bodega',
+vp_cancel_toast: '✕ Solicitud cancelada', vp_no_reqs: 'No hay solicitudes en esta categoría.',
 vp_po_title: 'ORDEN DE COMPRA', vp_po_vendor: 'Proveedor', vp_po_items: 'Artículos', vp_po_total: 'TOTAL',
 vp_po_date: 'Fecha', vp_po_approved: 'Aprobada por', vp_po_eta: 'ETA', vp_po_notes: 'Notas',
 pending_status: 'Estado Pendiente', waiting_parts: 'Esperando por partes', waiting_approval: 'Esperando aprobación del cliente',
 pending_comments: 'Comentarios / Notas', request_sign: 'Mirar Work Order', leave_job: 'Salir del Trabajo',
 leave_reason: 'Razón de salida (ej: fin de turno, dejado a medias)', idle: 'Idle', working: 'Working',
-upload_signed: 'ðŸ“¥ Upload PDF Signed (Subir PDF firmado)',
-signed_title: 'ðŸ“¥ PDF firmado por el cliente',
+upload_signed: '📥 Upload PDF Signed (Subir PDF firmado)',
+signed_title: '📥 PDF firmado por el cliente',
 signed_hint: 'Selecciona el PDF con la firma del cliente (máx. 2 MB). Se guarda en este aparato y viaja en los respaldos.',
-signed_ok: 'âœ… PDF firmado guardado — Work Signed',
-signed_big: '⚠  PDF demasiado grande (máximo 2 MB). Comprime o escanea con menos resolución.',
-signed_only_pdf: '⚠  Solo se aceptan archivos PDF.',
+signed_ok: '✅ PDF firmado guardado — Work Signed',
+signed_big: '⚠  PDF demasiado grande (máximo 2 MB). Comprime o escanea con menos resolución.',
+signed_only_pdf: '⚠  Solo se aceptan archivos PDF.',
 work_signed: 'Work Signed',
-signed_remove: 'ðŸ—‘ Quitar',
-save_error: '⚠  No se pudo guardar: almacenamiento del navegador lleno.'
+signed_remove: '🗑 Quitar',
+save_error: '⚠  No se pudo guardar: almacenamiento del navegador lleno.'
 },
 en: {
 nav_board: 'Board', nav_warehouse: 'Warehouse', nav_vendor: 'Order', nav_services: 'Services', nav_team: 'Team',
-h_backup: 'â¬‡ Backup', h_restore: 'â¬† Restore', h_logo: 'ðŸ–¼ Logo', h_road: 'ðŸš€ Roadmap', h_lang: 'ðŸŒ ES',
-st_queue: 'in queue', st_prog: 'in progress', st_carts: 'in carts', st_low: 'low stock', st_req: 'requests', mgr: 'ðŸ§‘â€ Manager',
-new_order: 'âž• NEW WORK ORDER', how_t: 'How it works',
-how_1: '1ï¸âƒ£ The <b>Manager</b> receives the truck and creates the order with services and parts (with rack).',
-how_2: '2ï¸âƒ£ The <b>mechanic</b> taps <b>TAKE THIS JOB</b> and becomes leader â­.',
-how_3: '3ï¸âƒ£ On the order, each part is pulled with one tap and goes to their <b>🛒’ cart</b>.',
-head_queue: 'ðŸ•’ In queue — taken in this order', head_prog: 'ðŸ”§ In progress', head_done: 'âœ… Completed',
-csv_all: 'â¬‡ QuickBooks CSV (all)', b_next: 'â–¶ NEXT', b_queue: 'IN QUEUE #', b_urg: 'ðŸ”´ URGENT',
-b_prog: 'ðŸ”§ IN PROGRESS', b_done: 'âœ… DONE', take_job: 'ðŸ™‹ TAKE THIS JOB', pre_assigned: 'ðŸ‘¤ Pre-assigned to:',
-team_none: 'No team yet', add_team: 'ï¼‹ Team', add_part: 'ï¼‹ Add part', estimate: 'Estimate', labor: 'labor',
-parts_w: 'parts', total: 'Total', finish_job: 'âœ” FINISH JOB', reopen: 'â†º Reopen', retry: 'Retry',
-missing_buy: '⚠  Missing — to buy', missing_btn: '⚠  MISSING', take_rack: 'ðŸ“¦ TAKE FROM RACK', in_cart: 'âœ… In cart',
-cart_of: '🛒’ Cart of', pieces_out: 'part(s) out', return_b: 'â†© Return', used_b: 'âœ” Used',
-search_parts_ph: 'ðŸ” Part, SKU or rack (A1...)', low_chip: '⚠  Low', add_part_b: 'âž• Part', stock: 'stock',
-dest_q: 'Where does it go?', dest_cart: '🛒’ To cart', dest_veh: 'ðŸšš To vehicle', dest_ubi: 'ðŸ“ Other shop location',
+h_backup: '⬇ Backup', h_restore: '⬆ Restore', h_logo: '🖼 Logo', h_road: '🚀 Roadmap', h_lang: '🌐 ES',
+st_queue: 'in queue', st_prog: 'in progress', st_carts: 'in carts', st_low: 'low stock', st_req: 'requests', mgr: '🧑‍🔧 Manager',
+new_order: '➕ NEW WORK ORDER', how_t: 'How it works',
+how_1: '11️⃣ The <b>Manager</b> receives the truck and creates the order with services and parts (with rack).',
+how_2: '21️⃣ The <b>mechanic</b> taps <b>TAKE THIS JOB</b> and becomes leader ⭐.',
+how_3: '31️⃣ On the order, each part is pulled with one tap and goes to their <b>🛒 cart</b>.',
+head_queue: '🕒 In queue — taken in this order', head_prog: '🔧 In progress', head_done: '✅ Completed',
+csv_all: '⬇ QuickBooks CSV (all)', b_next: '▶ NEXT', b_queue: 'IN QUEUE #', b_urg: '🔴 URGENT',
+b_prog: '🔧 IN PROGRESS', b_done: '✅ DONE', take_job: '🙋 TAKE THIS JOB', pre_assigned: '👤 Pre-assigned to:',
+team_none: 'No team yet', add_team: '＋ Team', add_part: '＋ Add part', estimate: 'Estimate', labor: 'labor',
+parts_w: 'parts', total: 'Total', finish_job: '✔ FINISH JOB', reopen: '↺ Reopen', retry: 'Retry',
+missing_buy: '⚠  Missing — to buy', missing_btn: '⚠  MISSING', take_rack: '📦 TAKE FROM RACK', in_cart: '✅ In cart',
+cart_of: '🛒 Cart of', pieces_out: 'part(s) out', return_b: '↩ Return', used_b: '✔ Used',
+search_parts_ph: '🔍 Part, SKU or rack (A1...)', low_chip: '⚠  Low', add_part_b: '➕ Part', stock: 'stock',
+dest_q: 'Where does it go?', dest_cart: '🛒 To cart', dest_veh: '🚚 To vehicle', dest_ubi: '📍 Other shop location',
 qty_f: 'Quantity', who_f: 'Who takes it?', job_f: 'Work order (optional)', none_opt: '— none —',
-no_orders: '— no active orders —', place_ph: 'e.g. weld table, bay 2...', take_from: 'ðŸ“¦ Take from',
-return_t: 'Return:', return_hint: 'Goes back to rack', had: 'Had', return_btn: 'â†© Return to rack',
+no_orders: '— no active orders —', place_ph: 'e.g. weld table, bay 2...', take_from: '📦 Take from',
+return_t: 'Return:', return_hint: 'Goes back to rack', had: 'Had', return_btn: '↩ Return to rack',
 use_t: 'Use:', use_hint: 'Installed/consumed and can be charged to the order. Base price preloaded — adjust if this job carries another.',
-price_f: 'Price to charge per part', charge_f: 'Charge to', no_charge: '— not charged / shop use —', use_btn: 'âœ” Used on the job',
-entry_t: 'Stock in:', entry_q: 'Quantity coming in (purchase, return, found)', note_f: 'Note (optional)', entry_btn: 'ï¼‹ Add to stock',
+price_f: 'Price to charge per part', charge_f: 'Charge to', no_charge: '— not charged / shop use —', use_btn: '✔ Used on the job',
+entry_t: 'Stock in:', entry_q: 'Quantity coming in (purchase, return, found)', note_f: 'Note (optional)', entry_btn: '＋ Add to stock',
 part_new: 'Add part manually', part_edit: 'Edit part', sku_f: 'SKU', loc_f: 'Rack / location', nes_f: 'Name (Spanish)',
-nen_f: 'Name (English)', price_base_f: 'Base price', min_f: 'Minimum', save_b: 'ðŸ’¾ Save', cancel_b: 'Cancel',
-name_missing: '⚠  Give the part a name.', sku_exists: '⚠  That SKU already exists.',
-serv_count: 'services Â· editable base price', add_serv: 'âž• Service', code_f: 'Code', ses_f: 'Service (Spanish)',
+nen_f: 'Name (English)', price_base_f: 'Base price', min_f: 'Minimum', save_b: '💾 Save', cancel_b: 'Cancel',
+name_missing: '⚠  Give the part a name.', sku_exists: '⚠  That SKU already exists.',
+serv_count: 'services · editable base price', add_serv: '➕ Service', code_f: 'Code', ses_f: 'Service (Spanish)',
 sen_f: 'Service (English)', unit_f: 'Unit', team_hint: 'Change "Mecánico 1" to the real name — everything updates automatically.',
 spec_ph: 'Specialty (brakes, AC, electrical...)', no_jobs: 'no jobs', in_cart_short: 'part(s) in cart',
-wo_t: 'ðŸ“¤ Outputs', out_lang: 'Output language (PDF/CSV)', pdf_b: 'ðŸ“„ Work order (PDF / print)',
-csv_b: 'ðŸ“Š QuickBooks CSV (this order)', out_hint: 'Today: files download. Tomorrow (with server): archived and sent straight to QuickBooks.',
-road_t: 'ðŸš€ Future features (notes)', who_t: 'Who takes this job?', who_take: 'Who takes this part?',
-new_t: 'âž• New work order', edit_t: 'âœï¸ Edit', s1: '1ï¸âƒ£ The vehicle', unit_f2: 'Unit / truck / trailer *',
+wo_t: '📤 Outputs', out_lang: 'Output language (PDF/CSV)', pdf_b: '📄 Work order (PDF / print)',
+csv_b: '📊 QuickBooks CSV (this order)', out_hint: 'Today: files download. Tomorrow (with server): archived and sent straight to QuickBooks.',
+road_t: '🚀 Future features (notes)', who_t: 'Who takes this job?', who_take: 'Who takes this part?',
+new_t: '➕ New work order', edit_t: '✏️ Edit', s1: '11️⃣ The vehicle', unit_f2: 'Unit / truck / trailer *',
 unit_ph: 'e.g. Truck 112 / 48\' Trailer #2214', client_f: 'Customer', client_ph: 'Customer name',
-desc_f: 'Description (free text)', desc_ph: 'e.g. Fix truck 112, AC repair...', mark_urgent: 'ðŸ”´ MARK AS URGENT',
-s2: '2ï¸âƒ£ Required services', price_list_f: 'Price to charge (base preloaded, adjustable)', s3: '3ï¸âƒ£ Pre-assigned parts',
-s3h: 'The mechanic will see each part with its rack. Search and tap ï¼‹.', search_ph: 'ðŸ” Search part, SKU or rack...',
-s4: '4ï¸âƒ£ Team (optional)', leader_f: 'Pre-assigned leader', leader_none: '— first available takes it —', companions_f: 'Crew',
-save_new: 'ðŸ’¾ Save and send to queue', save_edit: 'ðŸ’¾ Save changes', unit_missing: '⚠  Missing unit: which truck or trailer?',
+desc_f: 'Description (free text)', desc_ph: 'e.g. Fix truck 112, AC repair...', mark_urgent: '🔴 MARK AS URGENT',
+s2: '21️⃣ Required services', price_list_f: 'Price to charge (base preloaded, adjustable)', s3: '31️⃣ Pre-assigned parts',
+s3h: 'The mechanic will see each part with its rack. Search and tap ＋.', search_ph: '🔍 Search part, SKU or rack...',
+s4: '41️⃣ Team (optional)', leader_f: 'Pre-assigned leader', leader_none: '— first available takes it —', companions_f: 'Crew',
+save_new: '💾 Save and send to queue', save_edit: '💾 Save changes', unit_missing: '⚠  Missing unit: which truck or trailer?',
 finish_confirm: 'Finish', delete_confirm: 'Delete', no_undo: 'This cannot be undone.',
-skip_confirm: '⚠  There is a job first in line', take_anyway: 'Take this one anyway?',
-equipo_t: 'Team for', lead_b: 'â­ Leader', add_b: 'Add', remove_b: 'Remove', done_b: 'Done',
-hist_t: 'History:', hist_add: 'âž• stock in', hist_ret: 'â†© returned', hist_use: 'âœ” used', hist_out: 'ðŸ“¦ taken â†’',
+skip_confirm: '⚠  There is a job first in line', take_anyway: 'Take this one anyway?',
+equipo_t: 'Team for', lead_b: '⭐ Leader', add_b: 'Add', remove_b: 'Remove', done_b: 'Done',
+hist_t: 'History:', hist_add: '➕ stock in', hist_ret: '↩ returned', hist_use: '✔ used', hist_out: '📦 taken →',
 still_out: 'STILL OUT', no_moves: 'No movements yet.', results_none: 'No results', no_parts_yet: 'No parts yet.',
-logo_t: 'ðŸ–¼ Company logo', logo_up: 'ðŸ“· Upload logo (PNG / JPG)', logo_rm: 'ðŸ—‘ Remove logo',
+logo_t: '🖼 Company logo', logo_up: '📷 Upload logo (PNG / JPG)', logo_rm: '🗑 Remove logo',
 logo_none: 'No logo yet — CDE badge shown.', logo_hint: 'Auto-resized, stored on this device and travels in backups.',
-t_took: 'took', t_updated: 'updated', t_created: 'created and in queue', t_added_p: 'ï¼‹ Part added to', t_to_cart: 'â†’ 🛒’ cart of',
-t_short_f: '⚠  Missing', t_avisa: '— tell the manager', t_missing_mark: '⚠  Marked missing — to buy', t_no_stock: '⚠  Out of stock — mark to buy',
-t_back_r: 'â†© Part back to rack', t_used: 'âœ” Part used', t_charged: '— charged to', t_stock_up: 'ï¼‹ Stock updated:',
-t_part_saved: 'ðŸ’¾ Part saved', t_serv_saved: 'ðŸ’¾ Service saved', t_logo: ' Logo updated', t_logo_off: 'ðŸ–¼ Logo removed',
-t_restored: 'â¬† Data restored', t_backup: 'â¬‡ Backup downloaded', t_csv: 'ðŸ“Š QuickBooks CSV downloaded', t_mode_m: 'ðŸ§‘â€ðŸ’¼ Manager mode',
+t_took: 'took', t_updated: 'updated', t_created: 'created and in queue', t_added_p: '＋ Part added to', t_to_cart: '→ 🛒 cart of',
+t_short_f: '⚠  Missing', t_avisa: '— tell the manager', t_missing_mark: '⚠  Marked missing — to buy', t_no_stock: '⚠  Out of stock — mark to buy',
+t_back_r: '↩ Part back to rack', t_used: '✔ Part used', t_charged: '— charged to', t_stock_up: '＋ Stock updated:',
+t_part_saved: '💾 Part saved', t_serv_saved: '💾 Service saved', t_logo: ' Logo updated', t_logo_off: '🖼 Logo removed',
+t_restored: '⬆ Data restored', t_backup: '⬇ Backup downloaded', t_csv: '📊 QuickBooks CSV downloaded', t_mode_m: '🧑‍🔧ðŸ’¼ Manager mode',
 only: 'stock:', qtyshort: 'pc', wh_hint: 'Warehouse parts — click on the price to edit it inline.',
-vp_hint: 'Vendor catalog (customtruck.com) Â· Purchase requests Â· PDFs.',
-vp_search: 'ðŸ” Search vendor...', vp_cat: 'Category', vp_all: 'All', vp_req_b: '🛒Ž Request purchase',
-vp_po_b: 'ðŸ“„ Purchase Order (PDF)', vp_req: 'Requests', vp_active: 'Active', vp_history: 'History',
+vp_hint: 'Vendor catalog (customtruck.com) · Purchase requests · PDFs.',
+vp_search: '🔍 Search vendor...', vp_cat: 'Category', vp_all: 'All', vp_req_b: '🛒 Request purchase',
+vp_po_b: '📄 Purchase Order (PDF)', vp_req: 'Requests', vp_active: 'Active', vp_history: 'History',
 vp_needed: 'NEED APPROVAL', vp_approved: 'APPROVED', vp_ordered: 'ORDERED', vp_received: 'RECEIVED',
 vp_vendor: 'Vendor', vp_price: 'Vendor price', vp_qty: 'Qty requested', vp_urg: 'Urgency',
 vp_eta: 'ETA (expected arrival)', vp_order_num: 'Order #', vp_notes: 'Notes', vp_approved_by: 'Approved by',
-vp_order_date: 'Order date', vp_received_date: 'Received date', vp_mgr_approve: 'âœ“ Approve request',
-vp_mgr_send: 'ðŸ“¤ Mark as sent', vp_mgr_receive: 'âœ… Mark as received', vp_cancel: 'âœ• Cancel',
+vp_order_date: 'Order date', vp_received_date: 'Received date', vp_mgr_approve: '✓ Approve request',
+vp_mgr_send: '📤 Mark as sent', vp_mgr_receive: '✅ Mark as received', vp_cancel: '✕ Cancel',
 vp_reason: 'Reason for request', vp_reason_ph: 'e.g. missing for WO-003, broke during install...',
-vp_send: '🛒Ž Send request to Manager', vp_sent: 'âœ“ Request sent', vp_approved_toast: 'âœ“ Request approved',
-vp_sent_toast: 'ðŸ“¤ Request marked as sent', vp_received_toast: 'âœ… Request received and added to warehouse',
-vp_cancel_toast: 'âœ• Request cancelled', vp_no_reqs: 'No requests in this category.',
+vp_send: '🛒 Send request to Manager', vp_sent: '✓ Request sent', vp_approved_toast: '✓ Request approved',
+vp_sent_toast: '📤 Request marked as sent', vp_received_toast: '✅ Request received and added to warehouse',
+vp_cancel_toast: '✕ Request cancelled', vp_no_reqs: 'No requests in this category.',
 vp_po_title: 'PURCHASE ORDER', vp_po_vendor: 'Vendor', vp_po_items: 'Items', vp_po_total: 'TOTAL',
 vp_po_date: 'Date', vp_po_approved: 'Approved by', vp_po_eta: 'ETA', vp_po_notes: 'Notes',
 pending_status: 'Pending Status', waiting_parts: 'Waiting for parts', waiting_approval: 'Waiting for customer approval',
 pending_comments: 'Comments / Notes', request_sign: 'See Work Order', leave_job: 'Leave Job',
 leave_reason: 'Reason for leaving (e.g: end of shift, left incomplete)', idle: 'Idle', working: 'Working',
-upload_signed: 'ðŸ“¥ Upload PDF Signed',
-signed_title: 'ðŸ“¥ Customer-signed PDF',
+upload_signed: '📥 Upload PDF Signed',
+signed_title: '📥 Customer-signed PDF',
 signed_hint: 'Select the PDF with the customer signature (max 2 MB). Stored on this device and travels in backups.',
-signed_ok: 'âœ… Signed PDF saved — Work Signed',
-signed_big: '⚠  PDF too large (max 2 MB). Compress it or scan at lower resolution.',
-signed_only_pdf: '⚠  Only PDF files are accepted.',
+signed_ok: '✅ Signed PDF saved — Work Signed',
+signed_big: '⚠  PDF too large (max 2 MB). Compress it or scan at lower resolution.',
+signed_only_pdf: '⚠  Only PDF files are accepted.',
 work_signed: 'Work Signed',
-signed_remove: 'ðŸ—‘ Remove',
-save_error: '⚠  Could not save: browser storage full.'
+signed_remove: '🗑 Remove',
+save_error: '⚠  Could not save: browser storage full.'
 }
 };
 const lang = () => db.lang || 'es';
@@ -986,12 +986,12 @@ const mechName = id => (db.mechanics.find(m => m.id === id) || {}).name || '—'
 const partBySku = s => db.parts.find(p => p.sku === s);
 const servByCode = c => db.services.find(s => s.code === c);
 const userId = () => db.currentUser === 'mgr' ? null : db.currentUser;
-const destIcon = m => (m.dest || 'cart') === 'cart' ? '🛒’' : m.dest === 'vehiculo' ? 'ðŸšš' : 'ðŸ“';
+const destIcon = m => (m.dest || 'cart') === 'cart' ? '🛒' : m.dest === 'vehiculo' ? '🚚' : '📍';
 const destTxt = m => (m.dest || 'cart') === 'cart' ? (lang() === 'en' ? 'cart' : 'carrito') : (m.destTxt || '');
 function toast(msg) { const x = $('#toast'); x.textContent = msg; x.classList.add('show'); clearTimeout(x._h); x._h = setTimeout(() => x.classList.remove('show'), 2400) }
 function abrir(h) { $('#modal').innerHTML = h; $('#overlay').hidden = false; $('#modal').scrollTop = 0 }
 function cerrar() { $('#overlay').hidden = true }
-const mhead = x => `<div class="mhead"><h3>${x}</h3><button class="x" onclick="cerrar()">âœ•</button></div>`;
+const mhead = x => `<div class="mhead"><h3>${x}</h3><button class="x" onclick="cerrar()">✕</button></div>`;
 function download(name, content, type) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([content], { type })); a.download = name; a.click() }
 /* ========== DATOS ========== */
 function seed() {
@@ -1231,7 +1231,7 @@ $('#hbtns').innerHTML = `<button onclick="setLang()">${t('h_lang')}</button><but
 <label>${t('h_restore')}<input type="file" accept=".json" hidden onchange="importar(event)"></label>`;
 }
 function pintaNav() { ['board', 'warehouse', 'vendor', 'services', 'team'].forEach(k => $('#nv_' + k).textContent = t('nav_' + k)) }
-function setLang() { db.lang = lang() === 'es' ? 'en' : 'es'; save(); render(); toast(lang() === 'en' ? 'ðŸŒ English' : 'ðŸŒ Español') }
+function setLang() { db.lang = lang() === 'es' ? 'en' : 'es'; save(); render(); toast(lang() === 'en' ? '🌐 English' : '🌐 Español') }
 function estJob(j) {
 const s = (j.serv || []).reduce((a, c) => a + ((Number((j.prices || {})[c]) || servByCode(c)?.precio || 0) * (j.servQty?.[c] || 1)), 0);
 const p = db.moves.filter(m => !m.open && m.end === 'use' && m.job === j.num).reduce((a, m) => a + ((m.cargo != null ? m.cargo : m.precio) || 0) * m.q, 0);
@@ -1250,10 +1250,10 @@ $('#who').innerHTML = `<button class="wchip ${db.currentUser === 'mgr' ? 'on' : 
 db.mechanics.map(m => {
 const hasActiveJob = db.jobs.some(j => j.st === 'En progreso' && (j.mech || []).includes(m.id));
 const statusBadge = hasActiveJob ? `<span class="status-badge status-working">${t('working')}</span>` : `<span class="status-badge status-idle">${t('idle')}</span>`;
-return `<button class="wchip ${db.currentUser === m.id ? 'on' : ''}" onclick="setWho(${m.id})">ðŸ‘¤ ${esc(m.name)}<br>${statusBadge}</button>`;
+return `<button class="wchip ${db.currentUser === m.id ? 'on' : ''}" onclick="setWho(${m.id})">👤 ${esc(m.name)}<br>${statusBadge}</button>`;
 }).join('');
 }
-function setWho(w) { db.currentUser = w; save(); render(); toast(w === 'mgr' ? t('t_mode_m') : 'ðŸ‘¤ ' + mechName(w)) }
+function setWho(w) { db.currentUser = w; save(); render(); toast(w === 'mgr' ? t('t_mode_m') : '👤 ' + mechName(w)) }
 function logoModal() {
 abrir(`${mhead(t('logo_t'))}
 <div style="text-align:center;padding:14px 0">${db.logo ? `<img class="logoimg" style="height:64px" src="${db.logo}" alt="logo">` : `<span class="mut">${t('logo_none')}</span>`}</div>
@@ -1263,7 +1263,7 @@ ${db.logo ? `<button class="btn bad big" style="margin-top:8px" onclick="db.logo
 }
 function setLogoFile(ev) {
 const f = ev.target.files[0]; if (!f) return;
-if (!f.type.startsWith('image/')) { alert('⚠  PNG / JPG.'); return }
+if (!f.type.startsWith('image/')) { alert('⚠  PNG / JPG.'); return }
 const r = new FileReader();
 r.onload = () => {
 const img = new Image();
@@ -1273,21 +1273,21 @@ const w = Math.max(1, Math.round(img.width * sc)), h = Math.max(1, Math.round(im
 const c = document.createElement('canvas'); c.width = w; c.height = h; c.getContext('2d').drawImage(img, 0, 0, w, h);
 db.logo = c.toDataURL('image/png'); save(); cerrar(); toast(t('t_logo'));
 };
-img.onerror = () => alert('⚠ '); img.src = r.result;
+img.onerror = () => alert('⚠ '); img.src = r.result;
 };
 r.readAsDataURL(f); ev.target.value = '';
 }
 function roadModal() {
 abrir(mhead(t('road_t')) + `<div style="line-height:1.8;font-size:14px">
-<b>ðŸ–¥ Servidor / Server:</b> base de datos compartida en la nube — sincronización en vivo, archivo de órdenes y PDFs permanentes.<br>
-<b>ðŸ“’ QuickBooks Online API:</b> OAuth2 para crear Estimate/Invoice directo al terminar la orden.<br>
-<b>ðŸ“· Fotos / Photos:</b> evidencia antes/después en la orden y en el PDF.<br>
-<b>🛒’ Lista de compras / Purchase list:</b> faltantes acumulados â†’ lista para el proveedor.<br>
-<b>ðŸ” Usuarios / Users:</b> PIN por mecánico y rol de manager.<br>
-<b>ðŸ“… Recordatorios DOT / DOT reminders:</b> avisos de inspecciones anuales por unidad.</div>`);
+<b>🖥 Servidor / Server:</b> base de datos compartida en la nube — sincronización en vivo, archivo de órdenes y PDFs permanentes.<br>
+<b>📒 QuickBooks Online API:</b> OAuth2 para crear Estimate/Invoice directo al terminar la orden.<br>
+<b>📷 Fotos / Photos:</b> evidencia antes/después en la orden y en el PDF.<br>
+<b>🛒 Lista de compras / Purchase list:</b> faltantes acumulados → lista para el proveedor.<br>
+<b>🔐 Usuarios / Users:</b> PIN por mecánico y rol de manager.<br>
+<b>📅 Recordatorios DOT / DOT reminders:</b> avisos de inspecciones anuales por unidad.</div>`);
 }
-const unitLine = (j, sm) => `<div class="junit" ${sm ? 'style="font-size:17px"' : ''}>${esc(j.unit)} ${j.client ? `<span class="mut" style="font-weight:400">Â· ${esc(j.client)}</span>` : ''}</div>`;
-function servChips(j) { return (j.serv || []).map(c => { const s = servByCode(c); return s ? `<span class="chip read">${s.code} ${esc(L(s))} Â· ${money(j.prices?.[c] ?? s.precio)}</span>` : '' }).join('') }
+const unitLine = (j, sm) => `<div class="junit" ${sm ? 'style="font-size:17px"' : ''}>${esc(j.unit)} ${j.client ? `<span class="mut" style="font-weight:400">· ${esc(j.client)}</span>` : ''}</div>`;
+function servChips(j) { return (j.serv || []).map(c => { const s = servByCode(c); return s ? `<span class="chip read">${s.code} ${esc(L(s))} · ${money(j.prices?.[c] ?? s.precio)}</span>` : '' }).join('') }
 function servList(j) {
 if (!(j.serv || []).length) return '';
 return `<div style="margin-top:8px">` + j.serv.map(c => {
@@ -1303,7 +1303,7 @@ function partsResumen(j) {
 if (!(j.parts || []).length) return '';
 return `<div style="margin-top:6px">` + j.parts.map(p => {
 const part = partBySku(p.sku);
-return part ? `<span class="chip read">${part.loc} Â· ${p.q}Ã— ${esc(L(part))}${p.picked ? ' âœ…' : p.falta ? ' ⚠ ' : ''}</span>` : ''
+return part ? `<span class="chip read">${part.loc} · ${p.q}× ${esc(L(part))}${p.picked ? ' ✅' : p.falta ? ' ⚠ ' : ''}</span>` : ''
 }).join('') + `</div>`;
 }
 /* ========== TABLERO ========== */
@@ -1332,7 +1332,7 @@ return `<div class="card ${j.urgent ? 'urg' : ''}">
 <div class="jtop">${j.urgent ? `<span class="badge bUrg">${t('b_urg')}</span>` : ''}
 <span class="badge ${pos === 1 ? 'bSig' : 'bFila'}">${pos === 1 ? t('b_next') : t('b_queue') + pos}</span>
 <b class="ot">${OT(j.num)}</b>
-<span class="jacts"><button class="btn sm sec" onclick="nuevoTicket(${j.num})">âœï¸</button><button class="btn sm sec" onclick="borraJob(${j.num})">ðŸ—‘</button></span></div>
+<span class="jacts"><button class="btn sm sec" onclick="nuevoTicket(${j.num})">✏️</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span></div>
 ${unitLine(j)}
 ${j.desc ? `<div class="jdesc">${esc(j.desc)}</div>` : ''}
 ${servList(j)}${partsResumen(j)}
@@ -1350,14 +1350,14 @@ right = `<b style="color:var(--ok)">${t('in_cart')}${j.leader ? ' — ' + esc(me
 <span class="priceedit" onclick="precioPiezaJob(${j.num},${i})" title="Editar precio">${money(precio)}</span>`;
 } else if (p.falta) {
 right = `<span class="warnmut">${t('missing_buy')} (${p.falta})</span>
-<button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">🛒Ž ${t('vp_req_b').replace('🛒Ž ', '')}</button>
+<button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">🛒 ${t('vp_req_b').replace('🛒 ', '')}</button>
 ${part.cant > 0 ? `<button class="btn sm sec" onclick="sacarLista(${j.num},${i})">${t('retry')}</button>` : ''}`;
 } else if (part.cant <= 0) {
-right = `<button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">🛒Ž ${t('vp_req_b').replace('🛒Ž ', '')}</button>`;
+right = `<button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">🛒 ${t('vp_req_b').replace('🛒 ', '')}</button>`;
 } else {
 right = `<button class="btn sm pri" onclick="sacarLista(${j.num},${i})">${t('take_rack')}</button>`;
 }
-return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${p.q}Ã— ${esc(L(part))}</b><small>${esc(part.sku)} Â· ${money(part.precio)}</small></div>${right}</div>`
+return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${p.q}× ${esc(L(part))}</b><small>${esc(part.sku)} · ${money(part.precio)}</small></div>${right}</div>`
 }).join('') + `</div>`;
 }
 function precioPiezaJob(num, i) {
@@ -1373,11 +1373,11 @@ abrir(mhead(`${t('price_f')} — ${esc(L(part))}`) + `
 }
 function guardarPrecioPieza(num, i) {
 const j = db.jobs.find(x => x.num === num); j.parts[i].priceOverride = Number($('#precioO').value) || 0;
-save(); cerrar(); render(); toast('ðŸ’¾ ' + t('price_f'));
+save(); cerrar(); render(); toast('💾 ' + t('price_f'));
 }
 function cardProg(j) {
 const e = estJob(j);
-const team = (j.mech || []).map(id => `<span class="chip read">${id === j.leader ? 'â­ ' : ''}${esc(mechName(id))}</span>`).join('');
+const team = (j.mech || []).map(id => `<span class="chip read">${id === j.leader ? '⭐ ' : ''}${esc(mechName(id))}</span>`).join('');
 if (!j.pendingStatus) {
 j.pendingStatus = { waitingParts: false, waitingApproval: false, comments: '' };
 }
@@ -1400,8 +1400,8 @@ return `<div class="card ${j.urgent ? 'urg' : ''}">
 <b class="ot">${OT(j.num)}</b>
 <span class="jacts">
 <button class="btn-request-sign" onclick="requestCustomerSign(${j.num})">${t('request_sign')}</button>
-<button class="btn sm sec" onclick="outModal(${j.num})">ðŸ“¤</button>
-<button class="btn sm sec" onclick="nuevoTicket(${j.num})">âœï¸</button>
+<button class="btn sm sec" onclick="outModal(${j.num})">📤</button>
+<button class="btn sm sec" onclick="nuevoTicket(${j.num})">✏️</button>
 </span>
 </div>
 ${unitLine(j)}
@@ -1419,7 +1419,7 @@ ${signedBadge(j)}
 <div class="leave-job-box">
 <button class="btn bad big" onclick="leaveJobModal(${j.num})">${t('leave_job')}</button>
 </div>
-<div class="jtot">${t('estimate')}: <b>${money(e.s + e.p)}</b> <span class="mut">(${t('labor')} ${money(e.s)} Â· ${t('parts_w')} ${money(e.p)})</span></div>
+<div class="jtot">${t('estimate')}: <b>${money(e.s + e.p)}</b> <span class="mut">(${t('labor')} ${money(e.s)} · ${t('parts_w')} ${money(e.p)})</span></div>
 <button class="btn ok big" style="margin-top:10px" onclick="terminar(${j.num})">${t('finish_job')}</button></div>`;
 }
 function updatePendingStatus(num, field, value) {
@@ -1459,7 +1459,7 @@ td{border-bottom:1px solid #ddd;padding:6px 8px;vertical-align:top}
 .sign-line{border-bottom:2px solid #182c4d;height:60px;margin:10px 0}
 .sign-label{font-size:11px;color:#666;margin-top:5px}
 @media print{.btnp{display:none}}</style></head><body>
-<button class="btnp" onclick="window.print()">ðŸ–¨ Print / Save PDF</button>
+<button class="btnp" onclick="window.print()">🖨 Print / Save PDF</button>
 <div class="hd"><div>${db.logo ? `<img src="${db.logo}"><br>` : ''}<div class="co">CDE Truck &amp; Car Repair Inc.<small>Truck & Trailer Repair Shop</small></div></div>
 <div class="wo"><b>CUSTOMER SIGNATURE REQUEST</b><br>Work Order #${OT(j.num)}<br><span class="mut">${new Date().toLocaleDateString('en-US')}</span></div></div>
 <div class="sec">Customer / Vehicle</div>
@@ -1483,19 +1483,19 @@ ${rP || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
 <div class="sign-line" style="margin-top:20px"></div>
 <div class="sign-label">Print Name</div>
 </div>
-<p class="mut" style="margin-top:24px;font-size:10px">CDE Truck &amp; Car Repair Inc. — Prices subject to final inspection. Â· ${OT(j.num)}</p>
+<p class="mut" style="margin-top:24px;font-size:10px">CDE Truck &amp; Car Repair Inc. — Prices subject to final inspection. · ${OT(j.num)}</p>
 </body></html>`;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert('⚠  Pop-ups blocked'); return }
 w.document.write(html); w.document.close(); w.focus();
-toast('ðŸ“„ Signature request generated');
+toast('📄 Signature request generated');
 }
 /* ========== PDF FIRMADO (WORK SIGNED) ========== */
 function signedBadge(j) {
 if (!j.signedPdf) return '';
 return `<span class="signedwrap" onclick="verSignedPdf(${j.num})" title="${esc(j.signedPdf.name)}">
 <span class="pdficon">PDF</span>
-<span class="signedlabel">âœ“ ${t('work_signed')}</span>
+<span class="signedlabel">✓ ${t('work_signed')}</span>
 </span>`;
 }
 function uploadSignedModal(num) {
@@ -1504,7 +1504,7 @@ abrir(mhead(t('signed_title') + ' — ' + OT(num)) + `
 <p class="mut">${t('signed_hint')}</p>
 <label class="f">PDF</label>
 <input type="file" id="signedFile" accept="application/pdf,.pdf">
-${j.signedPdf ? `<div class="mut" style="margin-top:10px">ðŸ“Ž ${esc(j.signedPdf.name)} Â· ${fts(j.signedPdf.ts)}</div>
+${j.signedPdf ? `<div class="mut" style="margin-top:10px">📎 ${esc(j.signedPdf.name)} · ${fts(j.signedPdf.ts)}</div>
 <button class="btn bad big" style="margin-top:8px" onclick="quitarSignedPdf(${num})">${t('signed_remove')}</button>` : ''}
 <div style="display:flex;gap:8px;margin-top:14px">
 <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
@@ -1513,7 +1513,7 @@ ${j.signedPdf ? `<div class="mut" style="margin-top:10px">ðŸ“Ž ${esc(j.sign
 function guardarSignedPdf(num) {
 const j = db.jobs.find(x => x.num === num); if (!j) return;
 const f = $('#signedFile').files[0];
-if (!f) { alert('⚠  PDF'); return }
+if (!f) { alert('⚠  PDF'); return }
 if (!(f.type === 'application/pdf' || /\.pdf$/i.test(f.name))) { alert(t('signed_only_pdf')); return }
 if (f.size > 2 * 1024 * 1024) { alert(t('signed_big')); return }
 const r = new FileReader();
@@ -1527,14 +1527,14 @@ r.readAsDataURL(f);
 function verSignedPdf(num) {
 const j = db.jobs.find(x => x.num === num); if (!j || !j.signedPdf) return;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert('⚠  Pop-ups blocked'); return }
 w.document.write(`<!DOCTYPE html><html><head><title>${OT(num)} — ${t('work_signed')}</title></head><body style="margin:0"><iframe src="${j.signedPdf.data}" style="width:100%;height:100vh;border:none"></iframe></body></html>`);
 w.document.close();
 }
 function quitarSignedPdf(num) {
 const j = db.jobs.find(x => x.num === num); if (!j) return;
 if (!confirm(t('delete_confirm') + '?')) return;
-j.signedPdf = null; save(); cerrar(); render(); toast('ðŸ—‘ PDF');
+j.signedPdf = null; save(); cerrar(); render(); toast('🗑 PDF');
 }
 function leaveJobModal(num) {
 const j = db.jobs.find(x => x.num === num);
@@ -1549,7 +1549,7 @@ function leaveJob(num) {
 const j = db.jobs.find(x => x.num === num);
 const reason = $('#leaveReason').value.trim();
 const uid = userId();
-if (!uid) { alert('⚠  Only mechanics can leave jobs'); return }
+if (!uid) { alert('⚠  Only mechanics can leave jobs'); return }
 if (j.mech && j.mech.includes(uid)) {
 j.mech = j.mech.filter(id => id !== uid);
 }
@@ -1566,14 +1566,14 @@ if (!j.pendingStatus) j.pendingStatus = { waitingParts: false, waitingApproval: 
 if (reason) {
 j.pendingStatus.comments = (j.pendingStatus.comments ? j.pendingStatus.comments + '\n' : '') + `[${mechName(uid)} dejó el trabajo] ${reason}`;
 }
-save(); cerrar(); render(); toast('ðŸ‘‹ ' + mechName(uid) + ' left the job');
+save(); cerrar(); render(); toast('👋 ' + mechName(uid) + ' left the job');
 }
 function cardDone(j) {
 const e = estJob(j);
 return `<div class="card">
 <div class="jtop"><span class="badge bDone">${t('b_done')}</span><b class="ot">${OT(j.num)}</b>
 <span class="mut">${j.finished ? fts(j.finished) : ''}</span>
-<span class="jacts">${signedBadge(j)}<button class="btn sm sec" onclick="uploadSignedModal(${j.num})" title="${esc(t('upload_signed'))}">ðŸ“¥</button><button class="btn sm sec" onclick="outModal(${j.num})">ðŸ“¤</button><button class="btn sm sec" onclick="cambiarSt(${j.num},'En progreso')">${t('reopen')}</button><button class="btn sm sec" onclick="borraJob(${j.num})">ðŸ—‘</button></span></div>
+<span class="jacts">${signedBadge(j)}<button class="btn sm sec" onclick="uploadSignedModal(${j.num})" title="${esc(t('upload_signed'))}">📥</button><button class="btn sm sec" onclick="outModal(${j.num})">📤</button><button class="btn sm sec" onclick="cambiarSt(${j.num},'En progreso')">${t('reopen')}</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span></div>
 ${unitLine(j, true)}
 <div class="jtot">${t('total')}: <b>${money(e.s + e.p)}</b></div></div>`;
 }
@@ -1585,21 +1585,21 @@ const j = db.jobs.find(x => x.num === num); if (!j) return;
 const fila = db.jobs.filter(x => x.st === 'En fila').sort((a, b) => a.ts - b.ts);
 if (fila[0] && fila[0].num !== num && !confirm(t('skip_confirm') + ' (' + OT(fila[0].num) + '). ' + t('take_anyway'))) return;
 const uid = userId();
-if (uid) { j.leader = uid; if (!(j.mech || []).includes(uid)) j.mech.push(uid); j.st = 'En progreso'; save(); render(); toast('ðŸ™‹ ' + mechName(uid) + ' ' + t('t_took') + ' ' + OT(num)) }
+if (uid) { j.leader = uid; if (!(j.mech || []).includes(uid)) j.mech.push(uid); j.st = 'En progreso'; save(); render(); toast('🙋 ' + mechName(uid) + ' ' + t('t_took') + ' ' + OT(num)) }
 else abrir(mhead(t('who_t')) + db.mechanics.map(m =>
-`<button class="btn pri big" style="margin-bottom:8px" onclick="asignaToma(${num},${m.id})">ðŸ™‹ ${esc(m.name)}</button>`).join('') +
+`<button class="btn pri big" style="margin-bottom:8px" onclick="asignaToma(${num},${m.id})">🙋 ${esc(m.name)}</button>`).join('') +
 `<button class="btn sec big" onclick="cerrar()">${t('cancel_b')}</button>`);
 }
 function asignaToma(num, mid) {
 cerrar(); const j = db.jobs.find(x => x.num === num);
-j.leader = mid; if (!(j.mech || []).includes(mid)) j.mech.push(mid); j.st = 'En progreso'; save(); render(); toast('ðŸ™‹ ' + mechName(mid) + ' ' + t('t_took') + ' ' + OT(num))
+j.leader = mid; if (!(j.mech || []).includes(mid)) j.mech.push(mid); j.st = 'En progreso'; save(); render(); toast('🙋 ' + mechName(mid) + ' ' + t('t_took') + ' ' + OT(num))
 }
 function equipoModal(num) {
 const j = db.jobs.find(x => x.num === num);
 abrir(mhead(t('equipo_t') + ' ' + OT(num)) +
 db.mechanics.map(m => {
 const inT = (j.mech || []).includes(m.id);
-return `<div class="pickrow"><b style="flex:1">${inT ? 'âœ…' : 'â¬œ'} ${esc(m.name)} ${j.leader === m.id ? 'â­' : ''}</b>
+return `<div class="pickrow"><b style="flex:1">${inT ? '✅' : '⬜'} ${esc(m.name)} ${j.leader === m.id ? '⭐' : ''}</b>
 ${inT && j.leader !== m.id ? `<button class="btn sm sec" onclick="hacerLider(${num},${m.id})">${t('lead_b')}</button>` : ''}
 <button class="btn sm ${inT ? 'bad' : 'pri'}" onclick="toggleTeam(${num},${m.id})">${inT ? t('remove_b') : t('add_b')}</button></div>`
 }).join('') +
@@ -1655,8 +1655,8 @@ abrir(`${mhead(editNum ? t('edit_t') + ' ' + OT(editNum) : t('new_t'))}
 <div style="margin-top:10px"><span class="chip ${tUrgent ? 'sel' : ''}" onclick="tUrgent=!tUrgent;this.classList.toggle('sel')">${t('mark_urgent')}</span></div>
 <div class="step">${t('s2')}</div>
 <div style="display:flex;gap:8px;margin-bottom:7px">
-<input type="search" placeholder="ðŸ” Buscar servicio..." oninput="tServSearch=this.value;pintaTServ()" style="flex:1">
-<button class="btn sm sec" onclick="tOpenServ()" style="flex:none">âž• Nuevo</button>
+<input type="search" placeholder="🔍 Buscar servicio..." oninput="tServSearch=this.value;pintaTServ()" style="flex:1">
+<button class="btn sm sec" onclick="tOpenServ()" style="flex:none">➕ Nuevo</button>
 </div>
 <div class="chipbox" id="tServBox"></div><div id="tPriceList"></div>
 <div class="step">${t('s3')}</div>
@@ -1664,7 +1664,7 @@ abrir(`${mhead(editNum ? t('edit_t') + ' ' + OT(editNum) : t('new_t'))}
 <div id="tPartsList"></div>
 <div style="display:flex;gap:8px;margin-bottom:7px">
 <input type="search" placeholder="${esc(t('search_ph'))}" oninput="tSearch=this.value;pintaPick()" style="flex:1">
-<button class="btn sm sec" onclick="tOpenPart()" style="flex:none">âž• Nueva</button>
+<button class="btn sm sec" onclick="tOpenPart()" style="flex:none">➕ Nueva</button>
 </div>
 <div class="chipbox" id="tPickBox"></div>
 <div class="step">${t('s4')}</div>
@@ -1681,7 +1681,7 @@ function pintaTServ() {
 const q = tServSearch.toLowerCase();
 const list = db.services.filter(s => !q || s.code.toLowerCase().includes(q) || s.es.toLowerCase().includes(q) || (s.en || '').toLowerCase().includes(q));
 $('#tServBox').innerHTML = list.map(s =>
-`<span class="chip ${tSel.has(s.code) ? 'sel' : ''}" onclick="tToggleServ('${oq(s.code)}')">${s.code} ${esc(L(s))} Â· ${money(s.precio)}${s.unidad === 'hr' ? '/hr' : ''}</span>`).join('');
+`<span class="chip ${tSel.has(s.code) ? 'sel' : ''}" onclick="tToggleServ('${oq(s.code)}')">${s.code} ${esc(L(s))} · ${money(s.precio)}${s.unidad === 'hr' ? '/hr' : ''}</span>`).join('');
 }
 function tToggleServ(c) { 
   if (tSel.has(c)) { tSel.delete(c); delete tServQty[c]; } 
@@ -1701,22 +1701,22 @@ return `<div class="pickrow">
 <div class="pinfo"><b>${s.code} ${esc(L(s))}</b></div>
 <div class="stepbox"><button onclick="tSq('${oq(c)}',-1)">-</button><b>${q}</b><button onclick="tSq('${oq(c)}',1)">+</button></div>
 <span class="priceedit" style="width:70px;text-align:center"><input type="number" step="0.01" data-pc="${esc(c)}" value="${tPrices[c] ?? s.precio}" style="width:100%;background:transparent;border:none;text-align:center;color:inherit;font-weight:bold"></span>
-<button class="btn sm sec" onclick="tToggleServ('${oq(c)}')">âœ•</button>
+<button class="btn sm sec" onclick="tToggleServ('${oq(c)}')">✕</button>
 </div>`
 }).join('') : '';
 }
 function pintaTTeam() {
 $('#tTeamBox').innerHTML = db.mechanics.map(m =>
-`<span class="chip ${tTeam.has(m.id) ? 'sel' : ''}" onclick="tTeam.has(${m.id})?tTeam.delete(${m.id}):tTeam.add(${m.id});pintaTTeam()">ðŸ‘¤ ${esc(m.name)}</span>`).join('');
+`<span class="chip ${tTeam.has(m.id) ? 'sel' : ''}" onclick="tTeam.has(${m.id})?tTeam.delete(${m.id}):tTeam.add(${m.id});pintaTTeam()">👤 ${esc(m.name)}</span>`).join('');
 }
 function pintaTParts() {
 $('#tPartsList').innerHTML = tParts.length ? tParts.map((p, idx) => {
 const part = partBySku(p.sku); if (!part) return '';
 return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${esc(L(part))}</b><small>${t('only')} ${part.cant}</small></div>
-<div class="stepbox"><button onclick="tMenos('${oq(p.sku)}')">ï¼</button><b>${p.q}</b><button onclick="tMas('${oq(p.sku)}')">ï¼‹</button></div>
+<div class="stepbox"><button onclick="tMenos('${oq(p.sku)}')">-</button><b>${p.q}</b><button onclick="tMas('${oq(p.sku)}')">＋</button></div>
 <span class="priceedit" onclick="tEditPrecio(${idx})" title="Precio: ${money(p.priceOverride != null ? p.priceOverride : part.precio)}">${money(p.priceOverride != null ? p.priceOverride : part.precio)}</span>
-${p.q > part.cant ? `<span class="warnmut">⚠  ${t('only')} ${part.cant}</span>` : ''}
-<button class="btn sm sec" onclick="tDel('${oq(p.sku)}')">âœ•</button></div>`
+${p.q > part.cant ? `<span class="warnmut">⚠  ${t('only')} ${part.cant}</span>` : ''}
+<button class="btn sm sec" onclick="tDel('${oq(p.sku)}')">✕</button></div>`
 }).join('')
 : `<p class="mut">${t('no_parts_yet')}</p>`;
 }
@@ -1734,8 +1734,8 @@ function pintaPick() {
 const q = tSearch.toLowerCase();
 const list = db.parts.filter(p => !q || p.es.toLowerCase().includes(q) || p.en.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.loc.toLowerCase().includes(q)).slice(0, 30);
 $('#tPickBox').innerHTML = list.map(p =>
-`<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${esc(p.sku)} Â· ${money(p.precio)} Â· ${t('only')} ${p.cant}${p.cant <= p.min ? ' ⚠ ' : ''}</small></div>
-<button class="btn sm pri" onclick="tAdd('${oq(p.sku)}')">ï¼‹</button></div>`).join('') || `<div class="empty">${t('results_none')}</div>`;
+`<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${esc(p.sku)} · ${money(p.precio)} · ${t('only')} ${p.cant}${p.cant <= p.min ? ' ⚠ ' : ''}</small></div>
+<button class="btn sm pri" onclick="tAdd('${oq(p.sku)}')">＋</button></div>`).join('') || `<div class="empty">${t('results_none')}</div>`;
 }
 function guardaTicket() {
 const unit = $('#tUnit').value.trim();
@@ -1745,8 +1745,8 @@ const data = {
 unit, client: $('#tClient').value.trim(), desc: $('#tDesc').value.trim(), urgent: tUrgent,
 serv: [...tSel], servQty: { ...tServQty }, prices: { ...tPrices }, parts: tParts, leader: Number($('#tLeader').value) || null, mech: [...tTeam]
 };
-if (editNum) { Object.assign(db.jobs.find(x => x.num === editNum), data); toast('ðŸ’¾ ' + OT(editNum) + ' ' + t('t_updated')) }
-else { const n = db.nextJob++; db.jobs.push(Object.assign({ num: n, ts: Date.now(), st: 'En fila', finished: null, pendingStatus: { waitingParts: false, waitingApproval: false, comments: '' }, signedPdf: null }, data)); toast('âœ… ' + OT(n) + ' ' + t('t_created')) }
+if (editNum) { Object.assign(db.jobs.find(x => x.num === editNum), data); toast('💾 ' + OT(editNum) + ' ' + t('t_updated')) }
+else { const n = db.nextJob++; db.jobs.push(Object.assign({ num: n, ts: Date.now(), st: 'En fila', finished: null, pendingStatus: { waitingParts: false, waitingApproval: false, comments: '' }, signedPdf: null }, data)); toast('✅ ' + OT(n) + ' ' + t('t_created')) }
 save(); cerrar(); tab = 'board'; render();
 }
 /* añadir pieza en orden activa */
@@ -1761,8 +1761,8 @@ pintaJPick(num);
 function pintaJPick(num) {
 const q = jSearch.toLowerCase();
 const list = db.parts.filter(p => !q || p.es.toLowerCase().includes(q) || p.en.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.loc.toLowerCase().includes(q)).slice(0, 25);
-$('#jPickBox').innerHTML = list.map(p => `<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${t('only')} ${p.cant} Â· ${money(p.precio)}</small></div>
-<button class="btn sm pri" onclick="addJobPart(${num},'${oq(p.sku)}')">ï¼‹</button></div>`).join('') || `<div class="empty">${t('results_none')}</div>`;
+$('#jPickBox').innerHTML = list.map(p => `<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${t('only')} ${p.cant} · ${money(p.precio)}</small></div>
+<button class="btn sm pri" onclick="addJobPart(${num},'${oq(p.sku)}')">＋</button></div>`).join('') || `<div class="empty">${t('results_none')}</div>`;
 }
 function addJobPart(num, sku) {
 const j = db.jobs.find(x => x.num === num); j.parts = j.parts || [];
@@ -1774,7 +1774,7 @@ function sacarLista(num, i) {
 const j = db.jobs.find(x => x.num === num), lid = j.leader || userId();
 if (!lid) {
 abrir(mhead(t('who_take')) + db.mechanics.map(m =>
-`<button class="btn pri big" style="margin-bottom:8px" onclick="cerrar();sacaComo(${num},${i},${m.id})">🛒’ ${esc(m.name)}</button>`).join('') +
+`<button class="btn pri big" style="margin-bottom:8px" onclick="cerrar();sacaComo(${num},${i},${m.id})">🛒 ${esc(m.name)}</button>`).join('') +
 `<button class="btn sec big" onclick="cerrar()">${t('cancel_b')}</button>`); return
 }
 sacaComo(num, i, lid);
@@ -1786,9 +1786,9 @@ const precio = p.priceOverride != null ? p.priceOverride : part.precio;
 if (part.cant >= p.q) {
 part.cant -= p.q; p.picked = true; p.priceOverride = precio;
 db.moves.push({ id: Date.now() + Math.random(), ts: Date.now(), sku: p.sku, es: part.es, en: part.en, q: p.q, mech: mid, job: num, precio: precio, loc: part.loc, dest: 'cart', destTxt: '', open: true, end: null });
-toast('ðŸ“¦ ' + p.q + 'Ã— ' + L(part) + ' ' + t('t_to_cart') + ' ' + mechName(mid));
+toast('📦 ' + p.q + '× ' + L(part) + ' ' + t('t_to_cart') + ' ' + mechName(mid));
 } else if (part.cant > 0) {
-if (confirm('⚠  ' + t('only') + ' ' + part.cant + ' (' + part.loc + '). ' + t('t_short_f') + ' ' + (p.q - part.cant) + '?')) {
+if (confirm('⚠  ' + t('only') + ' ' + part.cant + ' (' + part.loc + '). ' + t('t_short_f') + ' ' + (p.q - part.cant) + '?')) {
 const take = part.cant; part.cant = 0; p.picked = true; p.falta = p.q - take; p.priceOverride = precio;
 db.moves.push({ id: Date.now() + Math.random(), ts: Date.now(), sku: p.sku, es: part.es, en: part.en, q: take, mech: mid, job: num, precio: precio, loc: part.loc, dest: 'cart', destTxt: '', open: true, end: null });
 toast(t('t_short_f') + ' ' + (p.q - take) + ' ' + t('t_avisa'));
@@ -1821,7 +1821,7 @@ id: db.nextReq++, ts: Date.now(), sku, es: part.es, en: part.en, cat: 'Warehouse
 jobNum: num || 0, jobUnit: j?.unit || '', requestedBy: mechName(userId())
 });
 if (j && j.parts[i]) j.parts[i].falta = q;
-save(); cerrar(); render(); toast(t('vp_sent') + ' Â· ' + L(part));
+save(); cerrar(); render(); toast(t('vp_sent') + ' · ' + L(part));
 }
 /* ========== WAREHOUSE PARTS ========== */
 let pSearch = '', pLow = false;
@@ -1831,7 +1831,7 @@ let carts = '';
 if (abiertos.length) {
 const porMech = {}, sinMech = [];
 abiertos.forEach(m => m.mech ? (porMech[m.mech] = porMech[m.mech] || []).push(m) : sinMech.push(m));
-const grupo = (nombre, ms) => `<div class="cartbox"><h3>${t('cart_of')} ${esc(nombre)} — ${ms.reduce((a, m) => a + m.q, 0)} ${t('pieces_out')}</h3>${ms.map(m => `<div class="mrow"><b>${m.q}Ã—</b> ${esc(lang() === 'en' ? (m.en || m.es) : m.es)} <span class="mut">${destIcon(m)} ${esc(destTxt(m))}${m.job ? ' Â· ' + OT(m.job) : ''} Â· ${fts(m.ts)}</span>
+const grupo = (nombre, ms) => `<div class="cartbox"><h3>${t('cart_of')} ${esc(nombre)} — ${ms.reduce((a, m) => a + m.q, 0)} ${t('pieces_out')}</h3>${ms.map(m => `<div class="mrow"><b>${m.q}×</b> ${esc(lang() === 'en' ? (m.en || m.es) : m.es)} <span class="mut">${destIcon(m)} ${esc(destTxt(m))}${m.job ? ' · ' + OT(m.job) : ''} · ${fts(m.ts)}</span>
 <span style="margin-left:auto;display:flex;gap:5px">
 <button class="btn sm sec" onclick="devolverModal(${m.id})">${t('return_b')}</button>
 <button class="btn sm ok" onclick="usarModal(${m.id})">${t('used_b')}</button></span></div>`).join('')}</div>`;
@@ -1847,25 +1847,25 @@ $('#main').innerHTML = carts + `
 <button class="chip ${pLow ? 'sel' : ''}" onclick="pLow=!pLow;render()">${t('low_chip')} (${db.parts.filter(p => p.cant <= p.min).length})</button>
 <button class="btn pri" onclick="partModal()">${t('add_part_b')}</button></div>
 ${parts.map(p => `<div class="pickrow">
-<div class="pinfo"><b>${esc(L(p))}</b><small>${esc(lang() === 'en' ? p.es : p.en)} Â· ${esc(p.sku)}</small></div>
+<div class="pinfo"><b>${esc(L(p))}</b><small>${esc(lang() === 'en' ? p.es : p.en)} · ${esc(p.sku)}</small></div>
 ${locBadge(p.loc)}<span class="priceedit" onclick="editPrecioInline('${oq(p.sku)}',this)" title="Click para editar">${money(p.precio)}</span>
 <span class="qty ${p.cant <= p.min ? 'low' : ''}">${p.cant}</span>
-<button class="btn sm sec" onclick="entradaModal('${oq(p.sku)}')">ï¼‹</button>
-<button class="btn sm pri" onclick="salidaModal('${oq(p.sku)}')">ï¼</button>
-<button class="btn sm sec" onclick="histModal('${oq(p.sku)}')">â‰¡</button>
-<button class="btn sm sec" onclick="partModal('${oq(p.sku)}')">âœï¸</button></div>`).join('')}
+<button class="btn sm sec" onclick="entradaModal('${oq(p.sku)}')">＋</button>
+<button class="btn sm pri" onclick="salidaModal('${oq(p.sku)}')">-</button>
+<button class="btn sm sec" onclick="histModal('${oq(p.sku)}')">≡</button>
+<button class="btn sm sec" onclick="partModal('${oq(p.sku)}')">✏️</button></div>`).join('')}
 ${parts.length ? '' : `<div class="empty">${t('results_none')}</div>`}`;
 }
 function editPrecioInline(sku, el) {
 const p = partBySku(sku);
 const v = prompt(`${t('price_base_f')} — ${L(p)}`, p.precio);
-if (v !== null) { p.precio = Number(v) || 0; save(); render(); toast('ðŸ’¾ ' + t('t_part_saved')) }
+if (v !== null) { p.precio = Number(v) || 0; save(); render(); toast('💾 ' + t('t_part_saved')) }
 }
 let salDest = 'cart';
 function salidaModal(sku) {
 const p = partBySku(sku); salDest = 'cart';
 abrir(`${mhead(t('take_from') + ' ' + p.loc + ': ' + esc(L(p)))}
-<p class="mut">${t('only')} <b>${p.cant}</b> Â· ${esc(p.loc)}</p>
+<p class="mut">${t('only')} <b>${p.cant}</b> · ${esc(p.loc)}</p>
 <label class="f">${t('dest_q')}</label>
 <div style="display:flex;gap:6px;flex-wrap:wrap">
 <span class="chip sel" id="dCart" onclick="setDest('cart')">${t('dest_cart')}</span>
@@ -1885,21 +1885,21 @@ function pintaSalExtra() {
 const jobs = db.jobs.filter(j => j.st !== 'Terminado');
 $('#salExtra').innerHTML =
 salDest === 'vehiculo' ? `<label class="f">${t('charge_f')}</label><select id="mJob">
-${jobs.length ? jobs.map(j => `<option value="${j.num}">${OT(j.num)} Â· ${esc(j.unit)}</option>`).join('') : `<option value="0">${t('no_orders')}</option>`}</select>`
+${jobs.length ? jobs.map(j => `<option value="${j.num}">${OT(j.num)} · ${esc(j.unit)}</option>`).join('') : `<option value="0">${t('no_orders')}</option>`}</select>`
 : salDest === 'ubicacion' ? `<label class="f">${t('dest_ubi')}</label><input id="mUbi" placeholder="${esc(t('place_ph'))}">`
 : `<label class="f">${t('job_f')}</label><select id="mJobO"><option value="0">${t('none_opt')}</option>
-${jobs.map(j => `<option value="${j.num}">${OT(j.num)} Â· ${esc(j.unit)}</option>`).join('')}</select>`;
+${jobs.map(j => `<option value="${j.num}">${OT(j.num)} · ${esc(j.unit)}</option>`).join('')}</select>`;
 }
 function sacar(sku) {
 const p = partBySku(sku), q = Math.max(1, Math.floor(Number($('#mQ').value) || 1));
-if (q > p.cant) { alert('⚠  ' + t('only') + ' ' + p.cant); return }
+if (q > p.cant) { alert('⚠  ' + t('only') + ' ' + p.cant); return }
 p.cant -= q;
 let dest = salDest, txt = '', job = 0;
 if (dest === 'vehiculo') { job = Number($('#mJob')?.value) || 0; txt = job ? OT(job) + ' ' + (db.jobs.find(j => j.num === job)?.unit || '') : '' }
 if (dest === 'ubicacion') { txt = $('#mUbi')?.value.trim() || '—' }
 if (dest === 'cart') { job = Number($('#mJobO')?.value) || 0 }
 db.moves.push({ id: Date.now() + Math.random(), ts: Date.now(), sku, es: p.es, en: p.en, q, mech: Number($('#mMech').value), job, precio: p.precio, loc: p.loc, dest, destTxt: txt, open: true, end: null });
-save(); cerrar(); render(); toast('ðŸ“¦ ' + q + 'Ã— ' + L(p) + ' â†’ ' + destIcon({ dest }) + ' ' + txt);
+save(); cerrar(); render(); toast('📦 ' + q + '× ' + L(p) + ' → ' + destIcon({ dest }) + ' ' + txt);
 }
 function devolverModal(id) {
 const m = db.moves.find(x => x.id === id);
@@ -1922,7 +1922,7 @@ abrir(`${mhead(t('use_t') + ' ' + esc(lang() === 'en' ? (m.en || m.es) : m.es))}
 <label class="f">${t('price_f')}</label><input type="number" step="0.01" id="uCargo" value="${m.precio}" inputmode="decimal">
 <label class="f">${t('charge_f')}</label><select id="uJob">
 <option value="0" ${!m.job ? 'selected' : ''}>${t('no_charge')}</option>
-${db.jobs.filter(j => j.st !== 'Terminado').map(j => `<option value="${j.num}" ${m.job === j.num ? 'selected' : ''}>${OT(j.num)} Â· ${esc(j.unit)}</option>`).join('')}</select>
+${db.jobs.filter(j => j.st !== 'Terminado').map(j => `<option value="${j.num}" ${m.job === j.num ? 'selected' : ''}>${OT(j.num)} · ${esc(j.unit)}</option>`).join('')}</select>
 <button class="btn ok big" style="margin-top:16px" onclick="usar(${id})">${t('use_btn')}</button>`);
 }
 function usar(id) {
@@ -1933,7 +1933,7 @@ save(); cerrar(); render(); toast(t('t_used') + (m.job ? ' ' + t('t_charged') + 
 function entradaModal(sku) {
 const p = partBySku(sku);
 abrir(`${mhead(t('entry_t') + ' ' + esc(L(p)))}
-<p class="mut">${esc(p.loc)} Â· ${t('stock')}: <b>${p.cant}</b></p>
+<p class="mut">${esc(p.loc)} · ${t('stock')}: <b>${p.cant}</b></p>
 <label class="f">${t('entry_q')}</label><input type="number" id="eQ" value="1" min="1" inputmode="numeric">
 <label class="f">${t('note_f')}</label><input id="eNota" placeholder="NAPA #4482">
 <button class="btn pri big" style="margin-top:16px" onclick="entrar('${oq(sku)}')">${t('entry_btn')}</button>`);
@@ -1958,7 +1958,7 @@ abrir(`${mhead(p ? t('part_edit') : t('part_new'))}
 <div style="flex:1"><label class="f">${t('qty_f')}</label><input type="number" id="pCant" value="${p?.cant ?? 0}" inputmode="numeric"></div>
 <div style="flex:1"><label class="f">${t('min_f')}</label><input type="number" id="pMin" value="${p?.min ?? 0}" inputmode="numeric"></div></div>
 <div style="display:flex;gap:8px;margin-top:16px">
-${p ? `<button class="btn bad" onclick="if(confirm('${oq(t('delete_confirm'))}?')){db.parts=db.parts.filter(x=>x.sku!=='${oq(p.sku)}');save();cerrar();render()}">ðŸ—‘</button>` : ''}
+${p ? `<button class="btn bad" onclick="if(confirm('${oq(t('delete_confirm'))}?')){db.parts=db.parts.filter(x=>x.sku!=='${oq(p.sku)}');save();cerrar();render()}">🗑</button>` : ''}
 <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
 <button class="btn pri" style="flex:2" onclick="guardaParte('${oq(sku || '')}')">${t('save_b')}</button></div>`);
 }
@@ -1978,7 +1978,7 @@ const ms = db.moves.filter(m => m.sku === sku).slice(-25).reverse();
 const p = partBySku(sku);
 const tipo = m => m.end === 'add' ? t('hist_add') : m.end === 'return' ? t('hist_ret') : m.end === 'use' ? t('hist_use') + (m.job ? ' ' + OT(m.job) : '') : t('hist_out') + ' ' + destIcon(m) + ' ' + esc(destTxt(m));
 abrir(mhead(t('hist_t') + ' ' + esc(L(p) || sku)) +
-(ms.length ? ms.map(m => `<div class="hist"><b>${tipo(m)}</b> Â· ${m.q} ${t('qtyshort')} Â· ${m.mech ? esc(mechName(m.mech)) : 'shop'} Â· ${fts(m.ts)}${m.nota ? ' Â· ' + esc(m.nota) : ''}${m.open ? ` Â· <b style="color:var(--bad)">${t('still_out')}</b>` : ''}</div>`).join('') : `<div class="empty">${t('no_moves')}</div>`));
+(ms.length ? ms.map(m => `<div class="hist"><b>${tipo(m)}</b> · ${m.q} ${t('qtyshort')} · ${m.mech ? esc(mechName(m.mech)) : 'shop'} · ${fts(m.ts)}${m.nota ? ' · ' + esc(m.nota) : ''}${m.open ? ` · <b style="color:var(--bad)">${t('still_out')}</b>` : ''}</div>`).join('') : `<div class="empty">${t('no_moves')}</div>`));
 }
 /* ========== VENDOR PARTS ========== */
 let vpSearch = '', vpCat = 'ALL', vpFilter = 'active';
@@ -2000,7 +2000,7 @@ $('#main').innerHTML = `
 ${cats.map(c => `<option ${vpCat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
 <button class="btn sm sec" onclick="vpFilter='active';render()" style="margin-left:auto">${t('vp_active')}</button>
 <button class="btn sm sec" onclick="vpFilter='hist';render()">${t('vp_history')}</button></div>
-${active.length && vpFilter === 'active' ? `<div class="subhead">${t('vp_req')} <button class="btn sm sec" onclick="printPO()">ðŸ“„ ${t('vp_po_b').replace('ðŸ“„ ', '')}</button></div>${active.map(cardReq).join('')}` : ''}
+${active.length && vpFilter === 'active' ? `<div class="subhead">${t('vp_req')} <button class="btn sm sec" onclick="printPO()">📄 ${t('vp_po_b').replace('📄 ', '')}</button></div>${active.map(cardReq).join('')}` : ''}
 ${hist.length && vpFilter === 'hist' ? `<div class="subhead">${t('vp_history')}</div>${hist.map(cardReq).join('')}` : ''}
 ${!active.length && vpFilter === 'active' ? `<div class="empty">${t('vp_no_reqs')}</div>` : ''}
 ${!hist.length && vpFilter === 'hist' ? `<div class="empty">${t('vp_no_reqs')}</div>` : ''}
@@ -2023,26 +2023,26 @@ return `<div class="card">
 <div class="jtop">
 <span class="badge ${badgeClass}">${statusBadge}</span>
 <b class="ot">REQ-${String(r.id).padStart(3, '0')}</b>
-${r.jobNum ? `<span class="mut">â†’ ${OT(r.jobNum)} ${r.jobUnit ? esc(r.jobUnit) : ''}</span>` : ''}
+${r.jobNum ? `<span class="mut">→ ${OT(r.jobNum)} ${r.jobUnit ? esc(r.jobUnit) : ''}</span>` : ''}
 <span class="jacts">${actions}</span></div>
 <div class="junit">${esc(L({ es: r.es, en: r.en || r.es }))}</div>
-<div class="mut">${esc(r.sku)} Â· ${r.cat || 'Warehouse'} Â· ${r.q} ${t('qtyshort')} Ã— ${money(precio)} = <b>${money(total)}</b></div>
+<div class="mut">${esc(r.sku)} · ${r.cat || 'Warehouse'} · ${r.q} ${t('qtyshort')} × ${money(precio)} = <b>${money(total)}</b></div>
 ${r.urg !== 'normal' ? `<span class="badge ${r.urg === 'critical' ? 'bUrg' : 'bSig'}" style="font-size:10px">${r.urg.toUpperCase()}</span>` : ''}
 ${r.reason ? `<div class="jdesc">${esc(r.reason)}</div>` : ''}
-<div class="mut" style="margin-top:5px">ðŸ‘¤ ${esc(r.requestedBy || '—')} Â· ${fts(r.ts)}${r.approvedBy ? ' Â· âœ“ ' + esc(r.approvedBy) : ''}${r.eta ? ' Â· ðŸ“… ETA: ' + esc(r.eta) : ''}${r.orderNum ? ' Â· #' + esc(r.orderNum) : ''}</div>
+<div class="mut" style="margin-top:5px">👤 ${esc(r.requestedBy || '—')} · ${fts(r.ts)}${r.approvedBy ? ' · ✓ ' + esc(r.approvedBy) : ''}${r.eta ? ' · 📅 ETA: ' + esc(r.eta) : ''}${r.orderNum ? ' · #' + esc(r.orderNum) : ''}</div>
 </div>`;
 }
 function cardVP(v) {
 const existeEnWH = db.parts.find(p => p.sku === v.sku);
 return `<div class="pickrow">
-<div class="pinfo"><b>${esc(L(v))}</b><small>${esc(v.sku)} Â· ${esc(v.cat)}${existeEnWH ? ' Â· <b style="color:var(--ok)">âœ“ en bodega</b>' : ''}</small></div>
+<div class="pinfo"><b>${esc(L(v))}</b><small>${esc(v.sku)} · ${esc(v.cat)}${existeEnWH ? ' · <b style="color:var(--ok)">✓ en bodega</b>' : ''}</small></div>
 <b>${money(v.precio)}</b>
-<button class="btn sm pri" onclick="reqDesdeVendor('${oq(v.sku)}')">🛒Ž</button></div>`;
+<button class="btn sm pri" onclick="reqDesdeVendor('${oq(v.sku)}')">🛒</button></div>`;
 }
 function reqDesdeVendor(sku) {
 const v = db.vendorParts.find(x => x.sku === sku);
 abrir(mhead(`${t('vp_req_b')} — ${esc(L(v))}`) + `
-<p class="mut">${esc(v.sku)} Â· ${money(v.precio)} Â· ${esc(v.cat)}</p>
+<p class="mut">${esc(v.sku)} · ${money(v.precio)} · ${esc(v.cat)}</p>
 <label class="f">${t('vp_reason')}</label>
 <textarea id="vrReason" placeholder="${esc(t('vp_reason_ph'))}"></textarea>
 <label class="f">${t('vp_qty')}</label>
@@ -2060,12 +2060,12 @@ db.requests.push({
 id: db.nextReq++, ts: Date.now(), sku, es: v.es, en: v.en, cat: 'Vendor', q: Number($('#vrQ').value) || 1, urg: $('#vrUrg').value,
 reason: $('#vrReason').value.trim() || '—', status: 'needed', jobNum: 0, jobUnit: '', requestedBy: mechName(userId())
 });
-save(); cerrar(); render(); toast(t('vp_sent') + ' Â· ' + L(v));
+save(); cerrar(); render(); toast(t('vp_sent') + ' · ' + L(v));
 }
 function reqApprove(id) {
 const r = db.requests.find(x => x.id === id); if (!r) return;
 abrir(mhead(t('vp_mgr_approve')) + `
-<p class="mut">${esc(L({ es: r.es, en: r.en || r.es }))} Â· ${r.q} ${t('qtyshort')}</p>
+<p class="mut">${esc(L({ es: r.es, en: r.en || r.es }))} · ${r.q} ${t('qtyshort')}</p>
 <label class="f">${t('vp_eta')}</label>
 <input type="text" id="rEta" placeholder="Ej. 2026-08-14 o 'viernes PM'">
 <label class="f">${t('vp_order_num')}</label>
@@ -2095,7 +2095,7 @@ if (!db.parts.some(p => p.sku === r.sku)) {
 const v = db.vendorParts.find(x => x.sku === r.sku);
 const loc = prompt((lang() === 'en' ? 'Rack location: ' : 'Rack / ubicación: '), 'E1');
 if (loc) db.parts.push({ sku: r.sku, es: r.es, en: r.en || r.es, loc: loc.toUpperCase(), precio: v?.precio || 0, cant: r.q, min: Math.max(1, Math.floor(r.q / 2)) });
-else { toast('⚠ '); return }
+else { toast('⚠ '); return }
 } else {
 const p = db.parts.find(p => p.sku === r.sku);
 p.cant += r.q;
@@ -2132,7 +2132,7 @@ td{border-bottom:1px solid #ddd;padding:6px 8px;vertical-align:top}
 .btnp{position:fixed;top:10px;right:10px;background:#e8720c;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}
 .sec{margin:14px 0 4px;font-weight:800;color:#182c4d;text-transform:uppercase;font-size:12px}
 @media print{.btnp{display:none}}</style></head><body>
-<button class="btnp" onclick="window.print()">ðŸ–¨ ${W('Imprimir / Guardar PDF', 'Print / Save PDF')}</button>
+<button class="btnp" onclick="window.print()">🖨 ${W('Imprimir / Guardar PDF', 'Print / Save PDF')}</button>
 <div class="hd"><div>${db.logo ? `<img src="${db.logo}"><br>` : ''}<div class="co">CDE Truck &amp; Car Repair Inc.<small>${W('Taller de reparación de trailers y camiones', 'Truck & Trailer Repair Shop')}</small></div></div>
 <div class="po"><b>${W('ORDEN DE COMPRA', 'PURCHASE ORDER')}</b><br>${new Date().toLocaleDateString('en-US')}<br>
 <span class="mut" style="font-size:11px">${t('vp_vendor')}: customtruck.com</span></div></div>
@@ -2143,7 +2143,7 @@ ${etas ? `<div class="sec">${W('ETAs estimadas', 'Estimated ETAs')}</div><p>${et
 <p class="mut" style="margin-top:24px;font-size:10px">${W('Generado por CDE —', 'Generated by CDE —')} ${reqs.length} ${W('items', 'artículos')}</p>
 </body></html>`;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert('⚠  Pop-ups blocked'); return }
 w.document.write(html); w.document.close(); w.focus();
 }
 /* ========== SERVICIOS ========== */
@@ -2154,12 +2154,12 @@ $('#main').innerHTML = `
 ${db.services.map(s => `<div class="pickrow"><span class="loc" style="background:#eef2f8;color:var(--blue)">${s.code}</span>
 <div class="pinfo"><b>${esc(L(s))}</b><small>${esc(lang() === 'en' ? s.es : s.en)}</small></div>
 <span class="priceedit" onclick="editServInline('${oq(s.code)}',this)" title="Click para editar">${money(s.precio)}</span>
-<button class="btn sm sec" onclick="servModal('${oq(s.code)}')">âœï¸</button></div>`).join('')}`;
+<button class="btn sm sec" onclick="servModal('${oq(s.code)}')">✏️</button></div>`).join('')}`;
 }
 function editServInline(code, el) {
 const s = servByCode(code);
 const v = prompt(`${t('price_base_f')} — ${L(s)}`, s.precio);
-if (v !== null) { s.precio = Number(v) || 0; save(); render(); toast('ðŸ’¾ ' + t('t_serv_saved')) }
+if (v !== null) { s.precio = Number(v) || 0; save(); render(); toast('💾 ' + t('t_serv_saved')) }
 }
 function servModal(code) {
 const s = code ? servByCode(code) : null;
@@ -2172,7 +2172,7 @@ abrir(`${mhead(s ? t('edit_t') + ' ' + s.code : t('add_serv'))}
 <div style="flex:1"><label class="f">${t('unit_f')}</label><select id="sUnidad">
 ${['c/u', 'hr', 'eje', 'hoja'].map(u => `<option ${s?.unidad === u ? 'selected' : ''}>${u}</option>`).join('')}</select></div></div>
 <div style="display:flex;gap:8px;margin-top:16px">
-${s ? `<button class="btn bad" onclick="if(confirm('${oq(t('delete_confirm'))}?')){db.services=db.services.filter(x=>x.code!=='${oq(s.code)}');save();cerrar();render()}">ðŸ—‘</button>` : ''}
+${s ? `<button class="btn bad" onclick="if(confirm('${oq(t('delete_confirm'))}?')){db.services=db.services.filter(x=>x.code!=='${oq(s.code)}');save();cerrar();render()}">🗑</button>` : ''}
 <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
 <button class="btn pri" style="flex:2" onclick="guardaServ('${oq(code || '')}')">${t('save_b')}</button></div>`);
 }
@@ -2197,12 +2197,12 @@ const ab = db.moves.filter(x => x.open && x.mech === m.id);
 const hasActiveJob = jobs.some(j => j.st === 'En progreso');
 const statusBadge = hasActiveJob ? `<span class="status-badge status-working">${t('working')}</span>` : `<span class="status-badge status-idle">${t('idle')}</span>`;
 return `<div class="card">
-<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span style="font-size:26px">ðŸ‘¤</span>
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span style="font-size:26px">👤</span>
 <input value="${esc(m.name)}" onchange="setNombre(${m.id},this.value)" style="font-weight:800"></div>
 ${statusBadge}
 <input placeholder="${esc(t('spec_ph'))}" value="${esc(m.esp || '')}" onchange="setEsp(${m.id},this.value)">
-<div class="mut" style="margin-top:9px">🛒  ${jobs.map(j => OT(j.num)).join(', ') || t('no_jobs')} Â· 🛒’ ${ab.reduce((a, x) => a + x.q, 0)} ${t('in_cart_short')}</div>
-${ab.map(x => `<div class="mut">â€¢ ${x.q}Ã— ${esc(lang() === 'en' ? (x.en || x.es) : x.es)}</div>`).join('')}</div>`
+<div class="mut" style="margin-top:9px">🛒 ${jobs.map(j => OT(j.num)).join(', ') || t('no_jobs')} · 🛒 ${ab.reduce((a, x) => a + x.q, 0)} ${t('in_cart_short')}</div>
+${ab.map(x => `<div class="mut">• ${x.q}× ${esc(lang() === 'en' ? (x.en || x.es) : x.es)}</div>`).join('')}</div>`
 }).join('')}</div>`;
 }
 function setNombre(id, v) { db.mechanics.find(m => m.id === id).name = v.trim() || ('Mecánico ' + id); save(); render() }
@@ -2215,9 +2215,9 @@ const draw = () => {
 abrir(`${mhead(t('wo_t') + ' — ' + OT(num))}
 <label class="f">${t('out_lang')}</label>
 <div style="display:flex;gap:6px;flex-wrap:wrap">
-<span class="chip ${outLang() === 'en' ? 'sel' : ''}" onclick="setOutLang('en')">ðŸ‡ºðŸ‡¸ English</span>
-<span class="chip ${outLang() === 'es' ? 'sel' : ''}" onclick="setOutLang('es')">ðŸ‡² Español</span>
-<span class="chip ${outLang() === 'bi' ? 'sel' : ''}" onclick="setOutLang('bi')">ðŸŒ ES / EN</span></div>
+<span class="chip ${outLang() === 'en' ? 'sel' : ''}" onclick="setOutLang('en')">🇺🇸 English</span>
+<span class="chip ${outLang() === 'es' ? 'sel' : ''}" onclick="setOutLang('es')">🇲🇽 Español</span>
+<span class="chip ${outLang() === 'bi' ? 'sel' : ''}" onclick="setOutLang('bi')">🌐 ES / EN</span></div>
 <button class="btn pri big" style="margin-top:14px" onclick="printWO(${num})">${t('pdf_b')}</button>
 <p class="mut" style="margin-top:12px">${t('out_hint')}</p>`)
 };
@@ -2275,7 +2275,7 @@ td{border-bottom:1px solid #ddd;padding:6px 8px;vertical-align:top}
 .sig{display:flex;gap:40px;margin-top:56px}.sig div{flex:1;border-top:1px solid #111;padding-top:6px;font-size:11px}
 .btnp{position:fixed;top:10px;right:10px;background:#e8720c;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}
 @media print{.btnp{display:none}}</style></head><body>
-<button class="btnp" onclick="window.print()">ðŸ–¨ ${W('Imprimir / Guardar PDF', 'Print / Save PDF')}</button>
+<button class="btnp" onclick="window.print()">🖨 ${W('Imprimir / Guardar PDF', 'Print / Save PDF')}</button>
 <div class="hd"><div>${db.logo ? `<img src="${db.logo}"><br>` : ''}<div class="co">CDE Truck &amp; Car Repair Inc.<small>${W('Taller de reparación de trailers y camiones', 'Truck & Trailer Repair Shop')}</small></div></div>
 <div class="wo"><b>${W('ORDEN DE TRABAJO', 'WORK ORDER')}</b><br>#${OT(j.num)}<br><span class="mut">${new Date().toLocaleDateString('en-US')}</span><br><span class="mut">${esc(stTxt(j.st))}</span></div></div>
 <div class="sec">${W('Cliente / Vehículo', 'Customer / Vehicle')}</div>
@@ -2290,10 +2290,10 @@ ${rS || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
 ${rP || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
 <div class="tot">${W('TOTAL ESTIMADO', 'ESTIMATED TOTAL')}: <b>${money(e.s + pTot)}</b></div>
 <div class="sig"><div>${W('Firma del cliente', 'Customer signature')}</div><div>${W('Recibido por', 'Received by')}</div></div>
-<p class="mut" style="margin-top:24px;font-size:10px">CDE Truck &amp; Car Repair Inc. — ${W('Precios sujetos a inspección final.', 'Prices subject to final inspection.')} Â· ${OT(j.num)}</p>
+<p class="mut" style="margin-top:24px;font-size:10px">CDE Truck &amp; Car Repair Inc. — ${W('Precios sujetos a inspección final.', 'Prices subject to final inspection.')} · ${OT(j.num)}</p>
 </body></html>`;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert('⚠  Pop-ups blocked'); return }
 w.document.write(html); w.document.close(); w.focus();
 }
 /* ========== respaldo ========== */
@@ -2309,8 +2309,8 @@ if (!d.vendorParts) d.vendorParts = seed().vendorParts;
 if (!d.requests) d.requests = []; if (!d.nextReq) d.nextReq = 1;
 db = d; save(); render(); toast(t('t_restored'))
 }
-else alert('⚠ ')
-} catch (e) { alert('⚠ ') }
+else alert('⚠ ')
+} catch (e) { alert('⚠ ') }
 };
 r.readAsText(f); ev.target.value = '';
 }
