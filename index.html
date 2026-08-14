@@ -1230,7 +1230,14 @@ $('#hbtns').innerHTML = `<button onclick="setLang()">${t('h_lang')}</button><but
 <button onclick="roadModal()">${t('h_road')}</button><button onclick="exportar()">${t('h_backup')}</button>
 <label>${t('h_restore')}<input type="file" accept=".json" hidden onchange="importar(event)"></label>`;
 }
-function pintaNav() { ['board', 'warehouse', 'vendor', 'services', 'team'].forEach(k => $('#nv_' + k).textContent = t('nav_' + k)) }
+function pintaNav() { 
+  const isMgr = db.currentUser === 'mgr';
+  ['board', 'warehouse', 'vendor', 'services', 'team'].forEach(k => {
+    const btn = $('#nv_' + k).parentElement;
+    if (!isMgr && k !== 'board') btn.style.display = 'none'; else btn.style.display = '';
+    $('#nv_' + k).textContent = t('nav_' + k);
+  });
+}
 function setLang() { db.lang = lang() === 'es' ? 'en' : 'es'; save(); render(); toast(lang() === 'en' ? '🌐 English' : '🌐 Español') }
 function estJob(j) {
 const s = (j.serv || []).reduce((a, c) => a + ((Number((j.prices || {})[c]) || servByCode(c)?.precio || 0) * (j.servQty?.[c] || 1)), 0);
@@ -1253,7 +1260,15 @@ const statusBadge = hasActiveJob ? `<span class="status-badge status-working">${
 return `<button class="wchip ${db.currentUser === m.id ? 'on' : ''}" onclick="setWho(${m.id})">👤 ${esc(m.name)}<br>${statusBadge}</button>`;
 }).join('');
 }
-function setWho(w) { db.currentUser = w; save(); render(); toast(w === 'mgr' ? t('t_mode_m') : '👤 ' + mechName(w)) }
+function setWho(w) {
+  if (w === 'mgr' && db.currentUser !== 'mgr') {
+    const p = prompt('Password:');
+    if (p !== '123') { alert('Incorrect password'); return; }
+  } else if (w !== 'mgr') {
+    tab = 'board';
+  }
+  db.currentUser = w; save(); render(); window.scrollTo(0,0); toast(w === 'mgr' ? t('t_mode_m') : '🙋 ' + mechName(w));
+}
 function logoModal() {
 abrir(`${mhead(t('logo_t'))}
 <div style="text-align:center;padding:14px 0">${db.logo ? `<img class="logoimg" style="height:64px" src="${db.logo}" alt="logo">` : `<span class="mut">${t('logo_none')}</span>`}</div>
@@ -1325,7 +1340,7 @@ ${isManager ? `<button class="btn neword" onclick="nuevoTicket()">${t('new_order
 ${db.jobs.length === 0 ? `<div class="helpbox"><b>${t('how_t')}</b><br>${t('how_1')}<br>${t('how_2')}<br>${t('how_3')}</div>` : ''}
 ${fila.length ? `<div class="subhead">${t('head_queue')}</div>${fila.map((j, i) => cardFila(j, i + 1)).join('')}` : ''}
 ${prog.length ? `<div class="subhead">${t('head_prog')}</div>${prog.map(cardProg).join('')}` : ''}
-${done.length ? `<div class="subhead">${t('head_done')} <button class="btn sm sec" onclick="exportCSV()">${t('csv_all')}</button></div>${done.map(cardDone).join('')}` : ''}`;
+${done.length && isManager ? `<div class="subhead">${t('head_done')} <button class="btn sm sec" onclick="exportCSV()">${t('csv_all')}</button></div>${done.map(cardDone).join('')}` : ''}`;
 }
 function cardFila(j, pos) {
 return `<div class="card ${j.urgent ? 'urg' : ''}">
@@ -1419,7 +1434,7 @@ ${signedBadge(j)}
 <div class="leave-job-box">
 <button class="btn bad big" onclick="leaveJobModal(${j.num})">${t('leave_job')}</button>
 </div>
-<div class="jtot">${t('estimate')}: <b>${money(e.s + e.p)}</b> <span class="mut">(${t('labor')} ${money(e.s)} · ${t('parts_w')} ${money(e.p)})</span></div>
+${db.currentUser === 'mgr' ? `<div class="jtot">${t('estimate')}: <b>${money(e.s + e.p)}</b> <span class="mut">(${t('labor')} ${money(e.s)} · ${t('parts_w')} ${money(e.p)})</span></div>` : ''}
 <button class="btn ok big" style="margin-top:10px" onclick="terminar(${j.num})">${t('finish_job')}</button></div>`;
 }
 function updatePendingStatus(num, field, value) {
@@ -1573,7 +1588,7 @@ return `<div class="card">
 <span class="mut">${j.finished ? fts(j.finished) : ''}</span>
 <span class="jacts">${signedBadge(j)}<button class="btn sm sec" onclick="uploadSignedModal(${j.num})" title="${esc(t('upload_signed'))}">📥</button><button class="btn sm sec" onclick="outModal(${j.num})">📤</button><button class="btn sm sec" onclick="cambiarSt(${j.num},'En progreso')">${t('reopen')}</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span></div>
 ${unitLine(j, true)}
-<div class="jtot">${t('total')}: <b>${money(e.s + e.p)}</b></div></div>`;
+${db.currentUser === 'mgr' ? `<div class="jtot">${t('total')}: <b>${money(e.s + e.p)}</b></div>` : ''}</div>`;
 }
 function cambiarSt(n, st) { const j = db.jobs.find(x => x.num === n); if (j) { j.st = st; if (st === 'Terminado') j.finished = Date.now(); save(); render() } }
 function terminar(n) { if (confirm(t('finish_confirm') + ' ' + OT(n) + '?')) cambiarSt(n, 'Terminado') }
@@ -1759,7 +1774,7 @@ pintaJPick(num);
 function pintaJPick(num) {
 const q = jSearch.toLowerCase();
 const list = db.parts.filter(p => !q || p.es.toLowerCase().includes(q) || p.en.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q) || p.loc.toLowerCase().includes(q)).slice(0, 25);
-$('#jPickBox').innerHTML = list.map(p => `<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${t('only')} ${p.cant} · ${money(p.precio)}</small></div>
+$('#jPickBox').innerHTML = list.map(p => `<div class="pickrow">${locBadge(p.loc)}<div class="pinfo"><b>${esc(L(p))}</b><small>${t('only')} ${p.cant} ${db.currentUser === 'mgr' ? ' · ' + money(p.precio) : ''}</small></div>
 <button class="btn sm pri" onclick="addJobPart(${num},'${oq(p.sku)}')">＋</button></div>`).join('') || `<div class="empty">${t('results_none')}</div>`;
 }
 function addJobPart(num, sku) {
