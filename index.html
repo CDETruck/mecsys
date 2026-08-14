@@ -768,6 +768,36 @@ white-space: nowrap
 <div id="modal"></div>
 </div>
 <div id="toast"></div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBCt75wEX64h7X6-_WsqTYePWuLROVYzMU",
+    authDomain: "cdetruck-mecsys-18472.firebaseapp.com",
+    projectId: "cdetruck-mecsys-18472",
+    storageBucket: "cdetruck-mecsys-18472.firebasestorage.app",
+    messagingSenderId: "753660602460",
+    appId: "1:753660602460:web:da65793bf0595ffcaf9e99"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  window.firebaseDB = database;
+  window.firebaseSet = set;
+  window.firebaseRef = ref;
+  window.firebaseOnValue = onValue;
+  window.isFirebaseReady = true;
+
+  const dbRef = ref(database, 'cde_v2');
+  onValue(dbRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data && window.updateDBFromCloud) {
+      window.updateDBFromCloud(data);
+    }
+  });
+</script>
 <script>
 /* ================================================================
 CDE TALLER v7
@@ -1162,9 +1192,17 @@ moves: v1.moves || [], requests: [], vendorParts: s.vendorParts
 return seed();
 }
 let db = loadDB();
+window.updateDBFromCloud = function(cloudData) {
+   db = cloudData;
+   try { localStorage.setItem('cde_v2', JSON.stringify(db)) } catch (e) { }
+   if (typeof render === 'function') render();
+};
 function save() {
 let ok = true;
 try { localStorage.setItem('cde_v2', JSON.stringify(db)) } catch (e) { ok = false; toast(t('save_error')) }
+if (window.isFirebaseReady && window.firebaseSet) {
+  window.firebaseSet(window.firebaseRef(window.firebaseDB, 'cde_v2'), db).catch(e => console.error(e));
+}
 pintaChrome();
 return ok;
 }
@@ -1550,11 +1588,42 @@ j.mech = j.mech || []; const i = j.mech.indexOf(mid); i >= 0 ? j.mech.splice(i, 
 }
 function hacerLider(num, mid) { const j = db.jobs.find(x => x.num === num); j.leader = mid; if (!(j.mech || []).includes(mid)) j.mech.push(mid); save(); equipoModal(num); render() }
 /* ========== CREAR ORDEN ========== */
-let tSel = new Set(), tTeam = new Set(), tParts = [], tPrices = {}, tSearch = '', tUrgent = false, editNum = null;
+let tSel = new Set(), tTeam = new Set(), tParts = [], tPrices = {}, tSearch = '', tServSearch = '', tUrgent = false, editNum = null, tDraft = null, returningToTicket = false;
+function saveTDraft() {
+document.querySelectorAll('#tPriceList [data-pc]').forEach(i => tPrices[i.dataset.pc] = Number(i.value) || 0);
+tDraft = { unit: $('#tUnit').value, client: $('#tClient').value, desc: $('#tDesc').value, leader: $('#tLeader').value };
+}
+function restoreTDraft() {
+if(!tDraft) return;
+$('#tUnit').value = tDraft.unit;
+$('#tClient').value = tDraft.client;
+$('#tDesc').value = tDraft.desc;
+$('#tLeader').value = tDraft.leader;
+tDraft = null;
+}
+function tOpenPart() {
+saveTDraft();
+returningToTicket = true;
+partModal(null);
+const btns = document.querySelectorAll('#modal .btn.sec');
+if(btns.length > 0) btns[btns.length-1].setAttribute('onclick', 'tResume()');
+}
+function tOpenServ() {
+saveTDraft();
+returningToTicket = true;
+servModal(null);
+const btns = document.querySelectorAll('#modal .btn.sec');
+if(btns.length > 0) btns[btns.length-1].setAttribute('onclick', 'tResume()');
+}
+function tResume() {
+returningToTicket = false;
+nuevoTicket(editNum);
+restoreTDraft();
+}
 function nuevoTicket(num) {
 editNum = num || null; const j = num ? db.jobs.find(x => x.num === num) : null;
 tSel = new Set(j?.serv || []); tTeam = new Set(j?.mech || []); tParts = (j?.parts || []).map(p => ({ ...p }));
-tPrices = { ...(j?.prices || {}) }; tUrgent = j?.urgent || false; tSearch = '';
+tPrices = { ...(j?.prices || {}) }; tUrgent = j?.urgent || false; tSearch = ''; tServSearch = '';
 abrir(`${mhead(editNum ? t('edit_t') + ' ' + OT(editNum) : t('new_t'))}
 <div class="step">${t('s1')}</div>
 <label class="f">${t('unit_f2')}</label><input id="tUnit" value="${esc(j?.unit || '')}" placeholder="${esc(t('unit_ph'))}">
@@ -1562,12 +1631,19 @@ abrir(`${mhead(editNum ? t('edit_t') + ' ' + OT(editNum) : t('new_t'))}
 <label class="f">${t('desc_f')}</label><textarea id="tDesc" placeholder="${esc(t('desc_ph'))}">${esc(j?.desc || '')}</textarea>
 <div style="margin-top:10px"><span class="chip ${tUrgent ? 'sel' : ''}" onclick="tUrgent=!tUrgent;this.classList.toggle('sel')">${t('mark_urgent')}</span></div>
 <div class="step">${t('s2')}</div>
+<div style="display:flex;gap:8px;margin-bottom:7px">
+<input type="search" placeholder="🔍 Buscar servicio..." oninput="tServSearch=this.value;pintaTServ()" style="flex:1">
+<button class="btn sm sec" onclick="tOpenServ()" style="flex:none">➕ Nuevo</button>
+</div>
 <div class="chipbox" id="tServBox"></div><div id="tPriceList"></div>
 <div class="step">${t('s3')}</div>
 <p class="mut">${t('s3h')}</p>
 <div id="tPartsList"></div>
-<input type="search" placeholder="${esc(t('search_ph'))}" oninput="tSearch=this.value;pintaPick()">
-<div class="chipbox" style="margin-top:7px" id="tPickBox"></div>
+<div style="display:flex;gap:8px;margin-bottom:7px">
+<input type="search" placeholder="${esc(t('search_ph'))}" oninput="tSearch=this.value;pintaPick()" style="flex:1">
+<button class="btn sm sec" onclick="tOpenPart()" style="flex:none">➕ Nueva</button>
+</div>
+<div class="chipbox" id="tPickBox"></div>
 <div class="step">${t('s4')}</div>
 <label class="f">${t('leader_f')}</label>
 <select id="tLeader"><option value="">${t('leader_none')}</option>
@@ -1579,7 +1655,9 @@ ${db.mechanics.map(m => `<option value="${m.id}" ${j?.leader === m.id ? 'selecte
 pintaTServ(); pintaSelPrices(); pintaTParts(); pintaPick(); pintaTTeam();
 }
 function pintaTServ() {
-$('#tServBox').innerHTML = db.services.map(s =>
+const q = tServSearch.toLowerCase();
+const list = db.services.filter(s => !q || s.code.toLowerCase().includes(q) || s.es.toLowerCase().includes(q) || (s.en || '').toLowerCase().includes(q));
+$('#tServBox').innerHTML = list.map(s =>
 `<span class="chip ${tSel.has(s.code) ? 'sel' : ''}" onclick="tToggleServ('${oq(s.code)}')">${s.code} ${esc(L(s))} · ${money(s.precio)}${s.unidad === 'hr' ? '/hr' : ''}</span>`).join('');
 }
 function tToggleServ(c) { tSel.has(c) ? tSel.delete(c) : tSel.add(c); pintaTServ(); pintaSelPrices() }
@@ -1856,7 +1934,7 @@ cant: Math.max(0, Math.floor(Number($('#pCant').value) || 0)), min: Math.max(0, 
 if (!d.es) { alert(t('name_missing')); return }
 if (sku) { const old = partBySku(sku); if (old) Object.assign(old, d) }
 else { if (db.parts.some(p => p.sku === d.sku)) { alert(t('sku_exists')); return } db.parts.push(d) }
-save(); cerrar(); render(); toast(t('t_part_saved'));
+save(); if(returningToTicket) { tResume(); toast(t('t_part_saved')); } else { cerrar(); render(); toast(t('t_part_saved')); }
 }
 function histModal(sku) {
 const ms = db.moves.filter(m => m.sku === sku).slice(-25).reverse();
@@ -2069,7 +2147,7 @@ precio: Number($('#sPrecio').value) || 0, unidad: $('#sUnidad').value
 if (!d.es) { alert(t('name_missing')); return }
 if (code) { const old = servByCode(code); if (old) Object.assign(old, d) }
 else { if (db.services.some(x => x.code === d.code)) { alert(t('sku_exists')); return } db.services.push(d) }
-save(); cerrar(); render(); toast(t('t_serv_saved'));
+save(); if(returningToTicket) { tResume(); toast(t('t_serv_saved')); } else { cerrar(); render(); toast(t('t_serv_saved')); }
 }
 /* ========== EQUIPO ========== */
 function renderTeam() {
