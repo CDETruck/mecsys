@@ -1201,6 +1201,13 @@ window.updateDBFromCloud = function(cloudData) {
       return;
    }
    db = cloudData;
+   db.moves = db.moves || [];
+   db.requests = db.requests || [];
+   db.mechanics = db.mechanics || [];
+   db.services = db.services || [];
+   db.vendorParts = db.vendorParts || [];
+   db.parts = db.parts || [];
+   db.jobs = db.jobs || [];
    try { localStorage.setItem('cde_v2', JSON.stringify(db)) } catch (e) { }
    if (typeof render === 'function') render();
 };
@@ -1681,15 +1688,11 @@ $('#tPriceList').innerHTML = tSel.size ? `<label class="f">${t('price_list_f')}<
 [...tSel].map(c => {
 const s = servByCode(c);
 const q = tServQty[c] || 1;
-return `<div class="selrow">
-<div style="flex:1;display:flex;align-items:center;gap:10px">
-  <span>${s.code} ${esc(L(s))}</span>
-  <div class="stepbox" style="margin:0"><button onclick="tSq('${oq(c)}',-1)">-</button><b>${q}</b><button onclick="tSq('${oq(c)}',1)">+</button></div>
-</div>
-<div style="display:flex;gap:5px;align-items:center;">
-<input type="number" step="0.01" data-pc="${esc(c)}" value="${tPrices[c] ?? s.precio}" style="width:80px">
+return `<div class="pickrow">
+<div class="pinfo"><b>${s.code} ${esc(L(s))}</b></div>
+<div class="stepbox"><button onclick="tSq('${oq(c)}',-1)">-</button><b>${q}</b><button onclick="tSq('${oq(c)}',1)">+</button></div>
+<span class="priceedit" style="width:70px;text-align:center"><input type="number" step="0.01" data-pc="${esc(c)}" value="${tPrices[c] ?? s.precio}" style="width:100%;background:transparent;border:none;text-align:center;color:inherit;font-weight:bold"></span>
 <button class="btn sm sec" onclick="tToggleServ('${oq(c)}')">✕</button>
-</div>
 </div>`
 }).join('') : '';
 }
