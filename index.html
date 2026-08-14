@@ -1310,7 +1310,7 @@ const s = servByCode(c); if (!s) return '';
 const q = j.servQty?.[c] || 1;
 const rate = j.prices?.[c] ?? s.precio;
 return `<div class="pickrow" style="cursor:default">
-<div class="pinfo"><b>${q}× ${s.code} - ${esc(L(s))}</b><small>${money(rate)}</small></div>
+<div class="pinfo"><b>${q}× ${s.code} - ${esc(L(s))}</b>${db.currentUser === "mgr" ? `<small>${money(rate)}</small>` : ""}</div>
 </div>`
 }).join('') + `</div>`;
 }
@@ -1347,7 +1347,7 @@ return `<div class="card ${j.urgent ? 'urg' : ''}">
 <div class="jtop">${j.urgent ? `<span class="badge bUrg">${t('b_urg')}</span>` : ''}
 <span class="badge ${pos === 1 ? 'bSig' : 'bFila'}">${pos === 1 ? t('b_next') : t('b_queue') + pos}</span>
 <b class="ot">${OT(j.num)}</b>
-<span class="jacts"><button class="btn sm sec" onclick="nuevoTicket(${j.num})">✏️</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span></div>
+${db.currentUser === "mgr" ? `<span class="jacts"><button class="btn sm sec" onclick="nuevoTicket(${j.num})">✏️</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span>` : ""}</div>
 ${unitLine(j)}
 ${j.desc ? `<div class="jdesc">${esc(j.desc)}</div>` : ''}
 ${servList(j)}${partsResumen(j)}
@@ -1413,11 +1413,11 @@ return `<div class="card ${j.urgent ? 'urg' : ''}">
 <div class="jtop">
 <span class="badge bProg">${t('b_prog')}</span>
 <b class="ot">${OT(j.num)}</b>
-<span class="jacts">
+${db.currentUser === "mgr" ? `<span class="jacts">
 <button class="btn-request-sign" onclick="requestCustomerSign(${j.num})">${t('request_sign')}</button>
 <button class="btn sm sec" onclick="outModal(${j.num})">📤</button>
 <button class="btn sm sec" onclick="nuevoTicket(${j.num})">✏️</button>
-</span>
+</span>` : ""}
 </div>
 ${unitLine(j)}
 ${j.desc ? `<div class="jdesc">${esc(j.desc)}</div>` : ''}
@@ -1586,7 +1586,7 @@ const e = estJob(j);
 return `<div class="card">
 <div class="jtop"><span class="badge bDone">${t('b_done')}</span><b class="ot">${OT(j.num)}</b>
 <span class="mut">${j.finished ? fts(j.finished) : ''}</span>
-<span class="jacts">${signedBadge(j)}<button class="btn sm sec" onclick="uploadSignedModal(${j.num})" title="${esc(t('upload_signed'))}">📥</button><button class="btn sm sec" onclick="outModal(${j.num})">📤</button><button class="btn sm sec" onclick="cambiarSt(${j.num},'En progreso')">${t('reopen')}</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span></div>
+${db.currentUser === "mgr" ? `<span class="jacts">${signedBadge(j)}<button class="btn sm sec" onclick="uploadSignedModal(${j.num})" title="${esc(t('upload_signed'))}">📥</button><button class="btn sm sec" onclick="outModal(${j.num})">📤</button><button class="btn sm sec" onclick="cambiarSt(${j.num},'En progreso')">${t('reopen')}</button><button class="btn sm sec" onclick="borraJob(${j.num})">🗑</button></span>` : ""}</div>
 ${unitLine(j, true)}
 ${db.currentUser === 'mgr' ? `<div class="jtot">${t('total')}: <b>${money(e.s + e.p)}</b></div>` : ''}</div>`;
 }
