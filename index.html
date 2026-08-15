@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#182c4d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>CDE Truck & Car Repair — Tablero</title>
+<title>CDE Truck & Car Repair</title>
 <style>
 :root {
 --navy: #182c4d;
@@ -810,7 +810,7 @@ CDE TALLER v7
 const T = {
 es: {
 nav_board: 'Tablero', nav_warehouse: 'Bodega', nav_vendor: 'Comprar', nav_services: 'Servicios', nav_team: 'Equipo',
-h_backup: '⬇ Respaldar', h_restore: '⬆ Restaurar', h_logo: '🖼 Logo', h_road: '🚀 Futuro', h_lang: '🌐 EN',
+h_backup: '⬇ Respaldar', h_restore: '⬆ Restaurar', h_logo: '🖼 Logo', h_road: '🚀 Futuro', h_lang: '🌐 ESPAÑOL',
 st_queue: 'en fila', st_prog: 'en progreso', st_carts: 'en carritos', st_low: 'stock bajo', st_req: 'solicitudes', mgr: '🧑‍🔧 Manager',
 new_order: '➕ NUEVA ORDEN DE TRABAJO', how_t: '¿Cómo funciona?',
 how_1: '11️⃣ El <b>Manager</b> recibe el camión y crea la orden con servicios y piezas (con su rack).',
@@ -885,11 +885,26 @@ signed_big: '⚠  PDF demasiado grande (máximo 2 MB). Comprime o escanea con me
 signed_only_pdf: '⚠  Solo se aceptan archivos PDF.',
 work_signed: 'Work Signed',
 signed_remove: '🗑 Quitar',
-save_error: '⚠  No se pudo guardar: almacenamiento del navegador lleno.'
+save_error: '⚠  No se pudo guardar: almacenamiento del navegador lleno.',
+pwd_prompt: 'Contraseña:',
+pwd_incorrect: 'Contraseña incorrecta',
+img_format_err: '⚠  PNG / JPG.',
+title_tag: 'CDE Truck & Car Repair — Tablero',
+brand_title: 'CDE Truck & Car Repair Inc.',
+popups_blocked: '⚠  Ventanas emergentes bloqueadas',
+rack_loc: 'Rack / ubicación:',
+shop_stopped: 'Crítica (shop parado)',
+urg_normal: 'Normal',
+urg_high: 'Alta',
+urg_critical: 'Crítica',
+date_ph: 'Ej. 2026-08-14 o \'viernes PM\'',
+order_num_ph: 'Ej. CT-1044805',
+notes_ph: 'Notas opcionales',
+missing_for: 'Faltante para '
 },
 en: {
 nav_board: 'Board', nav_warehouse: 'Warehouse', nav_vendor: 'Order', nav_services: 'Services', nav_team: 'Team',
-h_backup: '⬇ Backup', h_restore: '⬆ Restore', h_logo: '🖼 Logo', h_road: '🚀 Roadmap', h_lang: '🌐 ES',
+h_backup: '⬇ Backup', h_restore: '⬆ Restore', h_logo: '🖼 Logo', h_road: '🚀 Roadmap', h_lang: '🌐 ENGLISH',
 st_queue: 'in queue', st_prog: 'in progress', st_carts: 'in carts', st_low: 'low stock', st_req: 'requests', mgr: '🧑‍🔧 Manager',
 new_order: '➕ NEW WORK ORDER', how_t: 'How it works',
 how_1: '11️⃣ The <b>Manager</b> receives the truck and creates the order with services and parts (with rack).',
@@ -937,7 +952,7 @@ t_took: 'took', t_updated: 'updated', t_created: 'created and in queue', t_added
 t_short_f: '⚠  Missing', t_avisa: '— tell the manager', t_missing_mark: '⚠  Marked missing — to buy', t_no_stock: '⚠  Out of stock — mark to buy',
 t_back_r: '↩ Part back to rack', t_used: '✔ Part used', t_charged: '— charged to', t_stock_up: '＋ Stock updated:',
 t_part_saved: '💾 Part saved', t_serv_saved: '💾 Service saved', t_logo: ' Logo updated', t_logo_off: '🖼 Logo removed',
-t_restored: '⬆ Data restored', t_backup: '⬇ Backup downloaded', t_csv: '📊 QuickBooks CSV downloaded', t_mode_m: '🧑‍🔧ðŸ’¼ Manager mode',
+t_restored: '⬆ Data restored', t_backup: '⬇ Backup downloaded', t_csv: '📊 QuickBooks CSV downloaded', t_mode_m: '🧑‍🔧 Manager mode',
 only: 'stock:', qtyshort: 'pc', wh_hint: 'Warehouse parts — click on the price to edit it inline.',
 vp_hint: 'Vendor catalog (customtruck.com) · Purchase requests · PDFs.',
 vp_search: '🔍 Search vendor...', vp_cat: 'Category', vp_all: 'All', vp_req_b: '🛒 Request purchase',
@@ -964,7 +979,22 @@ signed_big: '⚠  PDF too large (max 2 MB). Compress it or scan at lower resolut
 signed_only_pdf: '⚠  Only PDF files are accepted.',
 work_signed: 'Work Signed',
 signed_remove: '🗑 Remove',
-save_error: '⚠  Could not save: browser storage full.'
+save_error: '⚠  Could not save: browser storage full.',
+pwd_prompt: 'Password:',
+pwd_incorrect: 'Incorrect password',
+img_format_err: '⚠  PNG / JPG.',
+title_tag: 'CDE Truck & Car Repair — Dashboard',
+brand_title: 'CDE Truck & Car Repair Inc.',
+popups_blocked: '⚠  Pop-ups blocked',
+rack_loc: 'Rack location:',
+shop_stopped: 'Critical (shop stopped)',
+urg_normal: 'Normal',
+urg_high: 'High',
+urg_critical: 'Critical',
+date_ph: 'e.g. 2026-08-14 or \'Friday PM\'',
+order_num_ph: 'e.g. CT-1044805',
+notes_ph: 'Optional notes',
+missing_for: 'Missing for '
 }
 };
 const lang = () => db.lang || 'es';
@@ -982,7 +1012,12 @@ const fts = ts => new Date(ts).toLocaleString(lang() === 'en' ? 'en-US' : 'es-US
 const OT = n => 'OT-' + String(n).padStart(3, '0');
 const rackCol = { A: '#c93b3b', B: '#2563a8', C: '#7b4fc9', D: '#1e8e4e', E: '#a56400' };
 const locBadge = l => `<span class="loc" style="background:${rackCol[(l || '?')[0]] || '#182c4d'}">${esc(l || '—')}</span>`;
-const mechName = id => (db.mechanics.find(m => m.id === id) || {}).name || '—';
+const mName = m => {
+  if (!m) return '—';
+  const match = m.name.match(/^(Mec[aá]nico|Mechanic)\s*(\d+)$/i);
+  return match ? (lang() === 'en' ? 'Mechanic ' : 'Mecánico ') + match[2] : m.name;
+};
+const mechName = id => mName(db.mechanics.find(m => m.id === id));
 const partBySku = s => db.parts.find(p => p.sku === s);
 const servByCode = c => db.services.find(s => s.code === c);
 const userId = () => db.currentUser === 'mgr' ? null : db.currentUser;
@@ -1220,10 +1255,11 @@ if (window.isFirebaseReady && window.firebaseSet) {
 pintaChrome();
 return ok;
 }
-function pintaChrome() { pintaBrand(); pintaHbtns(); pintaStats(); pintaWho(); pintaNav() }
+function updateTitle() { document.title = t('title_tag'); }
+function pintaChrome() { updateTitle();  pintaBrand(); pintaHbtns(); pintaStats(); pintaWho(); pintaNav() }
 function pintaBrand() {
 $('#brand').innerHTML = (db.logo ? `<img class="logoimg" src="${db.logo}" alt="logo">` : `<span class="logo">CDE</span>`) +
-`<div style="min-width:0"><b>CDE Truck &amp; Car Repair Inc.</b><small>${new Date().toLocaleDateString(lang() === 'en' ? 'en-US' : 'es-US', { weekday: 'long', month: 'long', day: 'numeric' })}</small></div>`;
+`<div style="min-width:0"><b>${t('brand_title')}</b><small>${new Date().toLocaleDateString(lang() === 'en' ? 'en-US' : 'es-US', { weekday: 'long', month: 'long', day: 'numeric' })}</small></div>`;
 }
 function pintaHbtns() {
 $('#hbtns').innerHTML = `<button onclick="setLang()">${t('h_lang')}</button><button onclick="logoModal()">${t('h_logo')}</button>
@@ -1238,7 +1274,7 @@ function pintaNav() {
     $('#nv_' + k).textContent = t('nav_' + k);
   });
 }
-function setLang() { db.lang = lang() === 'es' ? 'en' : 'es'; save(); render(); toast(lang() === 'en' ? '🌐 English' : '🌐 Español') }
+function setLang() { db.lang = lang() === 'es' ? 'en' : 'es'; save(); render(); updateTitle(); toast(lang() === 'en' ? '🌐 English' : '🌐 Español') }
 function estJob(j) {
 const s = (j.serv || []).reduce((a, c) => a + ((Number((j.prices || {})[c]) || servByCode(c)?.precio || 0) * (j.servQty?.[c] || 1)), 0);
 const p = db.moves.filter(m => !m.open && m.end === 'use' && m.job === j.num).reduce((a, m) => a + ((m.cargo != null ? m.cargo : m.precio) || 0) * m.q, 0);
@@ -1257,13 +1293,13 @@ $('#who').innerHTML = `<button class="wchip ${db.currentUser === 'mgr' ? 'on' : 
 db.mechanics.map(m => {
 const hasActiveJob = db.jobs.some(j => j.st === 'En progreso' && (j.mech || []).includes(m.id));
 const statusBadge = hasActiveJob ? `<span class="status-badge status-working">${t('working')}</span>` : `<span class="status-badge status-idle">${t('idle')}</span>`;
-return `<button class="wchip ${db.currentUser === m.id ? 'on' : ''}" onclick="setWho(${m.id})">👤 ${esc(m.name)}<br>${statusBadge}</button>`;
+return `<button class="wchip ${db.currentUser === m.id ? 'on' : ''}" onclick="setWho(${m.id})">👤 ${esc(mName(m))}<br>${statusBadge}</button>`;
 }).join('');
 }
 function setWho(w) {
   if (w === 'mgr' && db.currentUser !== 'mgr') {
-    const p = prompt('Password:');
-    if (p !== '123') { alert('Incorrect password'); return; }
+    const p = prompt(t('pwd_prompt'));
+    if (p !== '123') { alert(t('pwd_incorrect')); return; }
   } else if (w !== 'mgr') {
     tab = 'board';
   }
@@ -1278,7 +1314,7 @@ ${db.logo ? `<button class="btn bad big" style="margin-top:8px" onclick="db.logo
 }
 function setLogoFile(ev) {
 const f = ev.target.files[0]; if (!f) return;
-if (!f.type.startsWith('image/')) { alert('⚠  PNG / JPG.'); return }
+if (!f.type.startsWith('image/')) { alert(t('img_format_err')); return }
 const r = new FileReader();
 r.onload = () => {
 const img = new Image();
@@ -1499,7 +1535,7 @@ ${rP || `<tr><td colspan="3" class="mut">—</td></tr>`}</table>
 <p class="mut" style="margin-top:24px;font-size:10px">CDE Truck &amp; Car Repair Inc. — Prices subject to final inspection. · ${OT(j.num)}</p>
 </body></html>`;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert(t('popups_blocked')); return }
 w.document.write(html); w.document.close(); w.focus();
 toast('📄 Signature request generated');
 }
@@ -1540,7 +1576,7 @@ r.readAsDataURL(f);
 function verSignedPdf(num) {
 const j = db.jobs.find(x => x.num === num); if (!j || !j.signedPdf) return;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert(t('popups_blocked')); return }
 w.document.write(`<!DOCTYPE html><html><head><title>${OT(num)} — ${t('work_signed')}</title></head><body style="margin:0"><iframe src="${j.signedPdf.data}" style="width:100%;height:100vh;border:none"></iframe></body></html>`);
 w.document.close();
 }
@@ -1600,7 +1636,7 @@ if (fila[0] && fila[0].num !== num && !confirm(t('skip_confirm') + ' (' + OT(fil
 const uid = userId();
 if (uid) { j.leader = uid; if (!j.mech) j.mech = []; if (!j.mech.includes(uid)) j.mech.push(uid); j.st = 'En progreso'; save(); render(); toast('🙋 ' + mechName(uid) + ' ' + t('t_took') + ' ' + OT(num)) }
 else abrir(mhead(t('who_t')) + db.mechanics.map(m =>
-`<button class="btn pri big" style="margin-bottom:8px" onclick="asignaToma(${num},${m.id})">🙋 ${esc(m.name)}</button>`).join('') +
+`<button class="btn pri big" style="margin-bottom:8px" onclick="asignaToma(${num},${m.id})">🙋 ${esc(mName(m))}</button>`).join('') +
 `<button class="btn sec big" onclick="cerrar()">${t('cancel_b')}</button>`);
 }
 function asignaToma(num, mid) {
@@ -1612,7 +1648,7 @@ const j = db.jobs.find(x => x.num === num);
 abrir(mhead(t('equipo_t') + ' ' + OT(num)) +
 db.mechanics.map(m => {
 const inT = (j.mech || []).includes(m.id);
-return `<div class="pickrow"><b style="flex:1">${inT ? '✅' : '⬜'} ${esc(m.name)} ${j.leader === m.id ? '⭐' : ''}</b>
+return `<div class="pickrow"><b style="flex:1">${inT ? '✅' : '⬜'} ${esc(mName(m))} ${j.leader === m.id ? '⭐' : ''}</b>
 ${inT && j.leader !== m.id ? `<button class="btn sm sec" onclick="hacerLider(${num},${m.id})">${t('lead_b')}</button>` : ''}
 <button class="btn sm ${inT ? 'bad' : 'pri'}" onclick="toggleTeam(${num},${m.id})">${inT ? t('remove_b') : t('add_b')}</button></div>`
 }).join('') +
@@ -1683,7 +1719,7 @@ abrir(`${mhead(editNum ? t('edit_t') + ' ' + OT(editNum) : t('new_t'))}
 <div class="step">${t('s4')}</div>
 <label class="f">${t('leader_f')}</label>
 <select id="tLeader"><option value="">${t('leader_none')}</option>
-${db.mechanics.map(m => `<option value="${m.id}" ${j?.leader === m.id ? 'selected' : ''}>${esc(m.name)}</option>`).join('')}</select>
+${db.mechanics.map(m => `<option value="${m.id}" ${j?.leader === m.id ? 'selected' : ''}>${esc(mName(m))}</option>`).join('')}</select>
 <label class="f">${t('companions_f')}</label><div class="chipbox" id="tTeamBox"></div>
 <div style="display:flex;gap:8px;margin-top:18px">
 <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
@@ -1720,7 +1756,7 @@ return `<div class="pickrow">
 }
 function pintaTTeam() {
 $('#tTeamBox').innerHTML = db.mechanics.map(m =>
-`<span class="chip ${tTeam.has(m.id) ? 'sel' : ''}" onclick="tTeam.has(${m.id})?tTeam.delete(${m.id}):tTeam.add(${m.id});pintaTTeam()">👤 ${esc(m.name)}</span>`).join('');
+`<span class="chip ${tTeam.has(m.id) ? 'sel' : ''}" onclick="tTeam.has(${m.id})?tTeam.delete(${m.id}):tTeam.add(${m.id});pintaTTeam()">👤 ${esc(mName(m))}</span>`).join('');
 }
 function pintaTParts() {
 $('#tPartsList').innerHTML = tParts.length ? tParts.map((p, idx) => {
@@ -1787,7 +1823,7 @@ function sacarLista(num, i) {
 const j = db.jobs.find(x => x.num === num), lid = j.leader || userId();
 if (!lid) {
 abrir(mhead(t('who_take')) + db.mechanics.map(m =>
-`<button class="btn pri big" style="margin-bottom:8px" onclick="cerrar();sacaComo(${num},${i},${m.id})">🛒 ${esc(m.name)}</button>`).join('') +
+`<button class="btn pri big" style="margin-bottom:8px" onclick="cerrar();sacaComo(${num},${i},${m.id})">🛒 ${esc(mName(m))}</button>`).join('') +
 `<button class="btn sec big" onclick="cerrar()">${t('cancel_b')}</button>`); return
 }
 sacaComo(num, i, lid);
@@ -1813,11 +1849,11 @@ function pedirDesdeOrden(num, i) {
 const j = db.jobs.find(x => x.num === num), p = j.parts[i], part = partBySku(p.sku);
 abrir(mhead(`${t('vp_req_b')} — ${esc(L(part))}`) + `
 <p class="mut">${t('vp_reason')}</p>
-<textarea id="rReason" placeholder="${esc(t('vp_reason_ph'))}">${lang() === 'en' ? 'Missing for ' : 'Faltante para '}${OT(num)}${j.unit ? ' — ' + esc(j.unit) : ''}</textarea>
+<textarea id="rReason" placeholder="${esc(t('vp_reason_ph'))}">${t('missing_for')}${OT(num)}${j.unit ? ' — ' + esc(j.unit) : ''}</textarea>
 <label class="f">${t('vp_qty')}</label>
 <input type="number" id="rQ" value="${p.falta || p.q}" min="1" inputmode="numeric">
 <label class="f">${t('vp_urg')}</label>
-<select id="rUrg"><option value="normal">${lang() === 'en' ? 'Normal' : 'Normal'}</option><option value="high">${lang() === 'en' ? 'High' : 'Alta'}</option><option value="critical">${lang() === 'en' ? 'Critical (shop stopped)' : 'Crítica (shop parado)'}</option></select>
+<select id="rUrg"><option value="normal">${t('urg_normal')}</option><option value="high">${t('urg_high')}</option><option value="critical">${t('urg_critical')}</option></select>
 <div style="display:flex;gap:8px;margin-top:14px">
 <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
 <button class="btn pri" style="flex:2" onclick="crearReq('${oq(p.sku)}',${num},${i})">${t('vp_send')}</button></div>`);
@@ -1885,7 +1921,7 @@ abrir(`${mhead(t('take_from') + ' ' + p.loc + ': ' + esc(L(p)))}
 <span class="chip" id="dVeh" onclick="setDest('vehiculo')">${t('dest_veh')}</span>
 <span class="chip" id="dUbi" onclick="setDest('ubicacion')">${t('dest_ubi')}</span></div>
 <label class="f">${t('qty_f')}</label><input type="number" id="mQ" value="1" min="1" max="${p.cant}" inputmode="numeric">
-<label class="f">${t('who_f')}</label><select id="mMech">${db.mechanics.map(m => `<option value="${m.id}" ${userId() === m.id ? 'selected' : ''}>${esc(m.name)}</option>`).join('')}</select>
+<label class="f">${t('who_f')}</label><select id="mMech">${db.mechanics.map(m => `<option value="${m.id}" ${userId() === m.id ? 'selected' : ''}>${esc(mName(m))}</option>`).join('')}</select>
 <div id="salExtra"></div>
 <button class="btn pri big" style="margin-top:16px" onclick="sacar('${oq(sku)}')">${t('take_from')} ${esc(p.loc)}</button>`);
 pintaSalExtra();
@@ -2061,7 +2097,7 @@ abrir(mhead(`${t('vp_req_b')} — ${esc(L(v))}`) + `
 <label class="f">${t('vp_qty')}</label>
 <input type="number" id="vrQ" value="1" min="1" inputmode="numeric">
 <label class="f">${t('vp_urg')}</label>
-<select id="vrUrg"><option value="normal">${lang() === 'en' ? 'Normal' : 'Normal'}</option><option value="high">${lang() === 'en' ? 'High' : 'Alta'}</option><option value="critical">${lang() === 'en' ? 'Critical' : 'Crítica'}</option></select>
+<select id="vrUrg"><option value="normal">${t('urg_normal')}</option><option value="high">${t('urg_high')}</option><option value="critical">${t('urg_critical')}</option></select>
 <div style="display:flex;gap:8px;margin-top:14px">
 <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
 <button class="btn pri" style="flex:2" onclick="crearReqV('${oq(sku)}')">${t('vp_send')}</button></div>`);
@@ -2080,11 +2116,11 @@ const r = db.requests.find(x => x.id === id); if (!r) return;
 abrir(mhead(t('vp_mgr_approve')) + `
 <p class="mut">${esc(L({ es: r.es, en: r.en || r.es }))} · ${r.q} ${t('qtyshort')}</p>
 <label class="f">${t('vp_eta')}</label>
-<input type="text" id="rEta" placeholder="Ej. 2026-08-14 o 'viernes PM'">
+<input type="text" id="rEta" placeholder="${t('date_ph')}">
 <label class="f">${t('vp_order_num')}</label>
-<input type="text" id="rOrderNum" placeholder="Ej. CT-1044805">
+<input type="text" id="rOrderNum" placeholder="${t('order_num_ph')}">
 <label class="f">${t('vp_notes')}</label>
-<input type="text" id="rNotes" placeholder="Notas opcionales">
+<input type="text" id="rNotes" placeholder="${t('notes_ph')}">
 <div style="display:flex;gap:8px;margin-top:14px">
 <button class="btn sec" style="flex:1" onclick="cerrar()">${t('cancel_b')}</button>
 <button class="btn ok" style="flex:2" onclick="doApprove(${id})">${t('vp_mgr_approve')}</button></div>`);
@@ -2106,7 +2142,7 @@ const r = db.requests.find(x => x.id === id); if (!r) return;
 r.status = 'received'; r.receivedDate = new Date().toISOString();
 if (!db.parts.some(p => p.sku === r.sku)) {
 const v = db.vendorParts.find(x => x.sku === r.sku);
-const loc = prompt((lang() === 'en' ? 'Rack location: ' : 'Rack / ubicación: '), 'E1');
+const loc = prompt(t('rack_loc'), 'E1');
 if (loc) db.parts.push({ sku: r.sku, es: r.es, en: r.en || r.es, loc: loc.toUpperCase(), precio: v?.precio || 0, cant: r.q, min: Math.max(1, Math.floor(r.q / 2)) });
 else { toast('⚠ '); return }
 } else {
@@ -2156,7 +2192,7 @@ ${etas ? `<div class="sec">${W('ETAs estimadas', 'Estimated ETAs')}</div><p>${et
 <p class="mut" style="margin-top:24px;font-size:10px">${W('Generado por CDE —', 'Generated by CDE —')} ${reqs.length} ${W('items', 'artículos')}</p>
 </body></html>`;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert(t('popups_blocked')); return }
 w.document.write(html); w.document.close(); w.focus();
 }
 /* ========== SERVICIOS ========== */
@@ -2211,7 +2247,7 @@ const hasActiveJob = jobs.some(j => j.st === 'En progreso');
 const statusBadge = hasActiveJob ? `<span class="status-badge status-working">${t('working')}</span>` : `<span class="status-badge status-idle">${t('idle')}</span>`;
 return `<div class="card">
 <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span style="font-size:26px">👤</span>
-<input value="${esc(m.name)}" onchange="setNombre(${m.id},this.value)" style="font-weight:800"></div>
+<input value="${esc(mName(m))}" onchange="setNombre(${m.id},this.value)" style="font-weight:800"></div>
 ${statusBadge}
 <input placeholder="${esc(t('spec_ph'))}" value="${esc(m.esp || '')}" onchange="setEsp(${m.id},this.value)">
 <div class="mut" style="margin-top:9px">🛒 ${jobs.map(j => OT(j.num)).join(', ') || t('no_jobs')} · 🛒 ${ab.reduce((a, x) => a + x.q, 0)} ${t('in_cart_short')}</div>
@@ -2306,7 +2342,7 @@ ${rP || `<tr><td colspan="5" class="mut">—</td></tr>`}</table>
 <p class="mut" style="margin-top:24px;font-size:10px">CDE Truck &amp; Car Repair Inc. — ${W('Precios sujetos a inspección final.', 'Prices subject to final inspection.')} · ${OT(j.num)}</p>
 </body></html>`;
 const w = window.open('', '_blank');
-if (!w) { alert('⚠  Pop-ups blocked'); return }
+if (!w) { alert(t('popups_blocked')); return }
 w.document.write(html); w.document.close(); w.focus();
 }
 /* ========== respaldo ========== */
