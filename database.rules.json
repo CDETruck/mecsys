@@ -1,6 +1,18 @@
 {
   "rules": {
     ".read": true,
-    ".write": true
+    ".write": true,
+    "cde_v2": {
+      ".indexOn": ["ts", "num", "st"],
+      "jobs": {
+        ".indexOn": ["num", "st", "ts"]
+      },
+      "parts": {
+        ".indexOn": ["sku", "loc"]
+      },
+      "requests": {
+        ".indexOn": ["id", "status"]
+      }
+    }
   }
 }
