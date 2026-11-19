@@ -820,6 +820,7 @@ head_queue: '🕒 En fila — se toman en este orden', head_prog: '🔧 En progr
 csv_all: '⬇ CSV QuickBooks (todos)', b_next: '▶ SIGUIENTE', b_queue: 'EN FILA #', b_urg: '🔴 URGENTE',
 b_prog: '🔧 EN PROGRESO', b_done: '✅ TERMINADO', take_job: '🙋 TOMAR ESTE TRABAJO', pre_assigned: '👤 Pre-asignado a:',
 team_none: 'Sin equipo aún', add_team: '＋ Equipo', add_part: '＋ Añadir pieza', estimate: 'Estimado', labor: 'mano de obra',
+add_custom_part: '＋ Parte nueva (no está en el catálogo)', custom_name_f: 'Nombre de la pieza', custom_sku_f: 'SKU (opcional)', custom_loc_f: 'Rack / ubicación (opcional)', custom_hint: 'Se agrega a la orden y al catálogo con stock 0 y precio $0. El Manager pone el precio después.', custom_need_name: 'Escribe el nombre de la pieza', custom_badge: 'NUEVA',
 parts_w: 'partes', total: 'Total', finish_job: '✔ TERMINAR TRABAJO', reopen: '↺ Reabrir', retry: 'Reintentar',
 missing_buy: '⚠  Faltante p/ compra', missing_btn: '⚠  FALTANTE', take_rack: '📦 SACAR DEL RACK', in_cart: '✅ En carrito',
 cart_of: '🛒 Carrito de', pieces_out: 'pieza(s) fuera', return_b: '↩ Regresar', used_b: '✔ Usada',
@@ -886,7 +887,7 @@ signed_only_pdf: '⚠  Solo se aceptan archivos PDF.',
 work_signed: 'Work Signed',
 signed_remove: '🗑 Quitar',
 save_error: '⚠  No se pudo guardar: almacenamiento del navegador lleno.',
-pwd_prompt: 'Contraseña:',
+pwd_prompt: 'Contraseña:', pin_prompt: 'PIN del mecánico:', pin_f: 'PIN',
 pwd_incorrect: 'Contraseña incorrecta',
 img_format_err: '⚠  PNG / JPG.',
 title_tag: 'CDE Truck & Car Repair — Tablero',
@@ -932,6 +933,7 @@ head_queue: '🕒 In queue — taken in this order', head_prog: '🔧 In progres
 csv_all: '⬇ QuickBooks CSV (all)', b_next: '▶ NEXT', b_queue: 'IN QUEUE #', b_urg: '🔴 URGENT',
 b_prog: '🔧 IN PROGRESS', b_done: '✅ DONE', take_job: '🙋 TAKE THIS JOB', pre_assigned: '👤 Pre-assigned to:',
 team_none: 'No team yet', add_team: '＋ Team', add_part: '＋ Add part', estimate: 'Estimate', labor: 'labor',
+add_custom_part: '＋ New part (not in the catalog)', custom_name_f: 'Part name', custom_sku_f: 'SKU (optional)', custom_loc_f: 'Rack / location (optional)', custom_hint: 'It is added to the order and to the catalog with 0 stock and $0 price. The Manager sets the price later.', custom_need_name: 'Type the part name', custom_badge: 'NEW',
 parts_w: 'parts', total: 'Total', finish_job: '✔ FINISH JOB', reopen: '↺ Reopen', retry: 'Retry',
 missing_buy: '⚠  Missing — to buy', missing_btn: '⚠  MISSING', take_rack: '📦 TAKE FROM RACK', in_cart: '✅ In cart',
 cart_of: '🛒 Cart of', pieces_out: 'part(s) out', return_b: '↩ Return', used_b: '✔ Used',
@@ -998,7 +1000,7 @@ signed_only_pdf: '⚠  Only PDF files are accepted.',
 work_signed: 'Work Signed',
 signed_remove: '🗑 Remove',
 save_error: '⚠  Could not save: browser storage full.',
-pwd_prompt: 'Password:',
+pwd_prompt: 'Password:', pin_prompt: 'Mechanic PIN:', pin_f: 'PIN',
 pwd_incorrect: 'Incorrect password',
 img_format_err: '⚠  PNG / JPG.',
 title_tag: 'CDE Truck & Car Repair — Dashboard',
@@ -1088,6 +1090,7 @@ const mechName = id => mName(db.mechanics.find(m => m.id === id));
 const partBySku = s => db.parts.find(p => p.sku === s);
 const servByCode = c => db.services.find(s => s.code === c);
 const userId = () => db.currentUser === 'mgr' ? null : db.currentUser;
+const pinOf = m => (m && m.pin) || '1234';
 const destIcon = m => (m.dest || 'cart') === 'cart' ? '🛒' : m.dest === 'vehiculo' ? '🚚' : '📍';
 const destTxt = m => (m.dest || 'cart') === 'cart' ? (lang() === 'en' ? 'cart' : 'carrito') : (m.destTxt || '');
 function toast(msg) { const x = $('#toast'); x.textContent = msg; x.classList.add('show'); clearTimeout(x._h); x._h = setTimeout(() => x.classList.remove('show'), 2400) }
@@ -1373,9 +1376,12 @@ function setWho(w) {
   if (w === 'mgr' && db.currentUser !== 'mgr') {
     const p = prompt(t('pwd_prompt'));
     if (p !== '123') { alert(t('pwd_incorrect')); return; }
-  } else if (w !== 'mgr') {
-    tab = 'board';
+  } else if (w !== 'mgr' && db.currentUser !== w) {
+    const m = db.mechanics.find(x => x.id === w);
+    const p = prompt(t('pin_prompt'));
+    if (p !== pinOf(m)) { alert(t('pwd_incorrect')); return; }
   }
+  if (w !== 'mgr') tab = 'board';
   db.currentUser = w; save(); render(); window.scrollTo(0,0); toast(w === 'mgr' ? t('t_mode_m') : '🙋 ' + mechName(w));
 }
 function logoModal() {
@@ -1871,6 +1877,7 @@ function pickerJob(num) {
 jSearch = '';
 abrir(mhead(t('add_part') + ' — ' + OT(num)) +
 `<input type="search" placeholder="${esc(t('search_ph'))}" oninput="jSearch=this.value;pintaJPick(${num})">
+<button class="btn sec big" style="margin-top:8px" onclick="customPartJob(${num})">${t('add_custom_part')}</button>
 <div style="margin-top:8px" id="jPickBox"></div>`);
 pintaJPick(num);
 }
@@ -1884,6 +1891,33 @@ function addJobPart(num, sku) {
 const j = db.jobs.find(x => x.num === num); j.parts = j.parts || [];
 const ex = j.parts.find(p => p.sku === sku && !p.picked); ex ? ex.q++ : j.parts.push({ sku, q: 1, picked: false, falta: 0 });
 save(); toast(t('t_added_p') + ' ' + OT(num)); pintaJPick(num); render();
+}
+/* parte nueva (no está en el catálogo): la crea el mecánico desde la orden */
+function customPartJob(num) {
+abrir(mhead(t('add_custom_part') + ' — ' + OT(num)) +
+`<p class="mut">${t('custom_hint')}</p>
+<label class="f">${t('custom_name_f')}</label><input id="cpName" placeholder="">
+<label class="f">${t('custom_sku_f')}</label><input id="cpSku" placeholder="N-...">
+<label class="f">${t('custom_loc_f')}</label><input id="cpLoc" placeholder="A1, B3...">
+<label class="f">${t('qty_f')}</label><input type="number" id="cpQ" value="1" min="1" inputmode="numeric">
+<div style="display:flex;gap:8px;margin-top:14px">
+<button class="btn sec" style="flex:1" onclick="pickerJob(${num})">${t('cancel_b')}</button>
+<button class="btn pri" style="flex:2" onclick="guardarPiezaJob(${num})">${t('save_b')}</button></div>`);
+}
+function guardarPiezaJob(num) {
+const name = ($('#cpName').value || '').trim();
+if (!name) { toast(t('custom_need_name')); return; }
+let sku = ($('#cpSku').value || '').trim();
+const q = Math.max(1, Math.floor(Number($('#cpQ').value) || 1));
+if (!sku) sku = 'N-' + (db.parts.reduce((a, x) => Math.max(a, parseInt(String(x.sku).split('-')[1]) || 0), 0) + 1);
+if (!partBySku(sku)) {
+const loc = ($('#cpLoc').value || '').trim().toUpperCase() || '—';
+db.parts.push({ sku, es: name, en: name, loc, precio: 0, cant: 0, min: 0, custom: true });
+}
+const j = db.jobs.find(x => x.num === num); if (!j) return;
+j.parts = j.parts || [];
+const ex = j.parts.find(p => p.sku === sku && !p.picked); ex ? ex.q += q : j.parts.push({ sku, q, picked: false, falta: 0 });
+save(); toast(t('t_added_p') + ' ' + OT(num)); pickerJob(num);
 }
 /* sacar del rack */
 function sacarLista(num, i) {
@@ -1963,7 +1997,7 @@ $('#main').innerHTML = carts + `
 <button class="chip ${pLow ? 'sel' : ''}" onclick="pLow=!pLow;render()">${t('low_chip')} (${db.parts.filter(p => p.cant <= p.min).length})</button>
 <button class="btn pri" onclick="partModal()">${t('add_part_b')}</button></div>
 ${parts.map(p => `<div class="pickrow">
-<div class="pinfo"><b>${esc(L(p))}</b><small>${esc(lang() === 'en' ? p.es : p.en)} · ${esc(p.sku)}</small></div>
+<div class="pinfo"><b>${esc(L(p))}</b><small>${esc(lang() === 'en' ? p.es : p.en)} · ${esc(p.sku)}</small>${p.custom ? ` <span class="chip">${t('custom_badge')}</span>` : ''}</div>
 ${locBadge(p.loc)}<span class="priceedit" onclick="editPrecioInline('${oq(p.sku)}',this)" title="Click para editar">${money(p.precio)}</span>
 <span class="qty ${p.cant <= p.min ? 'low' : ''}">${p.cant}</span>
 <button class="btn sm sec" onclick="entradaModal('${oq(p.sku)}')">＋</button>
@@ -2315,12 +2349,14 @@ return `<div class="card">
 <input value="${esc(mName(m))}" onchange="setNombre(${m.id},this.value)" style="font-weight:800"></div>
 ${statusBadge}
 <input placeholder="${esc(t('spec_ph'))}" value="${esc(m.esp || '')}" onchange="setEsp(${m.id},this.value)">
+<label class="f">${t('pin_f')}</label><input type="password" inputmode="numeric" autocomplete="off" value="${esc(pinOf(m))}" onchange="setPin(${m.id},this.value)">
 <div class="mut" style="margin-top:9px">🛒 ${jobs.map(j => OT(j.num)).join(', ') || t('no_jobs')} · 🛒 ${ab.reduce((a, x) => a + x.q, 0)} ${t('in_cart_short')}</div>
 ${ab.map(x => `<div class="mut">• ${x.q}× ${esc(lang() === 'en' ? (x.en || x.es) : x.es)}</div>`).join('')}</div>`
 }).join('')}</div>`;
 }
 function setNombre(id, v) { db.mechanics.find(m => m.id === id).name = v.trim() || ('Mecánico ' + id); save(); render() }
 function setEsp(id, v) { db.mechanics.find(m => m.id === id).esp = v; save() }
+function setPin(id, v) { const m = db.mechanics.find(x => x.id === id); if (!m) return; m.pin = String(v || '').replace(/\D/g, '').slice(0, 6) || '1234'; save() }
 /* ========== SALIDAS ========== */
 function setOutLang(v) { db.outLang = v; save(); outModalRefresh && outModalRefresh() }
 let outModalRefresh = null;
