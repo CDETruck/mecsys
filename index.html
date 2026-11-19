@@ -1486,8 +1486,21 @@ right = `<button class="btn sm bad" onclick="pedirDesdeOrden(${j.num},${i})">�
 } else {
 right = `<button class="btn sm pri" onclick="sacarLista(${j.num},${i})">${t('take_rack')}</button>`;
 }
-return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${p.q}× ${esc(L(part))}</b><small>${esc(part.sku)}${db.currentUser === "mgr" ? " · " + money(part.precio) : ""}</small></div>${right}</div>`
+const edit = !p.picked ? `<span class="stepbox"><button onclick="cantPiezaJob(${j.num},${i},-1)">-</button><b>${p.q}</b><button onclick="cantPiezaJob(${j.num},${i},1)">＋</button></span><button class="btn sm sec" onclick="quitarPiezaJob(${j.num},${i})">✕</button>` : '';
+return `<div class="pickrow">${locBadge(part.loc)}<div class="pinfo"><b>${p.picked ? p.q + '× ' : ''}${esc(L(part))}</b><small>${esc(part.sku)}${db.currentUser === "mgr" ? " · " + money(part.precio) : ""}</small></div>${edit}${right}</div>`
 }).join('') + `</div>`;
+}
+/* cantidad / quitar pieza de la orden (solo antes de sacarla del rack) */
+function cantPiezaJob(num, i, d) {
+const j = db.jobs.find(x => x.num === num); if (!j || !j.parts[i]) return;
+j.parts[i].q += d;
+if (j.parts[i].q <= 0) j.parts.splice(i, 1);
+save(); render();
+}
+function quitarPiezaJob(num, i) {
+const j = db.jobs.find(x => x.num === num); if (!j || !j.parts[i]) return;
+j.parts.splice(i, 1);
+save(); render();
 }
 function precioPiezaJob(num, i) {
 const j = db.jobs.find(x => x.num === num), p = j.parts[i], part = partBySku(p.sku);
@@ -1909,7 +1922,10 @@ const name = ($('#cpName').value || '').trim();
 if (!name) { toast(t('custom_need_name')); return; }
 let sku = ($('#cpSku').value || '').trim();
 const q = Math.max(1, Math.floor(Number($('#cpQ').value) || 1));
-if (!sku) sku = 'N-' + (db.parts.reduce((a, x) => Math.max(a, parseInt(String(x.sku).split('-')[1]) || 0), 0) + 1);
+if (!sku) {
+const same = db.parts.find(x => x.custom && (x.es || '').trim().toLowerCase() === name.toLowerCase());
+sku = same ? same.sku : 'N-' + (db.parts.reduce((a, x) => Math.max(a, parseInt(String(x.sku).split('-')[1]) || 0), 0) + 1);
+}
 if (!partBySku(sku)) {
 const loc = ($('#cpLoc').value || '').trim().toUpperCase() || '—';
 db.parts.push({ sku, es: name, en: name, loc, precio: 0, cant: 0, min: 0, custom: true });
